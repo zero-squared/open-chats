@@ -6,7 +6,15 @@
   "main": "app.js",
   "scripts": {
     "start": "node .",
-    "dev": "nodemon ."
+    "dev": "nodemon .",
+    "pm2:start": "pm2 start app.js --name 'chats' --watch",
+    "pm2:stop": "pm2 stop chats",
+    "pm2:logs": "pm2 logs chats",
+    "pm2:delete": "pm2 delete chats",
+    "pm2:restart": "pm2 restart chats"
+  },
+  "engines": {
+    "node": "22.14.0"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +27,7 @@
     "express-session": "^1.18.1",
     "pg": "^8.14.1",
     "pg-hstore": "^2.3.4",
+    "pm2": "^6.0.5",
     "sequelize": "^6.37.7",
     "socket.io": "^4.8.1"
   },

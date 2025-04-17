@@ -3,10 +3,24 @@ import { Sequelize } from 'sequelize';
 import session from 'express-session';
 import 'dotenv/config';
 import bodyParser from 'body-parser';
+import { Server } from 'socket.io';
 
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
+
+const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTGRES_USERNAME, process.env.POSTGRES_PASSWORD, {
+    host: process.env.POSTGRES_HOST,
+    dialect: 'postgres',
+    logging: false,
+});
+
+try {
+    await sequelize.authenticate();
+    console.log('Connected to the database');
+} catch (err) {
+    console.error('Unable to connect to the database:', err);
+}
 
 const app = express();
 
@@ -24,26 +38,14 @@ if (process.env.NODE_ENV === 'prod') {
     server = http.createServer(app);
 }
 
-const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTGRES_USERNAME, process.env.POSTGRES_PASSWORD, {
-    host: process.env.POSTGRES_HOST,
-    dialect: 'postgres',
-    logging: false,
-});
-
-try {
-    await sequelize.authenticate();
-    console.log('Connected to the database');
-} catch (err) {
-    console.error('Unable to connect to the database:', err);
-}
-
-app.set('view engine', 'ejs');
-app.use(session({
+const sessionMiddleware = session({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     resave: true,
-}));
-app.use(bodyParser.urlencoded({ extended: true }));
+})
+
+app.set('view engine', 'ejs');
+app.use(sessionMiddleware);
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
@@ -57,4 +59,14 @@ app.use((req, res) => {
 
 server.listen(port, () => {
     console.log(`Server started on port ${port}`);
+});
+
+const io = new Server(server);
+
+io.engine.use(sessionMiddleware);
+
+io.on("connection", (socket) => {
+    const session = socket.request.session;
+
+    console.log(socket.request.session)
 });
