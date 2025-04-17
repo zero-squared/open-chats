@@ -4,9 +4,10 @@ import session from 'express-session';
 import 'dotenv/config';
 import fs from 'fs';
 import https from 'https';
+import http from 'http';
 
 const app = express();
-const port = process.env;
+const port = process.env.PORT || 3000;
 
 const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTGRES_USERNAME, process.env.POSTGRES_PASSWORD, {
     host: process.env.POSTGRES_HOST,
@@ -42,11 +43,16 @@ app.get('/', (req, res) => {
 let server;
 
 if (process.env.NODE_ENV === 'production') {
-    const privateKey = fs.readFileSync(process.env.SSL_KEY_FILE, 'utf8');
-    const certificate = fs.readFileSync(process.env.SSL_CERT_FILE, 'utf8');
-    server = https.createServer({ key: privateKey, cert: certificate }, app);
+    const privateKey = fs.readFileSync(process.env.SSL_KEY_FILE);
+    const certificate = fs.readFileSync(process.env.SSL_CERT_FILE);
+    server = https.createServer({ 
+        key: privateKey, 
+        cert: certificate 
+    }, app);
+} else {
+    server = http.createServer(app);
 }
 
-server.listen(process.env.HTTP_PORT, () => {
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${process.env.HTTP_PORT}`);
-  });
+server.listen(port, () => {
+    console.log(`Web server started on ${port}`);
+});
