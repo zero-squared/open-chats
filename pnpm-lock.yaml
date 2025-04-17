@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      body-parser:
+        specifier: ^2.2.0
+        version: 2.2.0
+      dotenv:
+        specifier: ^16.5.0
+        version: 16.5.0
       ejs:
         specifier: ^3.1.10
         version: 3.1.10
@@ -180,6 +186,10 @@ packages:
   depd@2.0.0:
     resolution: {integrity: sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==}
     engines: {node: '>= 0.8'}
+
+  dotenv@16.5.0:
+    resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
+    engines: {node: '>=12'}
 
   dottie@2.0.6:
     resolution: {integrity: sha512-iGCHkfUc5kFekGiqhe8B/mdaurD+lakO9txNnTvKtA6PISrw86LgqHvRzWYPyoE2Ph5aMIrCw9/uko6XHTKCwA==}
@@ -845,6 +855,8 @@ snapshots:
       supports-color: 5.5.0
 
   depd@2.0.0: {}
+
+  dotenv@16.5.0: {}
 
   dottie@2.0.6: {}
 
