@@ -5,6 +5,8 @@ import 'dotenv/config';
 import bodyParser from 'body-parser';
 import { Server } from 'socket.io';
 
+import { getHome } from './controllers/homeController.js';
+
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
@@ -51,7 +53,8 @@ app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     if (!req.session.bebra) req.session.bebra = Math.random();
-    res.send(`${JSON.stringify(req.session)}`);
+    // res.send(`${JSON.stringify(req.session)}`);
+    getHome(req, res);
 });
 app.use((req, res) => {
     return res.status(404).send('Not Found');
@@ -68,5 +71,5 @@ io.engine.use(sessionMiddleware);
 io.on("connection", (socket) => {
     const session = socket.request.session;
 
-    console.log(socket.request.session)
+    console.log(session);
 });
