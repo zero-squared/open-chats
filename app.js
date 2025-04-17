@@ -13,7 +13,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 let server;
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'prod') {
     const privateKey = fs.readFileSync(process.env.SSL_KEY_FILE);
     const certificate = fs.readFileSync(process.env.SSL_CERT_FILE);
     server = https.createServer({ 
