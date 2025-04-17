@@ -2,7 +2,8 @@ import express from 'express';
 import { Sequelize, DataTypes } from 'sequelize';
 import session from 'express-session';
 import 'dotenv/config';
-import 'fs';
+import fs from 'fs';
+import https from 'https';
 
 const app = express();
 const port = process.env;
@@ -24,7 +25,7 @@ try {
 //     quantity: DataTypes.INTEGER,
 // });
 
-await sequelize.sync();
+//await sequelize.sync();
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -46,6 +47,6 @@ if (process.env.NODE_ENV === 'production') {
     server = https.createServer({ key: privateKey, cert: certificate }, app);
 }
 
-server.listen(PORT, () => {
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+server.listen(process.env.HTTP_PORT, () => {
+    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${process.env.HTTP_PORT}`);
   });
