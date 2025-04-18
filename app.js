@@ -42,7 +42,7 @@ const sessionMiddleware = session({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     resave: true,
-})
+});
 
 if (process.env.ENABLE_HTTPS === 'true') {
     app.use((req, res, next) => {
@@ -76,10 +76,9 @@ if (process.env.ENABLE_HTTPS === 'true') {
     httpsServer.listen(process.env.HTTPS_PORT, () => {
         console.log(`HTTPS server started on port ${process.env.HTTPS_PORT}`);
     });
-    
 }
 
-const io = new Server(httpsServer);
+const io = new Server(process.env.ENABLE_HTTPS === 'true' ? httpsServer : httpServer);
 
 io.engine.use(sessionMiddleware);
 
