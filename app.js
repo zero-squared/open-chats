@@ -26,18 +26,16 @@ try {
 
 const app = express();
 
-const port = process.env.PORT || 3000;
-let server;
+let httpServer = http.createServer(app);
+let httpsServer;
 
-if (process.env.NODE_ENV === 'prod') {
+if (process.env.ENABLE_HTTPS === 'true') {
     const privateKey = fs.readFileSync(process.env.SSL_KEY_FILE);
     const certificate = fs.readFileSync(process.env.SSL_CERT_FILE);
-    server = https.createServer({ 
+    httpsServer = https.createServer({ 
         key: privateKey, 
         cert: certificate 
     }, app);
-} else {
-    server = http.createServer(app);
 }
 
 const sessionMiddleware = session({
@@ -45,6 +43,16 @@ const sessionMiddleware = session({
     saveUninitialized: true,
     resave: true,
 })
+
+if (process.env.ENABLE_HTTPS === 'true') {
+    app.use((req, res, next) => {
+        if (req.secure) {
+            next();
+        } else {
+            res.redirect("https://" + req.headers.host + req.path);
+        }
+    });
+}
 
 app.set('view engine', 'ejs');
 app.use(sessionMiddleware);
@@ -60,11 +68,15 @@ app.use((req, res) => {
     return res.status(404).send('Not Found');
 });
 
-server.listen(port, () => {
-    console.log(`Server started on port ${port}`);
+httpServer.listen(process.env.HTTP_PORT || 3000, () => {
+    console.log(`HTTP server started on port ${process.env.HTTP_PORT || 3000}`);
 });
 
-const io = new Server(server);
+httpsServer.listen(process.env.HTTPS_PORT, () => {
+    console.log(`HTTPS server started on port ${process.env.HTTPS_PORT}`);
+});
+
+const io = new Server(httpsServer);
 
 io.engine.use(sessionMiddleware);
 
