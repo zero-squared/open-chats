@@ -72,9 +72,12 @@ httpServer.listen(process.env.HTTP_PORT || 3000, () => {
     console.log(`HTTP server started on port ${process.env.HTTP_PORT || 3000}`);
 });
 
-httpsServer.listen(process.env.HTTPS_PORT, () => {
-    console.log(`HTTPS server started on port ${process.env.HTTPS_PORT}`);
-});
+if (process.env.ENABLE_HTTPS === 'true') {
+    httpsServer.listen(process.env.HTTPS_PORT, () => {
+        console.log(`HTTPS server started on port ${process.env.HTTPS_PORT}`);
+    });
+    
+}
 
 const io = new Server(httpsServer);
 
