@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chats</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <p>Authorized as <%=username%></p>
+    <div id="chat">
+    </div>
+    <label>Message: <input type="text" id="message" /></label>
+    <button id="send-button">send</button>
+
+    <script defer>
+        const socket = io.connect();
+
+        const sendButton = document.getElementById('send-button');
+        const messageInput = document.getElementById('message');
+        const chat = document.getElementById('chat');
+
+        sendButton.onclick = async () => {
+            const res = await fetch('/message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: messageInput.value }),
+            });
+            console.log(res);
+        }
+
+        socket.on('newMessage', ({ username, message }) => {
+            chat.innerHTML += `<p><b>${username}</b> ${message}</p>`;
+        });
+    </script>
+</body>
+
+</html>

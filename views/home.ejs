@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chats</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script defer>
-        const socket = io.connect();
-    </script>
 </head>
 <body>
-    <p>hmm</p>
+    <form action="/auth" method="post">
+        <label>Username: <input type="text" name="username" /></label>
+    </form>
 </body>
 </html>

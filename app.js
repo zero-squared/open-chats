@@ -3,13 +3,12 @@ import { Sequelize } from 'sequelize';
 import session from 'express-session';
 import 'dotenv/config';
 import bodyParser from 'body-parser';
-import { Server } from 'socket.io';
-
-import { getHome } from './controllers/homeController.js';
-
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
+
+import mainRouter from './routes/mainRoutes.js';
+import { initializeSockets } from './sockets.js';
 
 const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTGRES_USERNAME, process.env.POSTGRES_PASSWORD, {
     host: process.env.POSTGRES_HOST,
@@ -32,9 +31,9 @@ let httpsServer;
 if (process.env.ENABLE_HTTPS === 'true') {
     const privateKey = fs.readFileSync(process.env.SSL_KEY_FILE);
     const certificate = fs.readFileSync(process.env.SSL_CERT_FILE);
-    httpsServer = https.createServer({ 
-        key: privateKey, 
-        cert: certificate 
+    httpsServer = https.createServer({
+        key: privateKey,
+        cert: certificate
     }, app);
 }
 
@@ -57,16 +56,12 @@ if (process.env.ENABLE_HTTPS === 'true') {
 app.set('view engine', 'ejs');
 app.use(sessionMiddleware);
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-    if (!req.session.bebra) req.session.bebra = Math.random();
-    // res.send(`${JSON.stringify(req.session)}`);
-    getHome(req, res);
-});
-app.use((req, res) => {
-    return res.status(404).send('Not Found');
-});
+app.use(mainRouter);
 
 httpServer.listen(process.env.HTTP_PORT || 3000, () => {
     console.log(`HTTP server started on port ${process.env.HTTP_PORT || 3000}`);
@@ -78,12 +73,4 @@ if (process.env.ENABLE_HTTPS === 'true') {
     });
 }
 
-const io = new Server(process.env.ENABLE_HTTPS === 'true' ? httpsServer : httpServer);
-
-io.engine.use(sessionMiddleware);
-
-io.on("connection", (socket) => {
-    const session = socket.request.session;
-
-    console.log(session);
-});
+initializeSockets(process.env.ENABLE_HTTPS === 'true' ? httpsServer : httpServer, sessionMiddleware);
