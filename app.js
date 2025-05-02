@@ -7,7 +7,7 @@ import fs from 'fs';
 import https from 'https';
 import http from 'http';
 
-import mainRouter from './routes/mainRoutes.js';
+import router from './routes/mainRoutes.js';
 import { initializeSockets } from './sockets.js';
 
 const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTGRES_USERNAME, process.env.POSTGRES_PASSWORD, {
@@ -61,7 +61,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static('public'));
 
-app.use(mainRouter);
+app.use(router);
 
 httpServer.listen(process.env.HTTP_PORT || 3000, () => {
     console.log(`HTTP server started on port ${process.env.HTTP_PORT || 3000}`);
