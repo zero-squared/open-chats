@@ -1,0 +1,30 @@
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    width: 400px;
+}
+
+form label {
+    display: flex;
+    justify-content: space-between;
+}
+
+form input {
+    background: transparent;
+    padding: 5px;
+    border: solid 1px #ffffff;
+}
+
+img {
+    border: solid 1px #ffffff;
+}
