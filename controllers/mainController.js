@@ -1,5 +1,5 @@
 export default {
-    showIndex: async (req, res) => {
+    showHome: async (req, res) => {
         res.render('home');
     },
     showLogin: async (req, res) => {

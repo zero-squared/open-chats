@@ -1,5 +1,4 @@
 import express from 'express';
-import { Sequelize } from 'sequelize';
 import session from 'express-session';
 import 'dotenv/config';
 import bodyParser from 'body-parser';
@@ -8,20 +7,7 @@ import https from 'https';
 import http from 'http';
 
 import router from './routes/mainRoutes.js';
-import { initializeSockets } from './sockets.js';
-
-const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTGRES_USERNAME, process.env.POSTGRES_PASSWORD, {
-    host: process.env.POSTGRES_HOST,
-    dialect: 'postgres',
-    logging: false,
-});
-
-try {
-    await sequelize.authenticate();
-    console.log('Connected to the database');
-} catch (err) {
-    console.error('Unable to connect to the database:', err);
-}
+import { initializeSockets } from './sockets/index.js';
 
 const app = express();
 

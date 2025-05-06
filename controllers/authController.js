@@ -1,7 +1,7 @@
 export default {
     registerUser: async (req, res) => {
         // TODO
-        res.send('todo');
+        console.log(req.body);
     },
     loginUser: async (req, res) => {
         req.session.username = req.body.username;

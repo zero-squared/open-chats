@@ -5,7 +5,7 @@ import apiRouter from './apiRoutes.js';
 
 const router = express.Router();
 
-router.get('/', mainController.showIndex);
+router.get('/', mainController.showHome);
 router.get('/login', mainController.showLogin);
 router.get('/register', mainController.showRegister);
 
