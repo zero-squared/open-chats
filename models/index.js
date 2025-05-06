@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
-
-import User from './userModel.js';
+import fs from 'fs';
+import path from 'path';
 
 const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTGRES_USERNAME, process.env.POSTGRES_PASSWORD, {
     host: process.env.POSTGRES_HOST,
@@ -15,7 +15,17 @@ try {
     console.error('Unable to connect to the database:', err);
 }
 
-User(sequelize);
+const basename = path.basename(import.meta.filename); // This file name without path
+const modelFiles = fs.readdirSync('./models').filter(file => file.endsWith('.js') && file !== basename);
+
+for (const modelFile of modelFiles) {
+    try {
+        const model = (await import(path.join(import.meta.dirname, modelFile))).default;
+        model(sequelize);
+    } catch (e) {
+        throw new Error(`Failed to load ${modelFile}`);
+    }
+}
 
 await sequelize.sync();
 

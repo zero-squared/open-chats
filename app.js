@@ -8,6 +8,7 @@ import http from 'http';
 
 import router from './routes/mainRoutes.js';
 import { initializeSockets } from './sockets/index.js';
+import './models/index.js';
 
 const app = express();
 

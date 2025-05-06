@@ -12,7 +12,7 @@ export function initializeSockets(webServer, sessionMiddleware) {
 
 export function getIO() {
     if (!io) {
-        throw new Error('Socket.io not initialized!');
+        throw new Error('Socket.io not initialized');
     }
 
     return io;
