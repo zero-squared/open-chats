@@ -1,7 +1,9 @@
 <header>
     <nav>
         <a href="/">Home</a>
+        <% if (!username) { %>
         <a href="/login">Login</a>
         <a href="/register">Register</a>
+        <% } %> 
     </nav>
 </header>

@@ -54,6 +54,7 @@ export default {
                 username: username,
                 password: password
             });
+            req.session.username = user.username;
         } catch (e) {
             if (e.message === 'Validation error') {
                 const error = e.errors[0].message.charAt(0).toUpperCase() + e.errors[0].message.slice(1);
@@ -74,7 +75,6 @@ export default {
             return;
         }
 
-        req.session.username = user.username;
         res.send({
             success: true,
         });

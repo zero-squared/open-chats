@@ -23,7 +23,8 @@ header {
 
 header nav {
     display: flex;
-    column-gap: 100px; 
+    column-gap: 100px;
+    align-items: center;
 }
 
 header nav a {

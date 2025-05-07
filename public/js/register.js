@@ -36,7 +36,7 @@ registerForm.onsubmit = async (e) => {
             return;
         }
 
-        window.location.href = '/channels';
+        window.location.href = '/';
 
     } catch (e) {
         console.error(e);
