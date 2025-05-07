@@ -81,6 +81,6 @@ export default {
     },
     loginUser: async (req, res) => {
         req.session.username = req.body.username;
-        res.redirect('/channels');
+        res.redirect('/');
     }
 }

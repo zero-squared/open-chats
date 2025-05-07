@@ -7,6 +7,9 @@ export default {
     },
     showRegister: async (req, res) => {
         res.render('register', { username: req.session.username });
+    },
+    logoutUser: async (req, res) => {
+        req.session.destroy();
+        res.redirect('/');
     }
-
 }

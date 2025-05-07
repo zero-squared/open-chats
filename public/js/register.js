@@ -7,6 +7,7 @@ const repeatPasswordInput = document.getElementById('repeat-password-input');
 const errorElem = document.getElementById('error');
 
 const REGISTER_API = '/api/auth/register';
+const REDIRECT = '/';
 
 registerForm.onsubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +37,7 @@ registerForm.onsubmit = async (e) => {
             return;
         }
 
-        window.location.href = '/';
+        window.location.href = REDIRECT;
 
     } catch (e) {
         console.error(e);
