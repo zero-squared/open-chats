@@ -1,3 +1,5 @@
+import bcrypt from 'bcryptjs';
+
 import sequelize from '../models/index.js';
 
 export default {
@@ -49,14 +51,22 @@ export default {
             return;
         }
 
+        const passwordHash = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS));
+
         try {
             const user = await sequelize.models.User.create({
                 username: username,
-                password: password
+                password: passwordHash
             });
+
             req.session.username = user.username;
+            res.send({
+                success: true,
+            });
         } catch (e) {
+            // Handle sequelize error
             if (e.message === 'Validation error') {
+                // Capitalize the first letter of error message
                 const error = e.errors[0].message.charAt(0).toUpperCase() + e.errors[0].message.slice(1);
 
                 res.status(400).send({
@@ -71,16 +81,58 @@ export default {
                     error: 'Internal server error'
                 });
             }
+        }
+    },
+    loginUser: async (req, res) => {
+        const { password, username } = req.body;
 
+        if (!username) {
+            res.status(400).send({
+                success: false,
+                error: 'Username is required'
+            });
+            return;
+        }
+        if (!password) {
+            res.status(400).send({
+                success: false,
+                error: 'Password is required'
+            });
             return;
         }
 
-        res.send({
-            success: true,
-        });
-    },
-    loginUser: async (req, res) => {
-        req.session.username = req.body.username;
-        res.redirect('/channels');
+        try {
+            const user = await sequelize.models.User.findOne({ where: { username: username } });
+
+            if (!user) {
+                res.status(400).send({
+                    success: false,
+                    error: 'Incorrect username or password'
+                });
+                return;
+            }
+
+            const correctPassword = await bcrypt.compare(password, user.password);
+
+            if (!correctPassword) {
+                res.status(400).send({
+                    success: false,
+                    error: 'Incorrect username or password'
+                });
+                return;
+            }
+
+            req.session.username = user.username;
+            res.send({
+                success: true,
+            });
+        } catch (e) {
+            console.error(e);
+
+            res.status(500).send({
+                success: false,
+                error: 'Internal server error'
+            });
+        }
     }
 }

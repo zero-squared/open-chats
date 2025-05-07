@@ -1,25 +1,18 @@
-const registerForm = document.getElementById('register-form');
+const loginForm = document.getElementById('login-form');
 
 const usernameInput = document.getElementById('username-input');
 const passwordInput = document.getElementById('password-input');
-const repeatPasswordInput = document.getElementById('repeat-password-input');
 
 const errorElem = document.getElementById('error');
 
-const REGISTER_API = '/api/auth/register';
+const LOGIN_API = '/api/auth/login';
 const REDIRECT = '/';
 
-registerForm.onsubmit = async (e) => {
+loginForm.onsubmit = async (e) => {
     e.preventDefault();
 
-    if (passwordInput.value !== repeatPasswordInput.value) {
-        errorElem.innerText = 'Passwords must be the same';
-        return;
-    }
-    errorElem.innerText = '';
-
     try {
-        const res = await fetch(REGISTER_API, {
+        const res = await fetch(LOGIN_API, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

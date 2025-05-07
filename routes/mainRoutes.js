@@ -8,6 +8,7 @@ const router = express.Router();
 router.get('/', mainController.showHome);
 router.get('/login', mainController.showLogin);
 router.get('/register', mainController.showRegister);
+router.get('/logout', mainController.logoutUser);
 
 router.use('/api', apiRouter);
 
