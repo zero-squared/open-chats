@@ -2,17 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chats | Register</title>
+    <title>Chats | Login</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/form.css">
+    <script src="js/login.js" defer></script>
 </head>
 <body>
     <%- include('header'); -%>
     <main>
         <h1>Login</h1>
         <form id="login-form">
-            <label>Username: <input type="text" name="username" required /></label>
-            <label>Password: <input type="text" name="password" required /></label>
+            <label>Username: <input type="text" id="username-input" name="username" minlength="5" maxlength="30" required /></label>
+            <label>Password: <input type="password" id="password-input" name="password" minlength="5" maxlength="50" required /></label>
+            <p class="error" id="error"></p>
             <input type="submit" value="Login">
         </form>
         <img src="img/felix.gif" width="200" height="200" alt="Felix">
