@@ -35,3 +35,7 @@ header nav a {
 header nav a:hover {
     text-decoration: underline;
 }
+
+.error {
+    color: rgb(255, 108, 108);
+}

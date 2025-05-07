@@ -5,15 +5,17 @@
     <title>Chats | Register</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/form.css">
+    <script src="js/register.js" defer></script>
 </head>
 <body>
     <%- include('header'); -%>
     <main>
         <h1>Register</h1>
-        <form action="/api/auth/register" method="post" id="register-form">
-            <label>Username: <input type="text" name="username" required /></label>
-            <label>Password: <input type="text" name="password" required /></label>
-            <label>Repeat password: <input type="text" name="repeat-password" required /></label>
+        <form id="register-form">
+            <label>Username: <input type="text" name="username" id="username-input" minlength="5" maxlength="30" required /></label>
+            <label>Password: <input type="password" name="password" id="password-input" minlength="5" maxlength="50" required /></label>
+            <label>Repeat password: <input type="password" id="repeat-password-input" name="repeat-password" minlength="5" maxlength="50" required /></label>
+            <p class="error" id="error"></p>
             <input type="submit" value="Register">
         </form>
         <img src="img/astolfo.gif" width="200" height="200" alt="Astolfo">
