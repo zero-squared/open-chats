@@ -16,4 +16,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          script: whoami && hostname
+          script: |
+            cd chats/
+            git pull
+            pnpm install
+            pm2 restart chats
