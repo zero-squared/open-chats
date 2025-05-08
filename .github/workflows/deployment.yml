@@ -4,9 +4,10 @@ on:
     branches:
       - main
 jobs:
-  deploy:
+  deployment:
     name: Deploy to server via SSH
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Execute remote SSH commands using SSH key
         uses: appleboy/ssh-action@v1
