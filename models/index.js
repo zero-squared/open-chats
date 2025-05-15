@@ -20,10 +20,10 @@ const modelFiles = fs.readdirSync('./models').filter(file => file.endsWith('.js'
 
 for (const modelFile of modelFiles) {
     try {
-        const model = (await import(path.join(import.meta.dirname, modelFile))).default;
+        const model = (await import(`./${modelFile}`)).default;
         model(sequelize);
     } catch (e) {
-        throw new Error(`Failed to load ${modelFile}`);
+        throw new Error(`Failed to load ${modelFile}: ${e}`);
     }
 }
 
