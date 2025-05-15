@@ -7,6 +7,9 @@ export default (sequelize) => {
             allowNull: false,
             unique: true
         },
+        avatarUrl: {
+            type: DataTypes.STRING
+        },
         password: {
             type: DataTypes.STRING,
             allowNull: false

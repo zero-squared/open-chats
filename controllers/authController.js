@@ -60,6 +60,7 @@ export default {
             });
 
             req.session.username = user.username;
+            req.session.avatarUrl = user.avatarUrl;
             res.send({
                 success: true,
             });
@@ -123,6 +124,7 @@ export default {
             }
 
             req.session.username = user.username;
+            req.session.avatarUrl = user.avatarUrl;
             res.send({
                 success: true,
             });
