@@ -26,7 +26,7 @@ loginForm.onsubmit = async (e) => {
         const body = await res.json();
 
         if (!body.success) {
-            errorElem.innerText = body.error;
+            errorElem.innerText = body.message;
             return;
         }
 

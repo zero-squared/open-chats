@@ -16,6 +16,9 @@ export default {
         // TODO Redirect
         res.render('register', { username: req.session.username });
     },
+    showNotFound: async (req, res) => {
+        res.render('notFound', { username: req.session.username });
+    },
     showProfile: async (req, res) => {
         if (!req.session.username) {
             res.redirect('/');
