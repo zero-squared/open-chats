@@ -15,6 +15,7 @@ sudo -u postgres psql
 ```
 
 ## SSL Certificate
+
 ```bash
 sudo certbot certonly --standalone
 sudo chown ubuntu -R /etc/letsencrypt

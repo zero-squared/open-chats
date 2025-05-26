@@ -11,8 +11,8 @@ const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTG
 try {
     await sequelize.authenticate();
     console.log('Connected to the database');
-} catch (err) {
-    console.error('Unable to connect to the database:', err);
+} catch (e) {
+    console.error('Unable to connect to the database:', e);
 }
 
 const basename = path.basename(import.meta.filename); // This file name without path

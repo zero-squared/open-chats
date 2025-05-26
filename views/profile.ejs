@@ -6,16 +6,18 @@
     <title>Chats</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/home.css">
+    <script src="js/profile.js" defer></script>
 </head>
 
 <body>
     <%- include('header'); -%>
         <main>
-            <img src="<%= user.avatarUrl || 'img/defaultAvatar.png' %>" alt="User avatar" width="70" height="70">
+            <img src="<%= user.avatarUrl || 'img/defaultAvatar.png' %>" id="avatar" alt="User avatar" width="70" height="70">
             <p>Username: <%= user.username %>
             </p>
-            <form action="/api/users/aa/avatar" method="post" enctype="multipart/form-data">
-                <input type="file" name="image" accept="image/*" />
+            <form id="avatar-form">
+                <input type="file" id="file-input" name="avatar" accept="image/*" />
+                <p class="error" id="error"></p>
                 <button type="submit">Upload avatar</button>
             </form>
         </main>

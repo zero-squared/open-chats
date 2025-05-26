@@ -31,7 +31,6 @@ loginForm.onsubmit = async (e) => {
         }
 
         window.location.href = REDIRECT;
-
     } catch (e) {
         console.error(e);
         errorElem.innerText = 'Unexpected error';

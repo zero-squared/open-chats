@@ -1,7 +1,13 @@
+import FormData from 'form-data';
+import axios from 'axios';
+
+import upload from '../../middleware/multerUpload.js';
+import sequelize from '../../models/index.js';
+
 export default {
     updateAvatar: async (req, res) => {
         if (!req.file) {
-            res.status(400).send({
+            return res.status(400).send({
                 success: false,
             });
         }
@@ -35,13 +41,16 @@ export default {
             })
             req.session.user.avatarUrl = data.url;
 
-            res.redirect('/profile');
+            return res.send({
+                success: true,
+                avatarUrl: data.url
+            });
         } catch (e) {
             console.error(e);
 
-            res.status(500).send({
+            return res.status(500).send({
                 success: false,
-                error: 'Internal server error'
+                error: 'Internal Server Error'
             });
         }
     }
