@@ -11,9 +11,9 @@
     <main>
         <h1>Chats</h1>
         <p>Welcome :3</p>
-        <% if (username) { %>
-        <img src="<%= avatarUrl || 'img/defaultAvatar.png' %>" alt="User avatar" width="70" height="70">
-        <p>Username: <%= username %></p>
+        <% if (user) { %>
+        <img src="<%= user.avatarUrl || 'img/defaultAvatar.png' %>" alt="User avatar" width="70" height="70">
+        <p>Username: <%= user.username %></p>
         <% } %>
     </main>
 </body>

@@ -59,8 +59,10 @@ export default {
                 password: passwordHash
             });
 
-            req.session.username = user.username;
-            req.session.avatarUrl = user.avatarUrl;
+            req.session.user = {
+                username: user.username,
+                avatarUrl: user.avatarUrl
+            }
             res.send({
                 success: true,
             });
@@ -123,8 +125,10 @@ export default {
                 return;
             }
 
-            req.session.username = user.username;
-            req.session.avatarUrl = user.avatarUrl;
+            req.session.user = {
+                username: user.username,
+                avatarUrl: user.avatarUrl
+            }
             res.send({
                 success: true,
             });
