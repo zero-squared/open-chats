@@ -15,7 +15,7 @@ const app = express();
 let httpServer = http.createServer(app);
 let httpsServer;
 
-if (process.env.ENABLE_HTTPS === 'true') {
+if (process.env.NODE_ENV === 'production') {
     const privateKey = fs.readFileSync(process.env.SSL_KEY_FILE);
     const certificate = fs.readFileSync(process.env.SSL_CERT_FILE);
     httpsServer = https.createServer({
@@ -30,7 +30,7 @@ const sessionMiddleware = session({
     resave: true,
 });
 
-if (process.env.ENABLE_HTTPS === 'true') {
+if (process.env.NODE_ENV === 'production') {
     app.use((req, res, next) => {
         if (req.secure) {
             next();
@@ -51,13 +51,17 @@ app.use(express.static('public'));
 app.use(router);
 
 httpServer.listen(process.env.HTTP_PORT || 3000, () => {
-    console.log(`HTTP server started on port ${process.env.HTTP_PORT || 3000}`);
+    if (process.env.NODE_ENV === 'development') {
+        console.log(`HTTP server started on port ${process.env.HTTP_PORT || 3000}: http://localhost:${process.env.HTTP_PORT || 3000}`);
+    } else {
+        console.log(`HTTP server started on port ${process.env.HTTP_PORT || 3000}`);
+    }
 });
 
-if (process.env.ENABLE_HTTPS === 'true') {
+if (process.env.NODE_ENV === 'production') {
     httpsServer.listen(process.env.HTTPS_PORT, () => {
         console.log(`HTTPS server started on port ${process.env.HTTPS_PORT}`);
     });
 }
 
-initializeSockets(process.env.ENABLE_HTTPS === 'true' ? httpsServer : httpServer, sessionMiddleware);
+initializeSockets(process.env.NODE_ENV === 'production' ? httpsServer : httpServer, sessionMiddleware);

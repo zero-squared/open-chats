@@ -11,8 +11,8 @@ const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTG
 try {
     await sequelize.authenticate();
     console.log('Connected to the database');
-} catch (err) {
-    console.error('Unable to connect to the database:', err);
+} catch (e) {
+    console.error('Unable to connect to the database:', e);
 }
 
 const basename = path.basename(import.meta.filename); // This file name without path
@@ -20,13 +20,13 @@ const modelFiles = fs.readdirSync('./models').filter(file => file.endsWith('.js'
 
 for (const modelFile of modelFiles) {
     try {
-        const model = (await import(path.join(import.meta.dirname, modelFile))).default;
+        const model = (await import(`./${modelFile}`)).default;
         model(sequelize);
     } catch (e) {
-        throw new Error(`Failed to load ${modelFile}`);
+        throw new Error(`Failed to load ${modelFile}: ${e}`);
     }
 }
 
-await sequelize.sync();
+await sequelize.sync(process.env.NODE === 'development');
 
 export default sequelize;

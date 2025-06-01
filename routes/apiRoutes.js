@@ -1,9 +1,14 @@
 import express from 'express';
-import authController from '../controllers/authController.js';
+
+import authController from '../controllers/api/authController.js';
+import { uploadSingleImage } from '../middleware/multerUpload.js';
+import { canUpdateUser, isGuest } from '../middleware/user.js';
+import userController from '../controllers/api/userController.js';
 
 const router = express.Router();
 
-router.post('/auth/login', authController.loginUser);
-router.post('/auth/register', authController.registerUser);
+router.post(`/users/:id/avatar`, canUpdateUser, uploadSingleImage, userController.updateAvatar);
+router.post('/auth/login', isGuest, authController.loginUser);
+router.post('/auth/register', isGuest, authController.registerUser);
 
 export default router;
