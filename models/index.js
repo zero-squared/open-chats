@@ -27,6 +27,6 @@ for (const modelFile of modelFiles) {
     }
 }
 
-await sequelize.sync({force: process.env.NODE === 'development'});
+await sequelize.sync({force: process.env.NODE_ENV === 'development'});
 
 export default sequelize;
