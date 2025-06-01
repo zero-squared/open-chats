@@ -10,6 +10,8 @@ const UPDATE_AVATAR_API = '/api/users/@me/avatar';
 avatarForm.onsubmit = async (e) => {
     e.preventDefault();
 
+    errorElem.innerText = '';
+
     const file = fileInput.files[0];
         
     const formData = new FormData();

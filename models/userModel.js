@@ -10,6 +10,9 @@ export default (sequelize) => {
         avatarUrl: {
             type: DataTypes.STRING
         },
+        avatarFileId: {
+            type: DataTypes.STRING 
+        },
         password: {
             type: DataTypes.STRING,
             allowNull: false

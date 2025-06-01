@@ -11,12 +11,13 @@ const REDIRECT = '/';
 
 registerForm.onsubmit = async (e) => {
     e.preventDefault();
+    
+    errorElem.innerText = '';
 
     if (passwordInput.value !== repeatPasswordInput.value) {
         errorElem.innerText = 'Passwords must be the same';
         return;
     }
-    errorElem.innerText = '';
 
     try {
         const res = await fetch(REGISTER_API, {

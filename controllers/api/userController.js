@@ -1,8 +1,8 @@
 import FormData from 'form-data';
 import axios from 'axios';
 
-import upload from '../../middleware/multerUpload.js';
 import sequelize from '../../models/index.js';
+import { uploadFile, deleteFile } from '../../utils/imageKitApi.js';
 
 export default {
     updateAvatar: async (req, res) => {
@@ -13,27 +13,26 @@ export default {
         }
 
         try {
+            const user = await sequelize.models.User.findOne({ where: { username: req.session.user.username } });
+
+            if (user.avatarUrl) {
+                await deleteFile(user.avatarFileId);
+            }
+
+            const avatarFileName = `${req.session.user.username}_avatar`;
+
             const formData = new FormData();
-            formData.append('file', req.file.buffer, req.file.originalname);
-            formData.append('fileName', req.file.originalname); // TODO Generate name
+            formData.append('file', req.file.buffer, avatarFileName);
+            formData.append('fileName', avatarFileName);
+            // formData.append('useUniqueFileName', 'false');
+            formData.append('folder', '/avatars/');
             formData.append('publicKey', process.env.IK_PUBLIC_KEY);
 
-            // Encode "{private_key}:" string to base64 for authorization according to documentation: https://imagekit.io/docs/api-reference
-            const authorization = Buffer.from(`${process.env.IK_PRIVATE_KEY}:`).toString('base64');
+            const { data } = await uploadFile(formData);
 
-            const { data } = await axios.request({
-                method: 'POST',
-                url: 'https://upload.imagekit.io/api/v1/files/upload',
-                headers: {
-                    Accept: 'application/json',
-                    Authorization: `Basic ${authorization}`,
-                    ...formData.getHeaders()
-                },
-                data: formData
-            });
-            
             await sequelize.models.User.update({
-                avatarUrl: data.url
+                avatarUrl: data.url,
+                avatarFileId: data.fileId
             }, {
                 where: {
                     username: req.session.user.username
