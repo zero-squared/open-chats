@@ -3,7 +3,7 @@ import session from 'express-session';
 import 'dotenv/config';
 import bodyParser from 'body-parser';
 import i18next from 'i18next';
-import i18nextMiddleware, { missingKeyHandler } from 'i18next-http-middleware';
+import i18nextMiddleware from 'i18next-http-middleware';
 import i18nextBackend from 'i18next-fs-backend';
 
 import fs from 'fs';
@@ -50,8 +50,10 @@ await i18next
     .init({
         fallbackLng: 'en',
         preload: ['en', 'ru'],
+        saveMissing: true,
         backend: {
             loadPath: 'locales/{{lng}}.json',
+            addPath: 'locales/{{lng}}.missing.json',
         },
         detection: {
             order: ['header', 'cookie', 'querystring'],
