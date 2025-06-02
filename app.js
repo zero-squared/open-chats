@@ -50,10 +50,11 @@ await i18next
     .init({
         fallbackLng: 'en',
         preload: ['en', 'ru'],
-        saveMissing: true,
+        saveMissing: process.env.NODE_ENV === 'development',
         backend: {
             loadPath: 'locales/{{lng}}.json',
             addPath: 'locales/{{lng}}.missing.json',
+            ident: 4,
         },
         detection: {
             order: ['header', 'cookie', 'querystring'],
