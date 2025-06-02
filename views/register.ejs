@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chats | Register</title>
+    <title>Chats | <%= t('register.title') %></title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/form.css">
     <script src="js/register.js" defer></script>
@@ -10,13 +10,13 @@
 <body>
     <%- include('header'); -%>
     <main>
-        <h1>Register</h1>
+        <h1><%= t('register.title') %></h1>
         <form id="register-form">
-            <label>Username: <input type="text" name="username" id="username-input" minlength="5" maxlength="30" required /></label>
-            <label>Password: <input type="password" name="password" id="password-input" minlength="5" maxlength="50" required /></label>
-            <label>Repeat password: <input type="password" id="repeat-password-input" name="repeat-password" minlength="5" maxlength="50" required /></label>
+            <label><%= t('register.username') %><input type="text" name="username" id="username-input" minlength="5" maxlength="30" required /></label>
+            <label><%= t('register.password') %><input type="password" name="password" id="password-input" minlength="5" maxlength="50" required /></label>
+            <label><%= t('register.repeatPassword') %><input type="password" id="repeat-password-input" name="repeat-password" minlength="5" maxlength="50" required /></label>
             <p class="error" id="error"></p>
-            <input type="submit" value="Register">
+            <input type="submit" value="<%= t('register.registerButton') %>">
         </form>
         <img src="img/astolfoRegister.gif" width="200" height="200" alt="Astolfo">
     </main>

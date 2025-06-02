@@ -1,0 +1,29 @@
+{
+    "welcome": "Добро пожаловать :3",
+    "nav": {
+        "home": "Главная",
+        "login": "Вход",
+        "register": "Регистрация",
+        "logout": "Выход",
+        "profile": "Профиль"
+    },
+    "login": {
+        "title": "Вход",
+        "login": "Логин: ",
+        "password": "Пароль:",
+        "loginButton": "Войти"
+    },
+    "register": {
+        "title": "Регистрация",
+        "username": "Имя пользвоателя: ",
+        "password": "Пароль: ",
+        "repeatPassword": "Повторите пароль: ",
+        "registerButton": "Зарегестрироваться"
+    },
+    "notFound": "Не найдено",
+    "profile": {
+        "title": "Профиль",
+        "username": "Имя пользвоателя: ",
+        "uploadAvatarButton": "Загрузить аватарку"
+    }
+}

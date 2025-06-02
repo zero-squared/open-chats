@@ -1,0 +1,29 @@
+{
+    "welcome": "Welcome :3",
+    "nav": {
+        "home": "Home",
+        "login": "Login",
+        "register": "Register",
+        "logout": "Logout",
+        "profile": "Profile"
+    },
+    "login": {
+        "title": "Login",
+        "login": "Login: ",
+        "password": "Password:",
+        "loginButton": "Login"
+    },
+    "register": {
+        "title": "Register",
+        "username": "Username: ",
+        "password": "Password: ",
+        "repeatPassword": "Repeat password: ",
+        "registerButton": "Register"
+    },
+    "notFound": "Not found",
+    "profile": {
+        "title": "Profile",
+        "username": "Username: ",
+        "uploadAvatarButton": "Upload avatar"
+    }
+}

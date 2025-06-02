@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Chats</title>
+    <title>Chats | <%= t('profile.title') %></title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/home.css">
     <script src="js/profile.js" defer></script>
@@ -13,12 +13,12 @@
     <%- include('header'); -%>
         <main>
             <img src="<%= user.avatarUrl || 'img/defaultAvatar.png' %>" id="avatar" alt="User avatar" width="70" height="70">
-            <p>Username: <%= user.username %>
+            <p><%= t('profile.username') %><%= user.username %>
             </p>
             <form id="avatar-form">
                 <input type="file" id="file-input" name="avatar" accept="image/*" />
                 <p class="error" id="error"></p>
-                <button type="submit">Upload avatar</button>
+                <button type="submit"><%= t('profile.uploadAvatarButton') %></button>
             </form>
         </main>
 </body>

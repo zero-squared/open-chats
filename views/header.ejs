@@ -1,12 +1,12 @@
 <header>
     <nav>
-        <a href="/">Home</a>
+        <a href="/"><%= t('nav.home') %></a>
         <% if (!user) { %>
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <a href="/login"><%= t('nav.login') %></a>
+        <a href="/register"><%= t('nav.register') %></a>
         <% } else { %>
-        <a href="/profile">Profile</a>
-        <a href="/logout">Logout</a>
+        <a href="/profile"><%= t('nav.profile') %></a>
+        <a href="/logout"><%= t('nav.logout') %></a>
         <% } %>
     </nav>
 </header>
