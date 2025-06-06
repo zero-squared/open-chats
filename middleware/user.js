@@ -7,7 +7,7 @@ export function isAuthenticatedUser(req, res, next) {
     if (req.path.startsWith('/api')) {
         return res.status(400).send({
             success: false,
-            message: 'Bad Request'
+            message: req.t('errors.badRequest')
         });
     }
     return res.redirect('/');
@@ -20,7 +20,7 @@ export function isGuest(req, res, next) {
     if (req.path.startsWith('/api')) {
         return res.status(400).send({
             success: false,
-            message: 'Bad Request'
+            message: req.t('errors.badRequest')
         });
     }
     return res.redirect('/');
@@ -31,7 +31,7 @@ export async function canUpdateUser(req, res, next) {
     if (!req.session.user) {
         return res.status(401).send({
             success: false,
-            message: 'Unauthorized'
+            message: req.t('errors.unauthorized')
         });
     }
 
@@ -47,7 +47,7 @@ export async function canUpdateUser(req, res, next) {
         if (!user || user.id !== req.session.user.id) {
             return res.status(401).send({
                 success: false,
-                message: 'Unauthorized'
+                message: req.t('errors.unauthorized')
             });
         }
 
@@ -57,7 +57,7 @@ export async function canUpdateUser(req, res, next) {
 
         res.status(500).send({
             success: false,
-            message: 'Internal Server Error'
+            message: req.t('errors.internalServerError')
         });
     }
 }

@@ -92,13 +92,13 @@ export default {
         if (!username) {
             return res.status(400).send({
                 success: false,
-                message: 'Username is required'
+                message: req.t('errors.usernameRequired')
             });
         }
         if (!password) {
             return res.status(400).send({
                 success: false,
-                message: 'Password is required'
+                message: req.t('errors.passwordRequired')
             });
         }
 
@@ -108,7 +108,7 @@ export default {
             if (!user) {
                 return res.status(400).send({
                     success: false,
-                    message: 'Incorrect username or password'
+                    message: req.t('errors.incorrectUsernamePassword')
                 });
             }
 
@@ -117,7 +117,7 @@ export default {
             if (!correctPassword) {
                 return res.status(400).send({
                     success: false,
-                    message: 'Incorrect username or password'
+                    message: req.t('errors.incorrectUsernamePassword')
                 });
             }
 

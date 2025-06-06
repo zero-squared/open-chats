@@ -32,7 +32,12 @@
         "unexpectedError": "Unexpected error",
         "samePasswords": "Passwords must be the same",
         "uniqueUsername": "Username must be unique",
-        "internalServerError": "Internal Server Error"
+        "internalServerError": "Internal Server Error",
+        "incorrectUsernamePassword": "Incorrect username or password",
+        "fileTooLarge": "File too large",
+        "incorrectImageExtension": "File does not have a .png or .jpg extension.",
+        "badRequest": "Bad Request",
+        "unauthorized": "Unauthorized"
     },
     "profile": {
         "title": "Profile",
