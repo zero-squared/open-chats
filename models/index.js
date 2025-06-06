@@ -27,8 +27,16 @@ for (const modelFile of modelFiles) {
     }
 }
 
-sequelize.models.User.belongsTo(sequelize.models.Role);
-sequelize.models.Role.hasMany(sequelize.models.User);
+sequelize.models.User.belongsTo(sequelize.models.Role, {
+    foreignKey: {
+        allowNull: false,
+    }
+});
+sequelize.models.Role.hasMany(sequelize.models.User, {
+    foreignKey: {
+        allowNull: false,
+    }
+});
 
 await sequelize.sync();
 

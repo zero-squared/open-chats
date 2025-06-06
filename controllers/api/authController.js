@@ -60,10 +60,9 @@ export default {
 
             const user = await sequelize.models.User.create({
                 username: username,
-                password: passwordHash
+                password: passwordHash,
+                RoleId: userRole.id
             });
-
-            user.setRole(userRole);
 
             // TODO Create sepparate function for creating session object
             req.session.user = {
@@ -92,6 +91,13 @@ export default {
         }
     },
     loginUser: async (req, res) => {
+        if (!req.body) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.usernameRequired')
+            });
+        }
+
         const { username, password } = req.body;
 
         if (!username) {

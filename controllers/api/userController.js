@@ -4,6 +4,39 @@ import sequelize from '../../models/index.js';
 import { uploadFile, deleteFile } from '../../utils/imageKitApi.js';
 
 export default {
+    getUsers: async (req, res) => {
+        let { limit, offset } = req.query;
+
+        limit = parseInt(limit);
+        offset = parseInt(offset);
+        
+        if (!limit) {
+            limit = 10;
+        }
+        if (!offset) {
+            offset = 0;
+        }
+
+        const users = await sequelize.models.User.findAll({
+            limit: limit,
+            offset: offset
+        });
+    
+        let result = [];
+
+        for (const user of users) {
+            const userRole = await user.getRole();
+
+            result.push({
+                id: user.id,
+                username: user.username,
+                avatarUrl: user.avatarUrl,
+                role: userRole.name
+            });
+        }
+
+        return res.send(result);
+    },
     updateAvatar: async (req, res) => {
         if (!req.file) {
             return res.status(400).send({
@@ -23,7 +56,6 @@ export default {
             const formData = new FormData();
             formData.append('file', req.file.buffer, avatarFileName);
             formData.append('fileName', avatarFileName);
-            // formData.append('useUniqueFileName', 'false');
             formData.append('folder', '/avatars/');
             formData.append('publicKey', process.env.IK_PUBLIC_KEY);
 
