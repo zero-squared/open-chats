@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title><%= t('websiteTitle') %> | <%= t('registerPage.title') %></title>
-    <link rel="icon" type="image/png" href="img/logo.png" />
-    <%- include('partials/main'); -%>
-    <link rel="stylesheet" href="css/form.css">
-    <script src="js/register.js" defer></script>
+    <link rel="icon" type="image/png" href="/img/logo.png" />
+    <%- include('partials/common'); -%>
+    <link rel="stylesheet" href="/css/form.css">
+    <script src="/js/register.js" defer></script>
 </head>
 <body>
     <%- include('partials/header'); -%>
@@ -19,7 +19,7 @@
             <p class="error" id="error"></p>
             <input type="submit" value="<%= t('forms.registerButton') %>">
         </form>
-        <img src="img/astolfoRegister.gif" width="200" height="200" alt="Astolfo">
+        <img src="/img/astolfoRegister.gif" width="200" height="200" alt="Astolfo">
     </main>
 </body>
 </html>

@@ -1,9 +1,6 @@
 import sequelize from '../models/index.js';
 
-export function isAuthenticatedUser(req, res, next) {
-    if (req.session.user) {
-        return next();
-    }
+function disallow(req, res) {
     if (req.path.startsWith('/api')) {
         return res.status(400).send({
             success: false,
@@ -11,19 +8,47 @@ export function isAuthenticatedUser(req, res, next) {
         });
     }
     return res.redirect('/');
-}
+} 
+
 
 export function isGuest(req, res, next) {
     if (!req.session.user) {
         return next();
     }
-    if (req.path.startsWith('/api')) {
-        return res.status(400).send({
-            success: false,
-            message: req.t('errors.badRequest')
-        });
+    
+    return disallow(req, res);
+}
+
+export function isAuthenticated(req, res, next) {
+    if (req.session.user) {
+        return next();
     }
-    return res.redirect('/');
+    
+    return disallow(req, res);
+}
+
+export function isUser(req, res, next) {
+    if (req.session.user && req.session.user.role === 'user') {
+        return next();
+    }
+    
+    return disallow(req, res);
+}
+
+export function isModerator(req, res, next) {
+    if (req.session.user && req.session.user.role === 'moderator') {
+        return next();
+    }
+
+    return disallow(req, res);
+}
+
+export function isAdmin(req, res, next) {
+    if (req.session.user && req.session.user.role === 'admin') {
+        return next();
+    }
+
+    return disallow(req, res);
 }
 
 // :id param - user id

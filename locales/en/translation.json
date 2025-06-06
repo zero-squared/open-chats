@@ -6,7 +6,8 @@
             "login": "Login",
             "register": "Register",
             "logout": "Logout",
-            "profile": "Profile"
+            "profile": "Profile",
+            "admin": "Admin"
         }
     },
     "loginPage": {
@@ -14,6 +15,17 @@
     },
     "registerPage": {
         "title": "Register"
+    },
+    "adminPage": {
+        "title": "Admin",
+        "tabs": {
+            "users": {
+                "title": "Users"
+            },
+            "chats": {
+                "title": "Chats"
+            }
+        }
     },
     "forms": {
         "usernameLabel": "Username: ",
@@ -23,7 +35,7 @@
         "registerButton": "Register"
     },
     "errors": {
-        "notFound": "Not found",
+        "notFound": "Not Found",
         "usernameRequired": "Username is required",
         "passwordRequired": "Password is required",
         "usernameTooShort": "Username must be at least 5 characters long",

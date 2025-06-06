@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title><%= t('websiteTitle') %></title>
     <link rel="icon" type="image/png" href="img/logo.png" />
-    <%- include('partials/main'); -%>
+    <%- include('partials/common'); -%>
     <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
         <p><%= t('welcome') %></p>
         <% if (user) { %>
         <%= user.role %>
-        <img src="<%= user.avatarUrl || 'img/defaultAvatar.png' %>" alt="User avatar" width="70" height="70">
+        <img src="<%= user.avatarUrl || 'img/defaultAvatar.png' %>" alt="User avatar" width="128" height="128">
         <% } %>
     </main>
 </body>

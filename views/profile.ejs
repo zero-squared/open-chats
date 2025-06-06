@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title><%= t('websiteTitle') %> | <%= t('profile.title') %></title>
-    <link rel="icon" type="image/png" href="img/logo.png" />
-    <%- include('partials/main'); -%>
-    <link rel="stylesheet" href="css/home.css">
-    <script src="js/profile.js" defer></script>
+    <link rel="icon" type="image/png" href="/img/logo.png" />
+    <%- include('partials/common'); -%>
+    <link rel="stylesheet" href="/css/home.css">
+    <script src="/js/profile.js" defer></script>
 </head>
 
 <body>
     <%- include('partials/header'); -%>
         <main>
-            <img src="<%= user.avatarUrl || 'img/defaultAvatar.png' %>" id="avatar" alt="User avatar" width="70" height="70">
+            <img src="<%= user.avatarUrl || '/img/defaultAvatar.png' %>" id="avatar" alt="User avatar" width="70" height="70">
             <p><%= t('profile.username') %><%= user.username %>
             </p>
             <form id="avatar-form">

@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title><%= t('websiteTitle') %> | 404</title>
-    <link rel="icon" type="image/png" href="img/logo.png" />
-    <%- include('partials/main'); -%>
-    <link rel="stylesheet" href="css/statusPage.css">
+    <link rel="icon" type="image/png" href="/img/logo.png" />
+    <%- include('partials/common'); -%>
+    <link rel="stylesheet" href="/css/statusPage.css">
 </head>
 <body>
     <%- include('partials/header'); -%>
     <main>
         <h1>404</h1>
-        <h2><%= t('notFound') %></h2>
+        <h2><%= t('errors.notFound') %></h2>
         <img src="/img/astolfo404.gif" alt="Astolfo">
     </main>
 </body>
