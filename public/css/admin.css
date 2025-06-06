@@ -27,6 +27,10 @@ main .side-panel .tab-link a:hover {
     text-decoration: underline;
 }
 
-.tab-content {
+main .tab-content {
     padding: 20px;
+}
+
+main .tab-content .users {
+    overflow-y: scroll;
 }

@@ -22,12 +22,12 @@ export default {
             offset: offset
         });
     
-        let result = [];
+        let results = [];
 
         for (const user of users) {
             const userRole = await user.getRole();
 
-            result.push({
+            results.push({
                 id: user.id,
                 username: user.username,
                 avatarUrl: user.avatarUrl,
@@ -35,7 +35,7 @@ export default {
             });
         }
 
-        return res.send(result);
+        return res.send(results);
     },
     updateAvatar: async (req, res) => {
         if (!req.file) {
