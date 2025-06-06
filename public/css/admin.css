@@ -43,11 +43,8 @@ main .tab-content .users {
     border: 1px solid white;
 }
 
-main .tab-content .users .user:not(:last-child) {
-    border-bottom: 1px solid white;
-}
-
 main .tab-content .users .user {
+    border-bottom: 1px solid white;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -64,6 +61,7 @@ main .tab-content .users .user p {
 }
 
 main .tab-content .users .user img {
+    height: 100%;
     border-right: 1px solid white;
 }
 
@@ -71,6 +69,5 @@ main .tab-content .users .loader {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-top: 1px solid white;
     height: 64px;
 }

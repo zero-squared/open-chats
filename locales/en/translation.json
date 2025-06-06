@@ -20,7 +20,8 @@
         "title": "Admin",
         "tabs": {
             "users": {
-                "title": "Users"
+                "title": "Users",
+                "loading": "Loading..."
             },
             "chats": {
                 "title": "Chats"

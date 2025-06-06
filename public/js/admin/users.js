@@ -42,8 +42,6 @@ function createUserElem(user) {
     const avatarElem = document.createElement('img');
     avatarElem.src = user.avatarUrl || DEFAULT_AVATAR;
     avatarElem.alt = 'Avatar';
-    avatarElem.width = '64';
-    avatarElem.height = '64';
     const usernameElem = document.createElement('p');
     usernameElem.textContent = user.username;
     const roleElem = document.createElement('p');
