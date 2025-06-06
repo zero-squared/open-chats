@@ -32,5 +32,6 @@ main .tab-content {
 }
 
 main .tab-content .users {
+    margin-top: 10px;
     overflow-y: scroll;
 }
