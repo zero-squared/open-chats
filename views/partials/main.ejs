@@ -1,0 +1,10 @@
+<!-- Must be included on every page in the <head> -->
+<script>
+    const UNEXPECTED_ERROR_TEXT = "<%= t('errors.unexpectedError') %>";
+    
+    function setLang(lang) {
+        document.cookie = 'i18next=' + lang + '; path=/';
+        location.reload();
+    }
+</script>
+<link rel="stylesheet" href="css/main.css">

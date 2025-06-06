@@ -3,13 +3,13 @@
         <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/5962/5962463.png" width="30" height="30" alt="Logo"></a>
     </div>
     <nav>
-        <a href="/"><%= t('nav.home') %></a>
+        <a href="/"><%= t('header.nav.home') %></a>
         <% if (!user) { %>
-        <a href="/login"><%= t('nav.login') %></a>
-        <a href="/register"><%= t('nav.register') %></a>
+        <a href="/login"><%= t('header.nav.login') %></a>
+        <a href="/register"><%= t('header.nav.register') %></a>
         <% } else { %>
-        <a href="/profile"><%= t('nav.profile') %></a>
-        <a href="/logout"><%= t('nav.logout') %></a>
+        <a href="/profile"><%= t('header.nav.profile') %></a>
+        <a href="/logout"><%= t('header.nav.logout') %></a>
         <% } %>
     </nav>
     <div class="language-selector">

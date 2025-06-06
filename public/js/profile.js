@@ -33,6 +33,6 @@ avatarForm.onsubmit = async (e) => {
         avatarElem.src = body.avatarUrl;
     } catch (e) {
         console.error(e);
-        errorElem.innerText = 'Unexpected error';
+        errorElem.innerText = UNEXPECTED_ERROR_TEXT;
     }
 }

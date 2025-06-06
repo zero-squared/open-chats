@@ -1,49 +1,55 @@
 import bcrypt from 'bcryptjs';
-import { BaseError } from 'sequelize';
+import { UniqueConstraintError } from 'sequelize';
 
 import sequelize from '../../models/index.js';
 
 export default {
     registerUser: async (req, res) => {
-        const { password, username } = req.body;
+        const { username, password, repeatPassword } = req.body;
 
         // TODO Create middleware for username and password validation?
         if (!username) {
             return res.status(400).send({
                 success: false,
-                message: 'Username is required'
+                message: req.t('errors.usernameRequired')
             });
         }
         if (!password) {
             return res.status(400).send({
                 success: false,
-                message: 'Password is required'
+                message: req.t('errors.passwordRequired')
+            });
+        }
+        if (password !== repeatPassword) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.samePasswords')
             });
         }
 
         if (username.length < 5) {
             return res.status(400).send({
                 success: false,
-                message: 'Username must be at least 5 characters long'
+                message: req.t('errors.usernameTooShort')
             });
         }
         if (username.length > 30) {
             return res.status(400).send({
                 success: false,
-                message: 'Username cannot be longer than 30 characters'
+                message: req.t('errors.usernameTooLong')
             });
         }
 
         if (password.length < 5) {
             return res.status(400).send({
                 success: false,
-                message: 'Password must be at least 5 characters long'
+                message: req.t('errors.passwordTooShort')
             });
         }
         if (password.length > 50) {
             return res.status(400).send({
                 success: false,
-                message: 'Password cannot be longer than 50 characters'
+                message: req.t('errors.passwordTooLong')
             });
         }
 
@@ -65,27 +71,23 @@ export default {
                 success: true,
             });
         } catch (e) {
-            // Handle sequelize error
-            if (e instanceof BaseError) {
-                // Capitalize the first letter of error message
-                const message = e.errors[0].message.charAt(0).toUpperCase() + e.errors[0].message.slice(1);
-
+            if (e instanceof UniqueConstraintError) {
                 res.status(400).send({
                     success: false,
-                    message
+                    message: req.t('errors.uniqueUsername')
                 });
             } else {
                 console.error(e);
 
                 return res.status(500).send({
                     success: false,
-                    message: 'Internal Server Error'
+                    message: req.t('errors.internalServerError')
                 });
             }
         }
     },
     loginUser: async (req, res) => {
-        const { password, username } = req.body;
+        const { username, password } = req.body;
 
         if (!username) {
             return res.status(400).send({
@@ -132,7 +134,7 @@ export default {
 
             return res.status(500).send({
                 success: false,
-                message: 'Internal Server Error'
+                message: req.t('errors.internalServerError')
             });
         }
     }

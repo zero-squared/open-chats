@@ -1,26 +1,39 @@
 {
-    "welcome": "Welcome :3",
-    "nav": {
-        "home": "Home",
-        "login": "Login",
-        "register": "Register",
-        "logout": "Logout",
-        "profile": "Profile"
+    "header": {
+        "nav": {
+            "home": "Home",
+            "login": "Login",
+            "register": "Register",
+            "logout": "Logout",
+            "profile": "Profile"
+        }
     },
-    "login": {
-        "title": "Login",
-        "login": "Login: ",
-        "password": "Password:",
-        "loginButton": "Login"
+    "loginPage": {
+        "title": "Login"
     },
-    "register": {
-        "title": "Register",
-        "username": "Username: ",
-        "password": "Password: ",
-        "repeatPassword": "Repeat password: ",
+    "registerPage": {
+        "title": "Register"
+    },
+    "forms": {
+        "usernameLabel": "Username: ",
+        "passwordLabel": "Password: ",
+        "repeatPasswordLabel": "Repeat password: ",
+        "loginButton": "Login",
         "registerButton": "Register"
     },
-    "notFound": "Not found",
+    "errors": {
+        "notFound": "Not found",
+        "usernameRequired": "Username is required",
+        "passwordRequired": "Password is required",
+        "usernameTooShort": "Username must be at least 5 characters long",
+        "usernameTooLong": "Username cannot be longer than 30 characters",
+        "passwordTooShort": "Password must be at least 5 characters long",
+        "passwordTooLong": "Password cannot be longer than 50 characters",
+        "unexpectedError": "Unexpected error",
+        "samePasswords": "Passwords must be the same",
+        "uniqueUsername": "Username must be unique",
+        "internalServerError": "Internal Server Error"
+    },
     "profile": {
         "title": "Profile",
         "username": "Username: ",
