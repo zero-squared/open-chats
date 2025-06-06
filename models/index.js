@@ -27,6 +27,9 @@ for (const modelFile of modelFiles) {
     }
 }
 
-await sequelize.sync({force: process.env.NODE_ENV === 'development'});
+sequelize.models.User.belongsTo(sequelize.models.Role);
+sequelize.models.Role.hasMany(sequelize.models.User);
+
+await sequelize.sync();
 
 export default sequelize;

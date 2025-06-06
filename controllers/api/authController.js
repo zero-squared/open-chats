@@ -27,7 +27,7 @@ export default {
             });
         }
 
-        if (username.length < 5) {
+        if (username.length < 4) {
             return res.status(400).send({
                 success: false,
                 message: req.t('errors.usernameTooShort')
@@ -56,10 +56,14 @@ export default {
         const passwordHash = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS));
 
         try {
+            const userRole = await sequelize.models.Role.findOne({ where: { name: 'user' } });
+
             const user = await sequelize.models.User.create({
                 username: username,
                 password: passwordHash
             });
+
+            user.setRole(userRole);
 
             // TODO Create sepparate function for creating session object
             req.session.user = {

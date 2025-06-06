@@ -1,17 +1,20 @@
 import { DataTypes } from 'sequelize';
 
 export default (sequelize) => {
-    sequelize.define('User', {
+    const User = sequelize.define('User', {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
+            unique: true,
+            validate: {
+                len: [4, 30]
+            }
         },
         avatarUrl: {
             type: DataTypes.STRING
         },
         avatarFileId: {
-            type: DataTypes.STRING 
+            type: DataTypes.STRING
         },
         password: {
             type: DataTypes.STRING,
