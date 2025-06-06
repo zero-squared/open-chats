@@ -56,6 +56,10 @@ header .language-selector button {
     cursor: pointer;
 }
 
+header .language-selector img {
+    border: solid 1px #ffffff;
+}
+
 .error {
     color: rgb(255, 108, 108);
 }
