@@ -48,16 +48,17 @@ await i18next
     .use(i18nextBackend)
     .use(i18nextMiddleware.LanguageDetector)
     .init({
-        fallbackLng: 'en',
         preload: ['en', 'ru'],
+        saveMissingTo: 'current',
         saveMissing: process.env.NODE_ENV === 'development',
         backend: {
-            loadPath: 'locales/{{lng}}.json',
-            addPath: 'locales/{{lng}}.missing.json',
+            loadPath: 'locales/{{lng}}/translation.json',
+            addPath: 'locales/{{lng}}/translation.missing.json',
             ident: 4,
         },
         detection: {
-            order: ['header', 'cookie', 'querystring'],
+            lookupQuerystring: 'lang',
+            order: ['querystring', 'cookie', 'header'],
             caches: ['cookie']
         }
     });

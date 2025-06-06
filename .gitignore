@@ -136,4 +136,4 @@ dist
 .pnp.*
 
 # Missing localization keys
-locales/*.missing.json
+locales/*/*.missing.json

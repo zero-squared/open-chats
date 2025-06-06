@@ -7,12 +7,7 @@
         "logout": "Выход",
         "profile": "Профиль"
     },
-    "login": {
-        "title": "Вход",
-        "login": "Логин: ",
-        "password": "Пароль:",
-        "loginButton": "Войти"
-    },
+
     "register": {
         "title": "Регистрация",
         "username": "Имя пользвоателя: ",

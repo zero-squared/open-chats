@@ -1,4 +1,7 @@
 <header>
+    <div class="logo">
+        <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/5962/5962463.png" width="30" height="30" alt="Logo"></a>
+    </div>
     <nav>
         <a href="/"><%= t('nav.home') %></a>
         <% if (!user) { %>
@@ -9,4 +12,8 @@
         <a href="/logout"><%= t('nav.logout') %></a>
         <% } %>
     </nav>
+    <div class="language-selector">
+        <button onclick="setLang('ru')">🇷🇺</button>
+        <button onclick="setLang('en')">🇬🇧</button>
+    </div>
 </header>
