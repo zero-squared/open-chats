@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chats | Login</title>
-    <link rel="stylesheet" href="css/main.css">
+    <title>Chats | <%= t('loginPage.title') %></title>
+    <%- include('partials/main'); -%>
     <link rel="stylesheet" href="css/form.css">
     <script src="js/login.js" defer></script>
 </head>
 <body>
-    <%- include('header'); -%>
+    <%- include('partials/header'); -%>
     <main>
-        <h1>Login</h1>
+        <h1><%= t('loginPage.title') %></h1>
         <form id="login-form">
-            <label>Username: <input type="text" id="username-input" name="username" minlength="5" maxlength="30" required /></label>
-            <label>Password: <input type="password" id="password-input" name="password" minlength="5" maxlength="50" required /></label>
+            <label><%= t('forms.usernameLabel') %><input type="text" id="username-input" name="username" minlength="5" maxlength="30" required /></label>
+            <label><%= t('forms.passwordLabel') %><input type="password" id="password-input" name="password" minlength="5" maxlength="50" required /></label>
             <p class="error" id="error"></p>
-            <input type="submit" value="Login">
+            <input type="submit" value="<%= t('forms.loginButton') %>">
         </form>
         <img src="img/felixLogin.gif" width="200" height="200" alt="Felix">
     </main>

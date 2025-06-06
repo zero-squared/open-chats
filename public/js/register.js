@@ -14,11 +14,6 @@ registerForm.onsubmit = async (e) => {
     
     errorElem.innerText = '';
 
-    if (passwordInput.value !== repeatPasswordInput.value) {
-        errorElem.innerText = 'Passwords must be the same';
-        return;
-    }
-
     try {
         const res = await fetch(REGISTER_API, {
             method: 'POST',
@@ -27,7 +22,8 @@ registerForm.onsubmit = async (e) => {
             },
             body: JSON.stringify({
                 username: usernameInput.value,
-                password: passwordInput.value
+                password: passwordInput.value,
+                repeatPassword: repeatPasswordInput.value
             })
         });
 
@@ -42,6 +38,6 @@ registerForm.onsubmit = async (e) => {
 
     } catch (e) {
         console.error(e);
-        errorElem.innerText = 'Unexpected error';
+        errorElem.innerText = UNEXPECTED_ERROR_TEXT;
     }
 }

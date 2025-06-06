@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chats</title>
-    <link rel="stylesheet" href="css/main.css">
+    <title>Chats | 404</title>
+    <%- include('partials/main'); -%>
     <link rel="stylesheet" href="css/statusPage.css">
 </head>
 <body>
-    <%- include('header'); -%>
+    <%- include('partials/header'); -%>
     <main>
         <h1>404</h1>
-        <h2>Not found</h2>
+        <h2><%= t('notFound') %></h2>
         <img src="/img/astolfo404.gif" alt="Astolfo">
     </main>
 </body>

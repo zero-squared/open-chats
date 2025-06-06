@@ -1,0 +1,19 @@
+<header>
+    <div class="logo">
+        <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/5962/5962463.png" width="30" height="30" alt="Logo"></a>
+    </div>
+    <nav>
+        <a href="/"><%= t('header.nav.home') %></a>
+        <% if (!user) { %>
+        <a href="/login"><%= t('header.nav.login') %></a>
+        <a href="/register"><%= t('header.nav.register') %></a>
+        <% } else { %>
+        <a href="/profile"><%= t('header.nav.profile') %></a>
+        <a href="/logout"><%= t('header.nav.logout') %></a>
+        <% } %>
+    </nav>
+    <div class="language-selector">
+        <button onclick="setLang('ru')">🇷🇺</button>
+        <button onclick="setLang('en')">🇬🇧</button>
+    </div>
+</header>

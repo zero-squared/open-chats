@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Chats</title>
-    <link rel="stylesheet" href="css/main.css">
+    <%- include('partials/main'); -%>
     <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
-    <%- include('header'); -%>
+    <%- include('partials/header'); -%>
     <main>
         <h1>Chats</h1>
-        <p>Welcome :3</p>
+        <p><%= t('welcome') %></p>
         <% if (user) { %>
         <img src="<%= user.avatarUrl || 'img/defaultAvatar.png' %>" alt="User avatar" width="70" height="70">
-        <p>Username: <%= user.username %></p>
         <% } %>
     </main>
 </body>

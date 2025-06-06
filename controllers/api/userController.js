@@ -1,5 +1,4 @@
 import FormData from 'form-data';
-import axios from 'axios';
 
 import sequelize from '../../models/index.js';
 import { uploadFile, deleteFile } from '../../utils/imageKitApi.js';
@@ -49,7 +48,7 @@ export default {
 
             return res.status(500).send({
                 success: false,
-                error: 'Internal Server Error'
+                message: req.t('errors.internalServerError')
             });
         }
     }

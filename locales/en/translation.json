@@ -1,0 +1,47 @@
+{
+    "header": {
+        "nav": {
+            "home": "Home",
+            "login": "Login",
+            "register": "Register",
+            "logout": "Logout",
+            "profile": "Profile"
+        }
+    },
+    "loginPage": {
+        "title": "Login"
+    },
+    "registerPage": {
+        "title": "Register"
+    },
+    "forms": {
+        "usernameLabel": "Username: ",
+        "passwordLabel": "Password: ",
+        "repeatPasswordLabel": "Repeat password: ",
+        "loginButton": "Login",
+        "registerButton": "Register"
+    },
+    "errors": {
+        "notFound": "Not found",
+        "usernameRequired": "Username is required",
+        "passwordRequired": "Password is required",
+        "usernameTooShort": "Username must be at least 5 characters long",
+        "usernameTooLong": "Username cannot be longer than 30 characters",
+        "passwordTooShort": "Password must be at least 5 characters long",
+        "passwordTooLong": "Password cannot be longer than 50 characters",
+        "unexpectedError": "Unexpected error",
+        "samePasswords": "Passwords must be the same",
+        "uniqueUsername": "Username must be unique",
+        "internalServerError": "Internal Server Error",
+        "incorrectUsernamePassword": "Incorrect username or password",
+        "fileTooLarge": "File too large",
+        "incorrectImageExtension": "File does not have a .png or .jpg extension.",
+        "badRequest": "Bad Request",
+        "unauthorized": "Unauthorized"
+    },
+    "profile": {
+        "title": "Profile",
+        "username": "Username: ",
+        "uploadAvatarButton": "Upload avatar"
+    }
+}

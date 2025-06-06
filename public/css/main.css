@@ -15,8 +15,9 @@ html, body {
 header {
     box-sizing: border-box;
     padding: 10px;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
     width: 100%;
     border-bottom: solid 1px #ffffff;
 }
@@ -25,6 +26,7 @@ header nav {
     display: flex;
     column-gap: 100px;
     align-items: center;
+    justify-content: center;
 }
 
 header nav a {
@@ -35,6 +37,22 @@ header nav a {
 
 header nav a:hover {
     text-decoration: underline;
+}
+
+header .language-selector {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: 20px;
+    user-select: none;
+}
+
+header .language-selector button {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 28px;
+    cursor: pointer;
 }
 
 .error {
