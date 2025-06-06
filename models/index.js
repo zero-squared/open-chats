@@ -27,12 +27,33 @@ for (const modelFile of modelFiles) {
     }
 }
 
+// User
 sequelize.models.User.belongsTo(sequelize.models.Role, {
     foreignKey: {
         allowNull: false,
     }
 });
+
+sequelize.models.User.hasMany(sequelize.models.Message);
+
+// Role
 sequelize.models.Role.hasMany(sequelize.models.User, {
+    foreignKey: {
+        allowNull: false,
+    }
+});
+
+// Chat
+sequelize.models.Chat.hasMany(sequelize.models.Message);
+
+// Message
+sequelize.models.Message.belongsTo(sequelize.models.Chat, {
+    foreignKey: {
+        allowNull: false,
+    }
+});
+
+sequelize.models.Message.belongsTo(sequelize.models.User, {
     foreignKey: {
         allowNull: false,
     }
