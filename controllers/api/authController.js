@@ -69,7 +69,8 @@ export default {
             req.session.user = {
                 id: user.id,
                 username: user.username,
-                avatarUrl: user.avatarUrl
+                avatarUrl: user.avatarUrl,
+                role: userRole.name
             }
             res.send({
                 success: true,
@@ -125,10 +126,13 @@ export default {
                 });
             }
 
+            const role = await user.getRole();
+
             req.session.user = {
                 id: user.id,
                 username: user.username,
-                avatarUrl: user.avatarUrl
+                avatarUrl: user.avatarUrl,
+                role: role.name
             }
             res.send({
                 success: true,

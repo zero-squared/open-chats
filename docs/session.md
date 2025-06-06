@@ -7,7 +7,8 @@ Example of authenticated user **req.session** object:
     user: {
         id: 1,
         username: 'admin',
-        avatarUrl: 'https://example.com/image.png' // or null if does not exist
+        avatarUrl: 'https://example.com/image.png', // or null if does not exist
+        role: 'admin' // 'user', 'moderator', 'admin'
     }
 }
 ```
