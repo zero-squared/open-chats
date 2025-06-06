@@ -56,5 +56,10 @@
         "title": "Profile",
         "username": "Username: ",
         "uploadAvatarButton": "Upload avatar"
+    },
+    "roles": {
+        "admin": "Admin",
+        "moderator": "Moderator",
+        "user": "User"
     }
 }
