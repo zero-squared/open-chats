@@ -1,6 +1,6 @@
 <header>
     <div class="logo">
-        <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/5962/5962463.png" width="30" height="30" alt="Logo"></a>
+        <a href="/"><img src="img/logo.png" width="40" height="40" alt="Logo"></a>
     </div>
     <nav>
         <a href="/"><%= t('header.nav.home') %></a>
@@ -13,7 +13,11 @@
         <% } %>
     </nav>
     <div class="language-selector">
-        <button onclick="setLang('ru')">🇷🇺</button>
-        <button onclick="setLang('en')">🇬🇧</button>
+        <button onclick="setLang('ru')">
+            <img src="img/ruLang.png" width="40" alt="Russian laguage">
+        </button>
+        <button onclick="setLang('en')">
+            <img src="img/enLang.png" width="40" alt="English laguage">
+        </button>
     </div>
 </header>

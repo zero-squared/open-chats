@@ -14,15 +14,16 @@ html, body {
 
 header {
     box-sizing: border-box;
-    padding: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     width: 100%;
+    padding: 0 10px;
     border-bottom: solid 1px #ffffff;
 }
 
 header nav {
+    padding: 10px;
     display: flex;
     column-gap: 100px;
     align-items: center;
@@ -53,6 +54,10 @@ header .language-selector button {
     color: #ffffff;
     font-size: 28px;
     cursor: pointer;
+}
+
+header .language-selector img {
+    border: solid 1px #ffffff;
 }
 
 .error {
