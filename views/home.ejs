@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chats</title>
+    <title>OpenChats</title>
     <%- include('partials/main'); -%>
     <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
     <%- include('partials/header'); -%>
     <main>
-        <h1>Chats</h1>
+        <h1>OpenChats</h1>
         <p><%= t('welcome') %></p>
         <% if (user) { %>
         <img src="<%= user.avatarUrl || 'img/defaultAvatar.png' %>" alt="User avatar" width="70" height="70">
