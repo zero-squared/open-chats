@@ -23,6 +23,8 @@ pnpm run setup
 pnpm run dev
 ```
 
+### Setup for production
+
 ```bash
 pnpm install pm2 -g
 pm2 startup
