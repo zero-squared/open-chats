@@ -48,7 +48,19 @@ export default {
         }
     },
     updateUser: async (req, res) => {
+        let userId = req.params.id;
 
+        if (userId === '@me') {
+            userId = req.session.user.id;
+        }
+
+        const { username } = req.body;
+
+        try {
+            const user = await sequelize.models.User.findByPk(userId);
+        } catch (e) {
+
+        }
     },
     updateAvatar: async (req, res) => {
         let userId = req.params.id;

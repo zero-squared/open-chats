@@ -1,9 +1,6 @@
 import sequelize from '../../models/index.js';
 
-const GET_MESSAGES_LIMIT_MAX = 25;
-
-const GET_MESSAGES_LIMIT_DEFAULT = 10;
-const GET_MESSAGES_OFFSET_DEFAULT = 0;
+import { GET_MESSAGES_LIMIT_DEFAULT, GET_MESSAGES_LIMIT_MAX, GET_MESSAGES_OFFSET_DEFAULT } from '../../utils/config.js'
 
 export default {
     getChats: async (req, res) => {

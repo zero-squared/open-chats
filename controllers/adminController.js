@@ -1,4 +1,4 @@
-const ADMIN_TABS = ['users', 'chats'];
+import { ADMIN_TABS } from '../utils/config.js';
 
 export default{
     showAdmin: async (req, res, next) => {
