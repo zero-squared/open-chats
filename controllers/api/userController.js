@@ -91,8 +91,13 @@ export default {
             user.username = username;
             await user.save();
 
+            if (req.session.user.id === user.id) {
+                req.session.user.username = username;
+            }
+
             return res.send({
-                success: true
+                success: true,
+                username: username
             });
         } catch (e) {
             console.error(e);
