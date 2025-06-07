@@ -32,18 +32,21 @@ async function loadNewUsers() {
         usersContainer.appendChild(userElem);
     }
 
-    // offset += users.length;
+    offset += users.length;
     loaderElem.style.display = 'none';
     isLoading = false;
 }
 
 function createUserElem(user) {
     const userElem = document.createElement('div');
+
     const avatarElem = document.createElement('img');
     avatarElem.src = user.avatarUrl || DEFAULT_AVATAR;
     avatarElem.alt = 'Avatar';
+
     const usernameElem = document.createElement('p');
     usernameElem.textContent = user.username;
+
     const roleElem = document.createElement('p');
     if (user.role === 'admin') {
         roleElem.textContent = ADMIN_ROLE_TEXT;
@@ -52,19 +55,26 @@ function createUserElem(user) {
     } else {
         roleElem.textContent = USER_ROLE_TEXT;
     }
+
+    const createAtElem = document.createElement('p');
+    const createdAt = new Date(user.createdAt);
+    createAtElem.textContent = localDateString(createdAt, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+
     userElem.appendChild(avatarElem);
     userElem.appendChild(usernameElem);
     userElem.appendChild(roleElem);
+    userElem.appendChild(createAtElem);
     userElem.classList.add('user');
+
     return userElem;
 }
 
 window.onload = () => {
-    // for (let i = 0; i < 100; i++) {
-        loadNewUsers();
-    // }
-    // loadMore = false;
-    // loaderElem.style.display = 'flex';
+    loadNewUsers();
 };
 
 scrollElem.onscroll = () => {

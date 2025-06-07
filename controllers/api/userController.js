@@ -31,6 +31,7 @@ export default {
                 id: user.id,
                 username: user.username,
                 avatarUrl: user.avatarUrl,
+                createdAt: user.createdAt,
                 role: userRole.name
             });
         }

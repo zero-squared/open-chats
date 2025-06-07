@@ -10,5 +10,21 @@
         document.cookie = 'i18next=' + lang + '; path=/';
         location.reload();
     }
+
+    function localDateString(date, options) {
+        let lang = getCookie('i18next');
+        if (!lang) {
+            lang = undefined;
+        }
+
+        return date.toLocaleDateString(lang, options);
+    }
+
+    function getCookie(name) {
+        const cookie = `; ${document.cookie}`;
+        const parts = cookie.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    }
 </script>
 <link rel="stylesheet" href="/css/main.css">
