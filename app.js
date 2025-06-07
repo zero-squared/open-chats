@@ -51,7 +51,7 @@ await i18next
         preload: ['en', 'ru'],
         saveMissingTo: 'current',
         saveMissing: process.env.NODE_ENV === 'development',
-        fallbackLng: process.env.NODE_ENV === 'production' ? 'en' : false,
+        fallbackLng: 'en',
         backend: {
             loadPath: 'locales/{{lng}}/translation.json',
             addPath: 'locales/{{lng}}/translation.missing.json',

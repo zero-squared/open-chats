@@ -20,4 +20,4 @@ jobs:
             cd open-chats/
             git pull
             pnpm install
-            pm2 restart open_chats
+            pnpm run pm2:restart
