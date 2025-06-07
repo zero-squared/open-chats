@@ -1,5 +1,5 @@
 {
-  "name": "chats",
+  "name": "open-chats",
   "version": "1.0.0",
   "type": "module",
   "description": "",
@@ -7,11 +7,12 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
-    "pm2:start": "pm2 start app.js --name 'chats' --watch",
-    "pm2:stop": "pm2 stop chats",
-    "pm2:logs": "pm2 logs chats",
-    "pm2:delete": "pm2 delete chats",
-    "pm2:restart": "pm2 restart chats"
+    "setup": "node setup",
+    "pm2:start": "pm2 start app.js --name 'open_chats' --watch",
+    "pm2:stop": "pm2 stop open_chats",
+    "pm2:logs": "pm2 logs open_chats",
+    "pm2:delete": "pm2 delete open_chats",
+    "pm2:restart": "pm2 restart open_chats"
   },
   "engines": {
     "node": "22.14.0"
@@ -28,6 +29,9 @@
     "express": "^5.1.0",
     "express-session": "^1.18.1",
     "form-data": "^4.0.2",
+    "i18next": "^25.2.1",
+    "i18next-fs-backend": "^2.6.0",
+    "i18next-http-middleware": "^3.7.4",
     "multer": "1.4.5-lts.2",
     "pg": "^8.14.1",
     "pg-hstore": "^2.3.4",
@@ -37,5 +41,11 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "locales/*/*.missing.json",
+      "docs/**"
+    ]
   }
 }

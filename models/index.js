@@ -27,6 +27,38 @@ for (const modelFile of modelFiles) {
     }
 }
 
-await sequelize.sync({force: process.env.NODE_ENV === 'development'});
+// User
+sequelize.models.User.belongsTo(sequelize.models.Role, {
+    foreignKey: {
+        allowNull: false,
+    }
+});
+
+sequelize.models.User.hasMany(sequelize.models.Message);
+
+// Role
+sequelize.models.Role.hasMany(sequelize.models.User, {
+    foreignKey: {
+        allowNull: false,
+    }
+});
+
+// Chat
+sequelize.models.Chat.hasMany(sequelize.models.Message);
+
+// Message
+sequelize.models.Message.belongsTo(sequelize.models.Chat, {
+    foreignKey: {
+        allowNull: false,
+    }
+});
+
+sequelize.models.Message.belongsTo(sequelize.models.User, {
+    foreignKey: {
+        allowNull: false,
+    }
+});
+
+await sequelize.sync();
 
 export default sequelize;

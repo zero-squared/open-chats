@@ -1,0 +1,36 @@
+main {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height: 100%;
+    overflow: hidden;
+}
+
+.side-panel {
+    display: grid;
+    grid-auto-rows: 50px;
+    border-right: solid 1px white;
+}
+
+.side-panel .tab-link {
+    display: flex;
+    box-sizing: border-box;
+    padding-left: 30px;
+    align-items: center;
+    width: 100%;
+    border-bottom: solid 1px white;
+}
+
+.side-panel .tab-link a {
+    text-decoration: none;
+}
+
+.side-panel .tab-link a:hover {
+    text-decoration: underline;
+}
+
+.tab-content {
+    flex-direction: column;
+    padding: 20px;
+    display: flex;
+    overflow: hidden;
+}

@@ -8,16 +8,32 @@ const upload = multer({
 });
 
 export function uploadSingleImage(req, res, next) {
-    upload.single('image')(req, res, (e) => {
-        if (e instanceof multer.MulterError) {
+    return upload.single('image')(req, res, (e) => {
+        if (!req.file) {
             return res.status(400).send({
                 success: false,
-                message: e.message
+                message: req.t('errors.fileRequired')
+            });
+        }
+
+        if (e instanceof multer.MulterError && e.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.fileTooLarge')
             });
         } else if (e) {
+            console.error(e);
+
             return res.status(500).send({
                 success: false,
-                message: 'Internal Server Error'
+                message: req.t('errors.internalServerError')
+            });
+        }
+
+        if (!req.file.originalname.endsWith('.png') && !req.file.originalname.endsWith('.jpg')) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.incorrectImageExtension')
             });
         }
 

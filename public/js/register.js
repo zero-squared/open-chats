@@ -11,11 +11,7 @@ const REDIRECT = '/';
 
 registerForm.onsubmit = async (e) => {
     e.preventDefault();
-
-    if (passwordInput.value !== repeatPasswordInput.value) {
-        errorElem.innerText = 'Passwords must be the same';
-        return;
-    }
+    
     errorElem.innerText = '';
 
     try {
@@ -26,7 +22,8 @@ registerForm.onsubmit = async (e) => {
             },
             body: JSON.stringify({
                 username: usernameInput.value,
-                password: passwordInput.value
+                password: passwordInput.value,
+                repeatPassword: repeatPasswordInput.value
             })
         });
 
@@ -41,6 +38,6 @@ registerForm.onsubmit = async (e) => {
 
     } catch (e) {
         console.error(e);
-        errorElem.innerText = 'Unexpected error';
+        errorElem.innerText = UNEXPECTED_ERROR_TEXT;
     }
 }

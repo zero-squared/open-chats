@@ -1,29 +1,54 @@
 import sequelize from '../models/index.js';
 
-export function isAuthenticatedUser(req, res, next) {
-    if (req.session.user) {
-        return next();
-    }
-    if (req.path.startsWith('/api')) {
-        return res.status(400).send({
+function disallow(req, res) {
+    if (req.baseUrl === '/api') {
+        return res.status(401).send({
             success: false,
-            message: 'Bad Request'
+            message: req.t('errors.unauthorized')
         });
     }
     return res.redirect('/');
-}
+} 
+
 
 export function isGuest(req, res, next) {
     if (!req.session.user) {
         return next();
     }
-    if (req.path.startsWith('/api')) {
-        return res.status(400).send({
-            success: false,
-            message: 'Bad Request'
-        });
+    
+    return disallow(req, res);
+}
+
+export function isAuthenticated(req, res, next) {
+    if (req.session.user) {
+        return next();
     }
-    return res.redirect('/');
+    
+    return disallow(req, res);
+}
+
+export function isUser(req, res, next) {
+    if (req.session.user && req.session.user.role === 'user') {
+        return next();
+    }
+    
+    return disallow(req, res);
+}
+
+export function isModerator(req, res, next) {
+    if (req.session.user && req.session.user.role === 'moderator') {
+        return next();
+    }
+
+    return disallow(req, res);
+}
+
+export function isAdmin(req, res, next) {
+    if (req.session.user && req.session.user.role === 'admin') {
+        return next();
+    }
+
+    return disallow(req, res);
 }
 
 // :id param - user id
@@ -31,7 +56,7 @@ export async function canUpdateUser(req, res, next) {
     if (!req.session.user) {
         return res.status(401).send({
             success: false,
-            message: 'Unauthorized'
+            message: req.t('errors.unauthorized')
         });
     }
 
@@ -47,7 +72,7 @@ export async function canUpdateUser(req, res, next) {
         if (!user || user.id !== req.session.user.id) {
             return res.status(401).send({
                 success: false,
-                message: 'Unauthorized'
+                message: req.t('errors.unauthorized')
             });
         }
 
@@ -57,7 +82,7 @@ export async function canUpdateUser(req, res, next) {
 
         res.status(500).send({
             success: false,
-            message: 'Internal Server Error'
+            message: req.t('errors.internalServerError')
         });
     }
 }

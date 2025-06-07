@@ -2,6 +2,10 @@ import express from 'express';
 import session from 'express-session';
 import 'dotenv/config';
 import bodyParser from 'body-parser';
+import i18next from 'i18next';
+import i18nextMiddleware from 'i18next-http-middleware';
+import i18nextBackend from 'i18next-fs-backend';
+
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
@@ -40,6 +44,27 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
+await i18next
+    .use(i18nextBackend)
+    .use(i18nextMiddleware.LanguageDetector)
+    .init({
+        preload: ['en', 'ru'],
+        saveMissingTo: 'current',
+        saveMissing: process.env.NODE_ENV === 'development',
+        fallbackLng: process.env.NODE_ENV === 'production' ? 'en' : false,
+        backend: {
+            loadPath: 'locales/{{lng}}/translation.json',
+            addPath: 'locales/{{lng}}/translation.missing.json',
+            ident: 4,
+        },
+        detection: {
+            lookupQuerystring: 'lang',
+            order: ['querystring', 'cookie', 'header'],
+            caches: ['cookie']
+        }
+    });
+
+app.use(i18nextMiddleware.handle(i18next));
 app.set('view engine', 'ejs');
 app.use(sessionMiddleware);
 app.use(bodyParser.json());

@@ -7,24 +7,24 @@ main {
     row-gap: 30px;
 }
 
-form {
+main form {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
     width: 400px;
 }
 
-form label {
+main form label {
     display: flex;
     justify-content: space-between;
 }
 
-form input {
+main form input {
     background: transparent;
     padding: 5px;
     border: solid 1px #ffffff;
 }
 
-img {
+main img {
     border: solid 1px #ffffff;
 }
