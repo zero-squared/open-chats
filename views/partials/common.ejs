@@ -12,11 +12,7 @@
     }
 
     function localDateString(date, options) {
-        let lang = getCookie('i18next');
-        if (!lang) {
-            lang = undefined;
-        }
-
+        const lang = getCookie('i18next');
         return date.toLocaleDateString(lang, options);
     }
 
@@ -24,7 +20,6 @@
         const cookie = `; ${document.cookie}`;
         const parts = cookie.split(`; ${name}=`);
         if (parts.length === 2) return parts.pop().split(';').shift();
-        return null;
     }
 </script>
 <link rel="stylesheet" href="/css/common.css">

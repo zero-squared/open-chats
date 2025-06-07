@@ -7,8 +7,8 @@ import userController from '../controllers/api/userController.js';
 
 const router = express.Router();
 
-router.post('/users/:id/avatar', canUpdateUser, uploadSingleImage, userController.updateAvatar);
 router.get('/users/', isAdmin, userController.getUsers);
+router.post('/users/:id/avatar', canUpdateUser, uploadSingleImage, userController.updateAvatar);
 
 router.post('/auth/login', isGuest, authController.loginUser);
 router.post('/auth/register', isGuest, authController.registerUser);

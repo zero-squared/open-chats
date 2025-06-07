@@ -9,7 +9,7 @@ export default {
 
         limit = parseInt(limit);
         offset = parseInt(offset);
-        
+
         if (!limit) {
             limit = 10;
         }
@@ -21,7 +21,7 @@ export default {
             limit: limit,
             offset: offset
         });
-    
+
         let results = [];
 
         for (const user of users) {
@@ -38,21 +38,38 @@ export default {
 
         return res.send(results);
     },
+    updateUser: async (req, res) => {
+
+    },
     updateAvatar: async (req, res) => {
         if (!req.file) {
             return res.status(400).send({
                 success: false,
+                message: req.t('errors.badRequest')
             });
         }
 
         try {
-            const user = await sequelize.models.User.findOne({ where: { username: req.session.user.username } });
+            let userId = req.params.id;
+
+            if (userId === '@me') {
+                userId = req.session.user.id;
+            }
+
+            const user = await sequelize.models.User.findByPk(userId);
+
+            if (!user) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            }
 
             if (user.avatarUrl) {
                 await deleteFile(user.avatarFileId);
             }
 
-            const avatarFileName = `${req.session.user.username}_avatar`;
+            const avatarFileName = `${user.username}_avatar`;
 
             const formData = new FormData();
             formData.append('file', req.file.buffer, avatarFileName);
@@ -62,15 +79,14 @@ export default {
 
             const { data } = await uploadFile(formData);
 
-            await sequelize.models.User.update({
-                avatarUrl: data.url,
-                avatarFileId: data.fileId
-            }, {
-                where: {
-                    username: req.session.user.username
-                }
-            })
-            req.session.user.avatarUrl = data.url;
+            user.avatarUrl = data.url;
+            user.avatarFileId = data.fileId;
+
+            await user.save();
+
+            if (req.session.user.id === user.id) {
+                req.session.user.avatarUrl = data.url;
+            }
 
             return res.send({
                 success: true,
