@@ -6,6 +6,11 @@
     <link rel="icon" type="image/png" href="/img/logo.png" />
     <%- include('partials/common'); -%>
     <link rel="stylesheet" href="/css/admin.css">
+    <% if (tabName === 'users') { %>
+        <script src="/js/adminTabs/users.js" defer></script>
+        <link rel="stylesheet" href="/css/adminTabs/users.css">
+        <% } else if (tabName === 'chats') { %>
+    <% } %>
 </head>
 <body>
     <%- include('partials/header'); -%>
@@ -19,12 +24,10 @@
             </div>
         </div>
         <div class="tab-content">
-            <% if (tabName === 'main') { %>
-                <%- include('adminTabs/main'); -%>
-            <% } else if (tabName === 'users') { %>
-                <%- include('adminTabs/users'); -%>
+            <% if (tabName === 'users') { %>
+                <%- include('partials/adminTabs/users'); -%>
             <% } else if (tabName === 'chats') { %>
-                <%- include('adminTabs/chats'); -%>
+                <%- include('partials/adminTabs/chats'); -%>
             <% } %>
         </div>
     </main>

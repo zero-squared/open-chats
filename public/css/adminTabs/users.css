@@ -1,0 +1,38 @@
+.users {
+    flex: 1;
+    margin-top: 10px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.users .user {
+    border: 1px solid white;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 10px;
+    height: 64px;
+    box-sizing: border-box;
+}
+
+.users .user:not(:first-child) {
+    border-top: 0;
+}
+
+.users .user p {
+    font-size: 16px;
+}
+
+.users .user img {
+    height: 100%;
+    border-right: 1px solid white;
+}
+
+.users .loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 64px;
+}

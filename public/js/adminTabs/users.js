@@ -32,7 +32,7 @@ async function loadNewUsers() {
         usersContainer.appendChild(userElem);
     }
 
-    offset += users.length;
+    // offset += users.length;
     loaderElem.style.display = 'none';
     isLoading = false;
 }
@@ -60,7 +60,11 @@ function createUserElem(user) {
 }
 
 window.onload = () => {
-    loadNewUsers();
+    // for (let i = 0; i < 100; i++) {
+        loadNewUsers();
+    // }
+    // loadMore = false;
+    // loaderElem.style.display = 'flex';
 };
 
 scrollElem.onscroll = () => {
