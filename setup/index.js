@@ -12,7 +12,7 @@ const adminRole = await sequelize.models.Role.create({ name: 'admin' });
 
 console.log('Creating default admin user...');
 const passwordHash = await bcrypt.hash('admin', parseInt(process.env.SALT_ROUNDS));
-const adminUser = await sequelize.models.User.create({ username: 'admin', password: passwordHash, RoleId: adminRole.id });
+await sequelize.models.User.create({ username: 'admin', password: passwordHash, RoleId: adminRole.id });
 
 console.log('Creating placeholder chats...');
 const phChat1 = await sequelize.models.Chat.create({ name: 'Test chat 1' });

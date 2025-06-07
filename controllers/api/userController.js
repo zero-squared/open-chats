@@ -9,7 +9,7 @@ export default {
 
         limit = parseInt(limit);
         offset = parseInt(offset);
-        
+
         if (!limit) {
             limit = 10;
         }
@@ -17,41 +17,61 @@ export default {
             offset = 0;
         }
 
-        const users = await sequelize.models.User.findAll({
-            limit: limit,
-            offset: offset
-        });
-    
-        let results = [];
+        try {
+            const users = await sequelize.models.User.findAll({
+                limit: limit,
+                offset: offset
+            });
 
-        for (const user of users) {
-            const userRole = await user.getRole();
+            let results = [];
 
-            results.push({
-                id: user.id,
-                username: user.username,
-                avatarUrl: user.avatarUrl,
-                role: userRole.name
+            for (const user of users) {
+                const userRole = await user.getRole();
+
+                results.push({
+                    id: user.id,
+                    username: user.username,
+                    avatarUrl: user.avatarUrl,
+                    createdAt: user.createdAt,
+                    role: userRole.name
+                });
+            }
+
+            return res.send(results);
+        } catch (e) {
+            console.error(e);
+
+            return res.status(500).send({
+                success: false,
+                message: req.t('errors.internalServerError')
             });
         }
+    },
+    updateUser: async (req, res) => {
 
-        return res.send(results);
     },
     updateAvatar: async (req, res) => {
-        if (!req.file) {
-            return res.status(400).send({
-                success: false,
-            });
+        let userId = req.params.id;
+
+        if (userId === '@me') {
+            userId = req.session.user.id;
         }
 
         try {
-            const user = await sequelize.models.User.findOne({ where: { username: req.session.user.username } });
+            const user = await sequelize.models.User.findByPk(userId);
+
+            if (!user) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            }
 
             if (user.avatarUrl) {
                 await deleteFile(user.avatarFileId);
             }
 
-            const avatarFileName = `${req.session.user.username}_avatar`;
+            const avatarFileName = `${user.username}_avatar`;
 
             const formData = new FormData();
             formData.append('file', req.file.buffer, avatarFileName);
@@ -61,19 +81,59 @@ export default {
 
             const { data } = await uploadFile(formData);
 
-            await sequelize.models.User.update({
-                avatarUrl: data.url,
-                avatarFileId: data.fileId
-            }, {
-                where: {
-                    username: req.session.user.username
-                }
-            })
-            req.session.user.avatarUrl = data.url;
+            user.avatarUrl = data.url;
+            user.avatarFileId = data.fileId;
+
+            await user.save();
+
+            if (req.session.user.id === user.id) {
+                req.session.user.avatarUrl = data.url;
+            }
 
             return res.send({
                 success: true,
                 avatarUrl: data.url
+            });
+        } catch (e) {
+            console.error(e);
+
+            return res.status(500).send({
+                success: false,
+                message: req.t('errors.internalServerError')
+            });
+        }
+    },
+    deleteAvatar: async (req, res) => {
+        let userId = req.params.id;
+
+        if (userId === '@me') {
+            userId = req.session.user.id;
+        }
+
+        try {
+            const user = await sequelize.models.User.findByPk(userId);
+
+            if (!user) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            }
+
+            if (user.avatarUrl) {
+                await deleteFile(user.avatarFileId);
+
+                user.avatarUrl = null;
+                user.avatarFileId = null;
+                await user.save();
+
+                if (req.session.user.id === user.id) {
+                    req.session.user.avatarUrl = null;
+                }
+            }
+
+            return res.send({
+                success: true
             });
         } catch (e) {
             console.error(e);

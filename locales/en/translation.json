@@ -20,7 +20,8 @@
         "title": "Admin",
         "tabs": {
             "users": {
-                "title": "Users"
+                "title": "Users",
+                "loading": "Loading..."
             },
             "chats": {
                 "title": "Chats"
@@ -51,11 +52,17 @@
         "incorrectImageExtension": "File does not have a .png or .jpg extension.",
         "badRequest": "Bad Request",
         "unauthorized": "Unauthorized",
-        "chatNotExist": "Chat does not exist"
+        "chatNotExist": "Chat does not exist",
+        "fileRequired": "File is required"
     },
     "profile": {
         "title": "Profile",
         "username": "Username: ",
         "uploadAvatarButton": "Upload avatar"
+    },
+    "roles": {
+        "admin": "Admin",
+        "moderator": "Moderator",
+        "user": "User"
     }
 }
