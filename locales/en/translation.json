@@ -52,6 +52,7 @@
         "incorrectImageExtension": "File does not have a .png or .jpg extension.",
         "badRequest": "Bad Request",
         "unauthorized": "Unauthorized",
+        "chatNotExist": "Chat does not exist",
         "fileRequired": "File is required"
     },
     "profile": {
