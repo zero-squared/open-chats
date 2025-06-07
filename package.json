@@ -8,7 +8,7 @@
     "start": "node .",
     "dev": "nodemon .",
     "setup": "node setup",
-    "pm2:start": "pm2 start app.js --name 'open_chats' --watch",
+    "pm2:start": "pm2 start app.js --name 'open_chats'",
     "pm2:stop": "pm2 stop open_chats",
     "pm2:logs": "pm2 logs open_chats",
     "pm2:delete": "pm2 delete open_chats",
