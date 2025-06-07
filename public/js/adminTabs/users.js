@@ -1,6 +1,5 @@
 const USERS_API = '/api/users/';
 const LIMIT = 30;
-const DEFAULT_AVATAR = '/img/defaultAvatar.png';
 
 let offset = 0;
 let isLoading = true;

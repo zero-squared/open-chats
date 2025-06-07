@@ -7,7 +7,6 @@ export default {
     registerUser: async (req, res) => {
         const { username, password, repeatPassword } = req.body;
 
-        // TODO Create middleware for username and password validation?
         if (!username) {
             return res.status(400).send({
                 success: false,
@@ -64,7 +63,6 @@ export default {
                 RoleId: userRole.id
             });
 
-            // TODO Create sepparate function for creating session object
             req.session.user = {
                 id: user.id,
                 username: user.username,

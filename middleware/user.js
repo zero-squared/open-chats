@@ -1,10 +1,10 @@
 import sequelize from '../models/index.js';
 
 function disallow(req, res) {
-    if (req.path.startsWith('/api')) {
-        return res.status(400).send({
+    if (req.baseUrl === '/api') {
+        return res.status(401).send({
             success: false,
-            message: req.t('errors.badRequest')
+            message: req.t('errors.unauthorized')
         });
     }
     return res.redirect('/');
