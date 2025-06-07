@@ -9,6 +9,13 @@ const upload = multer({
 
 export function uploadSingleImage(req, res, next) {
     return upload.single('image')(req, res, (e) => {
+        if (!req.file) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.fileRequired')
+            });
+        }
+
         if (e instanceof multer.MulterError && e.code === 'LIMIT_FILE_SIZE') {
             return res.status(400).send({
                 success: false,

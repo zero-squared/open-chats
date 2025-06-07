@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.get('/users/', isAdmin, userController.getUsers);
 router.post('/users/:id/avatar', canUpdateUser, uploadSingleImage, userController.updateAvatar);
+router.delete('/users/:id/avatar', canUpdateUser, userController.deleteAvatar);
 
 router.post('/auth/login', isGuest, authController.loginUser);
 router.post('/auth/register', isGuest, authController.registerUser);

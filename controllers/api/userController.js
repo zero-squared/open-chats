@@ -17,45 +17,47 @@ export default {
             offset = 0;
         }
 
-        const users = await sequelize.models.User.findAll({
-            limit: limit,
-            offset: offset
-        });
+        try {
+            const users = await sequelize.models.User.findAll({
+                limit: limit,
+                offset: offset
+            });
 
-        let results = [];
+            let results = [];
 
-        for (const user of users) {
-            const userRole = await user.getRole();
+            for (const user of users) {
+                const userRole = await user.getRole();
 
-            results.push({
-                id: user.id,
-                username: user.username,
-                avatarUrl: user.avatarUrl,
-                createdAt: user.createdAt,
-                role: userRole.name
+                results.push({
+                    id: user.id,
+                    username: user.username,
+                    avatarUrl: user.avatarUrl,
+                    createdAt: user.createdAt,
+                    role: userRole.name
+                });
+            }
+
+            return res.send(results);
+        } catch (e) {
+            console.error(e);
+
+            return res.status(500).send({
+                success: false,
+                message: req.t('errors.internalServerError')
             });
         }
-
-        return res.send(results);
     },
     updateUser: async (req, res) => {
 
     },
     updateAvatar: async (req, res) => {
-        if (!req.file) {
-            return res.status(400).send({
-                success: false,
-                message: req.t('errors.badRequest')
-            });
+        let userId = req.params.id;
+
+        if (userId === '@me') {
+            userId = req.session.user.id;
         }
 
         try {
-            let userId = req.params.id;
-
-            if (userId === '@me') {
-                userId = req.session.user.id;
-            }
-
             const user = await sequelize.models.User.findByPk(userId);
 
             if (!user) {
@@ -91,6 +93,47 @@ export default {
             return res.send({
                 success: true,
                 avatarUrl: data.url
+            });
+        } catch (e) {
+            console.error(e);
+
+            return res.status(500).send({
+                success: false,
+                message: req.t('errors.internalServerError')
+            });
+        }
+    },
+    deleteAvatar: async (req, res) => {
+        let userId = req.params.id;
+
+        if (userId === '@me') {
+            userId = req.session.user.id;
+        }
+
+        try {
+            const user = await sequelize.models.User.findByPk(userId);
+
+            if (!user) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            }
+
+            if (user.avatarUrl) {
+                await deleteFile(user.avatarFileId);
+
+                user.avatarUrl = null;
+                user.avatarFileId = null;
+                await user.save();
+
+                if (req.session.user.id === user.id) {
+                    req.session.user.avatarUrl = null;
+                }
+            }
+
+            return res.send({
+                success: true
             });
         } catch (e) {
             console.error(e);
