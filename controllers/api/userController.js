@@ -2,6 +2,8 @@ import FormData from 'form-data';
 
 import sequelize from '../../models/index.js';
 import { uploadFile, deleteFile } from '../../utils/imageKitApi.js';
+import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH, PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from '../../utils/config.js';
+
 
 export default {
     getUsers: async (req, res) => {
@@ -48,6 +50,13 @@ export default {
         }
     },
     updateUser: async (req, res) => {
+        if (!req.body) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
         let userId = req.params.id;
 
         if (userId === '@me') {
@@ -56,10 +65,42 @@ export default {
 
         const { username } = req.body;
 
+        if (!username) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.usernameRequired')
+            });
+        }
+
+        if (username.length < USERNAME_MIN_LENGTH) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.usernameTooShort')
+            });
+        }
+        if (username.length > USERNAME_MAX_LENGTH) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.usernameTooLong')
+            });
+        }
+
         try {
             const user = await sequelize.models.User.findByPk(userId);
-        } catch (e) {
 
+            user.username = username;
+            await user.save();
+
+            return res.send({
+                success: true
+            });
+        } catch (e) {
+            console.error(e);
+
+            return res.status(500).send({
+                success: false,
+                message: req.t('errors.internalServerError')
+            });
         }
     },
     updateAvatar: async (req, res) => {

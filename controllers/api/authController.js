@@ -6,6 +6,13 @@ import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH, PASSWORD_MIN_LENGTH, PASSWORD
 
 export default {
     registerUser: async (req, res) => {
+        if (!req.body) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
         const { username, password, repeatPassword } = req.body;
 
         if (!username) {
@@ -93,7 +100,7 @@ export default {
         if (!req.body) {
             return res.status(400).send({
                 success: false,
-                message: req.t('errors.usernameRequired')
+                message: req.t('errors.badRequest')
             });
         }
 
