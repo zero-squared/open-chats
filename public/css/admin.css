@@ -2,15 +2,16 @@ main {
     display: grid;
     grid-template-columns: 300px 1fr;
     height: 100%;
+    overflow: hidden;
 }
 
-main .side-panel {
+.side-panel {
     display: grid;
     grid-auto-rows: 50px;
     border-right: solid 1px white;
 }
 
-main .side-panel .tab-link {
+.side-panel .tab-link {
     display: flex;
     box-sizing: border-box;
     padding-left: 30px;
@@ -19,18 +20,17 @@ main .side-panel .tab-link {
     border-bottom: solid 1px white;
 }
 
-main .side-panel .tab-link a {
+.side-panel .tab-link a {
     text-decoration: none;
 }
 
-main .side-panel .tab-link a:hover {
+.side-panel .tab-link a:hover {
     text-decoration: underline;
 }
 
-main .tab-content {
+.tab-content {
+    flex-direction: column;
     padding: 20px;
-}
-
-main .tab-content .users {
-    overflow-y: scroll;
+    display: flex;
+    overflow: hidden;
 }

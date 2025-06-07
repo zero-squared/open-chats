@@ -1,10 +1,27 @@
 <!-- Must be included on every page in the <head> -->
 <script>
+    const USER_ROLE_TEXT = "<%= t('roles.user') %>";
+    const MODERATOR_ROLE_TEXT = "<%= t('roles.moderator') %>";
+    const ADMIN_ROLE_TEXT = "<%= t('roles.admin') %>";
+
     const UNEXPECTED_ERROR_TEXT = "<%= t('errors.unexpectedError') %>";
+
+    const DEFAULT_AVATAR = '/img/defaultAvatar.png';
     
     function setLang(lang) {
         document.cookie = 'i18next=' + lang + '; path=/';
         location.reload();
     }
+
+    function localDateString(date, options) {
+        const lang = getCookie('i18next');
+        return date.toLocaleDateString(lang, options);
+    }
+
+    function getCookie(name) {
+        const cookie = `; ${document.cookie}`;
+        const parts = cookie.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
 </script>
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/common.css">

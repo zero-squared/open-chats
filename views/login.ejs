@@ -13,7 +13,7 @@
     <main>
         <h1><%= t('loginPage.title') %></h1>
         <form id="login-form">
-            <label><%= t('forms.usernameLabel') %><input type="text" id="username-input" name="username" minlength="5" maxlength="30" required /></label>
+            <label><%= t('forms.usernameLabel') %><input type="text" id="username-input" name="username" minlength="4" maxlength="30" required /></label>
             <label><%= t('forms.passwordLabel') %><input type="password" id="password-input" name="password" minlength="5" maxlength="50" required /></label>
             <p class="error" id="error"></p>
             <input type="submit" value="<%= t('forms.loginButton') %>">
