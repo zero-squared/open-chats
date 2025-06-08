@@ -4,7 +4,9 @@ import { GET_MESSAGES_LIMIT_DEFAULT, GET_MESSAGES_LIMIT_MAX, GET_MESSAGES_OFFSET
 
 export default {
     getChats: async (req, res) => {
-        const chats = await sequelize.models.Chat.findAll();
+        const chats = await sequelize.models.Chat.findAll({
+            order: [['id', 'ASC']] // TODO: add a way to order chats and use it here (or sort on frontend?)
+        });
 
         let results = [];
 

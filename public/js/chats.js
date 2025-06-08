@@ -4,8 +4,7 @@ const API_GET_CHATS = '/api/chats/';
 const apiGetMessages = `/api/chats/${chatId}/messages/`;
 
 const chatListElem = document.getElementById('chat-list');
-const mainContentElem = document.getElementById('main-content');
-let messagesElem = null;
+const messagesElem = document.getElementById('message-container');
 
 function createChatElem(chat) {
     const root = document.createElement('div');
@@ -40,7 +39,7 @@ async function loadChatList() {
     }
 }
 
-function createMessageElem(msg) {
+function createMsgElem(msg) {
     const root = document.createElement('div');
     root.classList.add('message');
     
@@ -75,7 +74,7 @@ function createMessageElem(msg) {
     return root;
 }
 
-async function initMessages() {
+async function loadMessages() {
     const res = await fetch(apiGetMessages, {
         method: 'GET',
         headers: {
@@ -85,33 +84,14 @@ async function initMessages() {
 
     const messages = await res.json();
 
-    // creating message container
-    messagesElem = document.createElement('div');
-    messagesElem.id = 'message-container';
-
     for (let msg of messages) {
-        messagesElem.prepend(createMessageElem(msg));
+        messagesElem.prepend(createMsgElem(msg));
     }
 
     mainContentElem.prepend(messagesElem);
 }
 
-async function loadDefaultMainContent() {
-    mainContentElem.appendChild(document.createTextNode('TODO: unimplemented'));
-}
-
-async function loadMainContent() {
-    if (chatId === null) {
-        await loadDefaultMainContent();
-        return;
-    }
-
-    await initMessages();
-}
-
 window.onload = () => {
-    Promise.all([
-        loadChatList(),
-        loadMainContent()
-    ])
+    loadChatList();
+    loadMessages();
 };

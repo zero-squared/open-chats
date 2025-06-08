@@ -19,7 +19,7 @@ router.get('/profile', isAuthenticated, mainController.showProfile);
 router.get('/admin', isAdmin, adminController.redirectMainAdmin);
 router.get('/admin/:tab', isAdmin, adminController.showAdmin);
 
-router.get('/chats/', chatController.showChatNoChatSelected);
+router.get('/chats/', chatController.redirectChatDefault);
 router.get('/chats/:id', chatController.showChat);
 
 router.use('/api', apiRouter);
