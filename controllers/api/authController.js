@@ -2,9 +2,17 @@ import bcrypt from 'bcryptjs';
 import { UniqueConstraintError } from 'sequelize';
 
 import sequelize from '../../models/index.js';
+import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH, PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from '../../utils/config.js';
 
 export default {
     registerUser: async (req, res) => {
+        if (!req.body) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
         const { username, password, repeatPassword } = req.body;
 
         if (!username) {
@@ -26,26 +34,26 @@ export default {
             });
         }
 
-        if (username.length < 4) {
+        if (username.length < USERNAME_MIN_LENGTH) {
             return res.status(400).send({
                 success: false,
                 message: req.t('errors.usernameTooShort')
             });
         }
-        if (username.length > 30) {
+        if (username.length > USERNAME_MAX_LENGTH) {
             return res.status(400).send({
                 success: false,
                 message: req.t('errors.usernameTooLong')
             });
         }
 
-        if (password.length < 5) {
+        if (password.length < PASSWORD_MIN_LENGTH) {
             return res.status(400).send({
                 success: false,
                 message: req.t('errors.passwordTooShort')
             });
         }
-        if (password.length > 50) {
+        if (password.length > PASSWORD_MAX_LENGTH) {
             return res.status(400).send({
                 success: false,
                 message: req.t('errors.passwordTooLong')
@@ -92,7 +100,7 @@ export default {
         if (!req.body) {
             return res.status(400).send({
                 success: false,
-                message: req.t('errors.usernameRequired')
+                message: req.t('errors.badRequest')
             });
         }
 

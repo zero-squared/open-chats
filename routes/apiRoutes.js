@@ -9,6 +9,7 @@ import chatController from '../controllers/api/chatController.js';
 const router = express.Router();
 
 router.get('/users/', isAdmin, userController.getUsers);
+router.patch('/users/:id', canUpdateUser, userController.updateUser);
 router.post('/users/:id/avatar', canUpdateUser, uploadSingleImage, userController.updateAvatar);
 router.delete('/users/:id/avatar', canUpdateUser, userController.deleteAvatar);
 

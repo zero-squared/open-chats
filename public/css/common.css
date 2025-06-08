@@ -52,7 +52,8 @@ header .language-selector button {
     background: transparent;
     border: none;
     color: #ffffff;
-    font-size: 28px;
+    display: flex;
+    align-items: center;
     cursor: pointer;
 }
 
