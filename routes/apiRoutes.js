@@ -4,7 +4,7 @@ import authController from '../controllers/api/authController.js';
 import { uploadSingleImage } from '../middleware/multerUpload.js';
 import { canUpdateUser, isGuest, isAdmin } from '../middleware/user.js';
 import userController from '../controllers/api/userController.js';
-import chatController from '../controllers/api/chatController.js';
+import chatController from '../controllers/api/chatApiController.js';
 
 const router = express.Router();
 

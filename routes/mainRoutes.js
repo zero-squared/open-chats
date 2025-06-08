@@ -4,6 +4,7 @@ import mainController from '../controllers/mainController.js';
 import adminController from '../controllers/adminController.js';
 import apiRouter from './apiRoutes.js';
 import { isGuest, isAuthenticated, isAdmin } from '../middleware/user.js';
+import chatController from '../controllers/chatController.js';
 
 const router = express.Router();
 
@@ -17,6 +18,9 @@ router.get('/profile', isAuthenticated, mainController.showProfile);
 
 router.get('/admin', isAdmin, adminController.redirectMainAdmin);
 router.get('/admin/:tab', isAdmin, adminController.showAdmin);
+
+router.get('/chats/', chatController.showChatNoChatSelected);
+router.get('/chats/:id', chatController.showChat);
 
 router.use('/api', apiRouter);
 

@@ -3,6 +3,7 @@
     "header": {
         "nav": {
             "home": "Home",
+            "chats": "Chats",
             "login": "Login",
             "register": "Register",
             "logout": "Logout",
@@ -27,6 +28,9 @@
                 "title": "Chats"
             }
         }
+    },
+    "chats": {
+        "defaultTitle": "Chats"
     },
     "forms": {
         "usernameLabel": "Username: ",

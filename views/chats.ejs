@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title><%= t('websiteTitle') %> | <%= chatId == null ? t('chats.defaultTitle') : chatName %></title>
+    <link rel="icon" type="image/png" href="/img/logo.png" />
+    <%- include('partials/common'); -%>
+
+    <link rel="stylesheet" href="/css/chats.css">
+    <script src="/js/chats.js" defer></script>
+
+    <!-- TODO: maybe get it on the client side in some other way -->
+    <script>
+        var chatId = <%= chatId === null ? "null" : chatId %>;
+    </script>
+</head>
+
+<body>
+    <%- include('partials/header'); -%>
+    <main>
+        <div class="side-panel">
+            <div id="chat-list">
+                <!-- filled with js -->
+            </div>
+        </div>
+        <div id="main-content">
+            <!-- filled with js -->
+        </div>
+    </main>
+</body>
+
+</html>

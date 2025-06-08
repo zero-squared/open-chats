@@ -4,6 +4,7 @@
     </div>
     <nav>
         <a href="/"><%= t('header.nav.home') %></a>
+        <a href="/chats"><%= t('header.nav.chats') %></a>
         <% if (!user) { %>
         <a href="/login"><%= t('header.nav.login') %></a>
         <a href="/register"><%= t('header.nav.register') %></a>
@@ -13,14 +14,14 @@
         <a href="/admin"><%= t('header.nav.admin') %></a>
         <% } %>
         <a href="/logout"><%= t('header.nav.logout') %></a>
-        <% } %>
+        <% } %> 
     </nav>
     <div class="language-selector">
         <button onclick="setLang('ru')">
-            <img src="/img/ruLang.png" width="40" alt="Russian laguage">
+            <img src="/img/ruLang.png" width="40" alt="Russian language">
         </button>
         <button onclick="setLang('en')">
-            <img src="/img/enLang.png" width="40" alt="English laguage">
+            <img src="/img/enLang.png" width="40" alt="English language">
         </button>
     </div>
 </header>

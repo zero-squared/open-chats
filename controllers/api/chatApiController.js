@@ -22,14 +22,7 @@ export default {
 
         limit = parseInt(limit);
         offset = parseInt(offset);
-
-        // validation
-        if (limit <= 0 || limit > GET_MESSAGES_LIMIT_MAX || offset < 0) {
-            return res.status(400).send({
-                success: false,
-                message: req.t('errors.badRequest')
-            });
-        }
+        let chatId = parseInt(req.params.id);
 
         // default values
         if (!limit) {
@@ -40,7 +33,18 @@ export default {
             offset = GET_MESSAGES_OFFSET_DEFAULT;
         }
 
-        const chat = await sequelize.models.Chat.findByPk(req.params.id);
+        // data type and limit validation
+        if (
+            !Number.isInteger(limit) || !Number.isInteger(offset) || !Number.isInteger(chatId)
+            || limit <= 0 || limit > GET_MESSAGES_LIMIT_MAX || offset < 0
+        ) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
+        const chat = await sequelize.models.Chat.findByPk(chatId);
 
         if (!chat) {
             return res.status(400).send({
@@ -52,7 +56,7 @@ export default {
         const messages = await chat.getMessages({
             limit: limit,
             offset: offset,
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']] // newest first
         });
 
         let result = [];
@@ -65,7 +69,7 @@ export default {
                 createdAt: msg.createdAt,
                 updatedAt: msg.updatedAt,
                 text: msg.text,
-                user: {
+                sender: {
                     id: user.id,
                     username: user.username,
                     avatarUrl: user.avatarUrl
