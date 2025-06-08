@@ -28,6 +28,15 @@
             <div id="message-container">
                 <!-- filled with js -->
             </div>
+            <% if (user) { %>
+            <div class="msg-textarea-container">
+                <!-- <input type="text"> -->
+                <textarea id="msg-textarea"></textarea>
+                <button id="msg-send-button">
+                    <img src="/img/logo.png">
+                </button>
+            </div>
+            <% } %>
         </div>
     </main>
 </body>

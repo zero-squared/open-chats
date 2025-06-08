@@ -2,9 +2,10 @@ import express from 'express';
 
 import authController from '../controllers/api/authController.js';
 import { uploadSingleImage } from '../middleware/multerUpload.js';
-import { canUpdateUser, isGuest, isAdmin } from '../middleware/user.js';
+import { canUpdateUser, isGuest, isAdmin, isAuthenticated } from '../middleware/user.js';
 import userController from '../controllers/api/userController.js';
 import chatController from '../controllers/api/chatApiController.js';
+import messageController from '../controllers/api/messageController.js';
 
 const router = express.Router();
 
@@ -18,5 +19,6 @@ router.post('/auth/register', isGuest, authController.registerUser);
 
 router.get('/chats/', chatController.getChats);
 router.get('/chats/:id/messages', chatController.getMessages);
+router.post('/chats/:id/send', isAuthenticated, messageController.sendMessage);
 
 export default router;

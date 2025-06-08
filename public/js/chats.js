@@ -5,6 +5,8 @@ const apiGetMessages = `/api/chats/${chatId}/messages/`;
 
 const chatListElem = document.getElementById('chat-list');
 const messagesElem = document.getElementById('message-container');
+const msgSendButtonElem = document.getElementById('msg-send-button');
+const msgTextareaElem = document.getElementById('msg-textarea');
 
 function createChatElem(chat) {
     const root = document.createElement('div');
@@ -87,11 +89,23 @@ async function loadMessages() {
     for (let msg of messages) {
         messagesElem.prepend(createMsgElem(msg));
     }
-
-    mainContentElem.prepend(messagesElem);
 }
 
 window.onload = () => {
     loadChatList();
     loadMessages();
+};
+
+msgSendButtonElem.onclick = async () => {
+    const res = await fetch(`/api/chats/${chatId}/send/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            text: msgTextareaElem.value,
+        })
+    });
+    
+    location.reload();
 };

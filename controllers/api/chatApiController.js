@@ -24,7 +24,7 @@ export default {
 
         limit = parseInt(limit);
         offset = parseInt(offset);
-        let chatId = parseInt(req.params.id);
+        const chatId = parseInt(req.params.id);
 
         // default values
         if (!limit) {
