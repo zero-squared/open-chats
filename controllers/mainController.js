@@ -9,7 +9,7 @@ export default {
         return res.render('register');
     },
     showNotFound: async (req, res) => {
-        return res.render('error', { title: '404', message: req.t('errors.notFound'), image: '/img/astolfo404.gif' });
+        return res.status(404).render('error', { title: '404', message: req.t('errors.notFound'), image: '/img/astolfo404.gif' });
     },
     showProfile: async (req, res) => {
         return res.render('profile');

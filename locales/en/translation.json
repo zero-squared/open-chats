@@ -68,5 +68,9 @@
         "admin": "Admin",
         "moderator": "Moderator",
         "user": "User"
+    },
+    "noChats": {
+        "title": "No chats",
+        "message": "No chats created"
     }
 }
