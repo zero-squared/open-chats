@@ -1,13 +1,24 @@
-const API_GET_CHATS = '/api/chats/';
 const CHAT_ID = location.pathname.split('/')[2];
-const API_GET_MESSAGES = `/api/chats/${CHAT_ID}/messages/`;
+const MSG_LOAD_LIMIT_INITIAL = 15;
+const MSG_LOAD_LIMIT_SCROLL = 10;
+const SCROLL_THRESHOLD = 100;
+
+// API url's
+const API_GET_CHATS = '/api/chats/';
+// const API_GET_MESSAGES = `/api/chats/${CHAT_ID}/messages/`;
 const API_SEND_MESSAGE = `/api/chats/${CHAT_ID}/send/`;
 
+// DOM elements
 const chatListElem = document.getElementById('chat-list');
-const messagesElem = document.getElementById('message-container');
+const msgContainerElem = document.getElementById('message-container');
 const msgSendButtonElem = document.getElementById('msg-send-button');
 const msgTextareaElem = document.getElementById('msg-textarea');
 
+let scrollMsgOffset = 0;
+let scrollIsLoading = false;
+let scrollLoadMore = true;
+
+// chat list
 function createChatElem(chat) {
     const root = document.createElement('div');
     root.classList.add('list-item');
@@ -47,7 +58,36 @@ async function loadChatList() {
     }
 }
 
-function createMsgElem(msg) {
+// messages
+
+// {data, elem} oldest first
+const msgArr = [];
+
+// adds the message to both the array and the DOM
+function addMsg(newMsgData) {
+    let index = 0;
+    for (const msg of msgArr) {
+        if (msg.data.createdAt > newMsgData.createdAt)
+            break;
+        index++;
+    }
+
+    // TODO: check corner cases
+
+    const nextChildElem = index === msgArr.length ? null : msgArr[index].elem;
+    const newMsg = { data: newMsgData, elem: createMsgElem(newMsgData) };
+    msgArr.splice(index, 0, newMsg);
+
+    // DOM
+    if (nextChildElem === null) {
+        msgContainerElem.appendChild(newMsg.elem);
+    }
+    else {
+        msgContainerElem.insertBefore(newMsg.elem, nextChildElem);
+    }
+}
+
+function createMsgElem(msgData) {
     const root = document.createElement('div');
     root.classList.add('message');
 
@@ -56,7 +96,7 @@ function createMsgElem(msg) {
     avatarDivElem.classList.add('avatar-container');
 
     const avatarElem = document.createElement('img');
-    avatarElem.src = msg.sender.avatarUrl;
+    avatarElem.src = msgData.sender.avatarUrl;
 
     avatarDivElem.appendChild(avatarElem);
 
@@ -66,11 +106,11 @@ function createMsgElem(msg) {
 
     const usernameElem = document.createElement('h4');
     usernameElem.classList.add('username');
-    usernameElem.innerText = msg.sender.username;
+    usernameElem.innerText = msgData.sender.username;
 
     const msgTextElem = document.createElement('p');
     msgTextElem.classList.add('msg-text');
-    msgTextElem.innerText = msg.text;
+    msgTextElem.innerText = msgData.text;
 
     usernameTextDivElem.appendChild(usernameElem);
     usernameTextDivElem.appendChild(msgTextElem);
@@ -81,8 +121,11 @@ function createMsgElem(msg) {
     return root;
 }
 
-async function loadMessages() {
-    const res = await fetch(API_GET_MESSAGES, {
+// returns the parsed api body or null if !success
+async function loadMessages(limit, offset) {
+    const apiGetMessages = `/api/chats/${CHAT_ID}/messages?limit=${limit}&offset=${offset}`;
+
+    const res = await fetch(apiGetMessages, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -93,20 +136,31 @@ async function loadMessages() {
 
     if (!body.success) {
         messagesElem.textContent = body.message;
-        return;
+        return null;
     }
 
     const messages = body.messages;
 
-    for (let msg of messages) {
-        console.log(msg);
-        messagesElem.prepend(createMsgElem(msg));
+    for (let msgData of messages) {
+        addMsg(msgData);
+    }
+
+    return body.messages;
+}
+
+async function init() {
+    loadChatList();
+
+    const messages = await loadMessages(MSG_LOAD_LIMIT_INITIAL, 0);
+    if (messages) {
+        console.log(messages);
+        console.log("a", messages.length);
+        scrollMsgOffset = messages.length;
     }
 }
 
 window.onload = () => {
-    loadChatList();
-    loadMessages();
+    init();
 };
 
 if (msgSendButtonElem) {
@@ -123,6 +177,34 @@ if (msgSendButtonElem) {
 
         // TODO: handle error
 
+        // FIXME: temporary until websockets are added
         location.reload();
     };
 }
+
+// TODO: scroll logic
+async function scrollLoad() {
+    if (!scrollLoadMore || scrollIsLoading) return;
+
+    scrollIsLoading = true;
+
+    const messages = await loadMessages(MSG_LOAD_LIMIT_SCROLL, scrollMsgOffset);
+
+    if (!messages || messages.length === 0) {
+        scrollLoadMore = false;
+    } else {
+        console.log("b", messages.length);
+        scrollMsgOffset += messages.length;
+    }
+
+    scrollIsLoading = false;
+}
+
+msgContainerElem.onscroll = () => {
+    const nearTop = msgContainerElem.scrollTop <= SCROLL_THRESHOLD;
+    if (nearTop) {
+        console.log(scrollLoadMore, scrollIsLoading, scrollMsgOffset);
+        scrollLoad();
+    }
+    // console.log(msgContainerElem.scrollTop, msgContainerElem.clientHeight, msgContainerElem.scrollHeight);
+};
