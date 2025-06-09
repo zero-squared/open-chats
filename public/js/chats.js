@@ -3,6 +3,8 @@ const MSG_LOAD_LIMIT_INITIAL = 15;
 const MSG_LOAD_LIMIT_SCROLL = 10;
 const SCROLL_THRESHOLD = 100;
 
+// TODO: remove console.log's
+
 // API url's
 const API_GET_CHATS = '/api/chats/';
 // const API_GET_MESSAGES = `/api/chats/${CHAT_ID}/messages/`;
@@ -153,8 +155,6 @@ async function init() {
 
     const messages = await loadMessages(MSG_LOAD_LIMIT_INITIAL, 0);
     if (messages) {
-        console.log(messages);
-        console.log("a", messages.length);
         scrollMsgOffset = messages.length;
     }
 }
@@ -206,5 +206,4 @@ msgContainerElem.onscroll = () => {
         console.log(scrollLoadMore, scrollIsLoading, scrollMsgOffset);
         scrollLoad();
     }
-    // console.log(msgContainerElem.scrollTop, msgContainerElem.clientHeight, msgContainerElem.scrollHeight);
 };
