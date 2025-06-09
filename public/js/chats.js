@@ -15,9 +15,9 @@ function createChatElem(chat) {
     const linkElem = document.createElement('a');
     linkElem.href = `/chats/${chat.id}`;
     linkElem.innerText = chat.name;
-    
+
     root.appendChild(linkElem);
-    
+
     // highlight the opened chat
     if (chat.id == CHAT_ID) {
         root.classList.add('active');
@@ -50,24 +50,24 @@ async function loadChatList() {
 function createMsgElem(msg) {
     const root = document.createElement('div');
     root.classList.add('message');
-    
+
     // avatar div
     const avatarDivElem = document.createElement('div');
     avatarDivElem.classList.add('avatar-container');
-    
+
     const avatarElem = document.createElement('img');
     avatarElem.src = msg.sender.avatarUrl;
-    
+
     avatarDivElem.appendChild(avatarElem);
-    
+
     // username/text div
     const usernameTextDivElem = document.createElement('div');
     usernameTextDivElem.classList.add('username-text-container');
-    
+
     const usernameElem = document.createElement('h4');
     usernameElem.classList.add('username');
     usernameElem.innerText = msg.sender.username;
-    
+
     const msgTextElem = document.createElement('p');
     msgTextElem.classList.add('msg-text');
     msgTextElem.innerText = msg.text;
@@ -99,6 +99,7 @@ async function loadMessages() {
     const messages = body.messages;
 
     for (let msg of messages) {
+        console.log(msg);
         messagesElem.prepend(createMsgElem(msg));
     }
 }
@@ -108,16 +109,20 @@ window.onload = () => {
     loadMessages();
 };
 
-msgSendButtonElem.onclick = async () => {
-    const res = await fetch(API_SEND_MESSAGE, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            text: msgTextareaElem.value,
-        })
-    });
-    
-    location.reload();
-};
+if (msgSendButtonElem) {
+    msgSendButtonElem.onclick = async () => {
+        const res = await fetch(API_SEND_MESSAGE, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: msgTextareaElem.value,
+            })
+        });
+
+        // TODO: handle error
+
+        location.reload();
+    };
+}
