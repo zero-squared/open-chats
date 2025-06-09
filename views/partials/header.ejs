@@ -3,17 +3,17 @@
         <a href="/"><img src="/img/logo.png" width="40" height="40" alt="Logo"></a>
     </div>
     <nav>
-        <a href="/"><%= t('header.nav.home') %></a>
-        <a href="/chats"><%= t('header.nav.chats') %></a>
+        <a href="/" class="<%= currentPath === '/' ? 'active' : '' %>"><%= t('header.nav.home') %></a>
+        <a href="/chats" class="<%= currentPath.startsWith('/chats') ? 'active' : '' %>"><%= t('header.nav.chats') %></a>
         <% if (!user) { %>
-        <a href="/login"><%= t('header.nav.login') %></a>
-        <a href="/register"><%= t('header.nav.register') %></a>
+        <a href="/login" class="<%= currentPath === '/login' ? 'active' : '' %>"><%= t('header.nav.login') %></a>
+        <a href="/register" class="<%= currentPath === '/register' ? 'active' : '' %>"><%= t('header.nav.register') %></a>
         <% } else { %>
-        <a href="/profile"><%= t('header.nav.profile') %></a>
+        <a href="/profile" class="<%= currentPath === '/profile' ? 'active' : '' %>"><%= t('header.nav.profile') %></a>
         <% if (user.role === 'admin') { %>
-        <a href="/admin"><%= t('header.nav.admin') %></a>
+        <a href="/admin" class="<%= currentPath.startsWith('/admin') ? 'active' : '' %>"><%= t('header.nav.admin') %></a>
         <% } %>
-        <a href="/logout"><%= t('header.nav.logout') %></a>
+        <a href="/logout" class="<%= currentPath === '/logout' ? 'active' : '' %>"><%= t('header.nav.logout') %></a>
         <% } %> 
     </nav>
     <div class="language-selector">

@@ -20,7 +20,15 @@ async function loadNewUsers() {
         }
     });
 
-    const users = await res.json();
+    const body = await res.json();
+
+    if (!body.success) {
+        loadMore = false;
+        loaderElem.textContent = body.message;
+        return;
+    }
+
+    const users = body.users;
 
     if (users.length === 0) {
         loadMore = false;

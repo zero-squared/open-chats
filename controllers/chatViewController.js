@@ -2,7 +2,7 @@ import sequelize from "../models/index.js";
 
 export default {
     showChat: async (req, res, next) => {
-        const chatId = parseInt(req.params.id);
+        const chatId = Number(req.params.id);
 
         if (!chatId || !Number.isInteger(chatId)) {
             return next();
@@ -13,7 +13,10 @@ export default {
             return next();
         }
 
-        return res.render('chats', { user: req.session.user, chatId: chatId, chatName: chat.name });
+        return res.render('chats', { chat: {
+            id: chat.id,
+            name: chat.name
+        }});
     },
     redirectChatDefault: async (req, res) => {
         const chat = await sequelize.models.Chat.findOne({

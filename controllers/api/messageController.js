@@ -3,7 +3,7 @@ import { MESSAGE_MAX_LENGTH } from "../../utils/config.js";
 
 export default {
     sendMessage: async (req, res) => {
-        const chatId = parseInt(req.params.id);
+        const chatId = Number(req.params.id);
         const { text } = req.body;
 
         // data type and limit validation

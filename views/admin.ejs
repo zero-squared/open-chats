@@ -16,10 +16,10 @@
     <%- include('partials/header'); -%>
     <main>
         <div class="side-panel">
-            <div class="tab-link">
+            <div class="tab-link <%= tabName === 'users' ? 'active' : '' %>">
                 <a href="/admin/users"><%= t('adminPage.tabs.users.title') %></a>
             </div>
-            <div class="tab-link">
+            <div class="tab-link <%= tabName === 'chats' ? 'active' : '' %>">
                 <a href="/admin/chats"><%= t('adminPage.tabs.chats.title') %></a>
             </div>
         </div>

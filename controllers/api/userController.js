@@ -9,8 +9,8 @@ export default {
     getUsers: async (req, res) => {
         let { limit, offset } = req.query;
 
-        limit = parseInt(limit);
-        offset = parseInt(offset);
+        limit = Number(limit);
+        offset = Number(offset);
 
         if (!limit) {
             limit = 10;
@@ -39,8 +39,10 @@ export default {
                 });
             }
 
-            // TODO Return success
-            return res.send(result);
+            return res.send({
+                success: true,
+                users: result
+            });
         } catch (e) {
             console.error(e);
 

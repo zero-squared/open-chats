@@ -1,18 +1,18 @@
 export default {
     showHome: async (req, res) => {
-        return res.render('home', { user: req.session.user });
+        return res.render('home');
     },
     showLogin: async (req, res) => {
-        return res.render('login', { user: req.session.user });
+        return res.render('login');
     },
     showRegister: async (req, res) => {
-        return res.render('register', { user: req.session.user });
+        return res.render('register');
     },
     showNotFound: async (req, res) => {
-        return res.render('notFound', { user: req.session.user });
+        return res.render('error', { title: '404', message: req.t('errors.notFound'), image: '/img/astolfo404.gif' });
     },
     showProfile: async (req, res) => {
-        return res.render('profile', { user: req.session.user });
+        return res.render('profile');
     },
     logoutUser: async (req, res) => {
         req.session.destroy();

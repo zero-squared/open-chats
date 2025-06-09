@@ -3,16 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <title><%= t('websiteTitle') %> | <%= chatId == null ? t('chats.defaultTitle') : chatName %></title>
+    <title><%= t('websiteTitle') %> | <%= chat.id == null ? t('chats.defaultTitle') : chat.name %></title>
     <link rel="icon" type="image/png" href="/img/logo.png" />
     <%- include('partials/common'); -%>
     <link rel="stylesheet" href="/css/chats.css">
     <script src="/js/chats.js" defer></script>
-
-    <!-- TODO: maybe get it on the client side in some other way -->
-    <script>
-        var chatId = <%= chatId === null ? "null" : chatId %>;
-    </script>
 </head>
 
 <body>
@@ -30,9 +25,9 @@
             <% if (user) { %>
             <div class="msg-textarea-container">
                 <!-- <input type="text"> -->
-                <textarea id="msg-textarea"></textarea>
+                <textarea id="msg-textarea" placeholder="Message <%= chat.name %>"></textarea>
                 <button id="msg-send-button">
-                    <img src="/img/logo.png">
+                    <img src="/img/send.png">
                 </button>
             </div>
             <% } %>

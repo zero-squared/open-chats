@@ -8,7 +8,7 @@ export default{
             return next();
         }
 
-        return res.render('admin', { user: req.session.user, tabName: tabName });
+        return res.render('admin', { tabName: tabName });
     },
     redirectMainAdmin: async (req, res) => {
         return res.redirect(`/admin/${ADMIN_TABS[0]}`);

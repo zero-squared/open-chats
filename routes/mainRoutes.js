@@ -6,10 +6,12 @@ import chatViewController from '../controllers/chatViewController.js';
 import apiRouter from './apiRoutes.js';
 import { isGuest, isAuthenticated, isAdmin } from '../middleware/user.js';
 import { updateSessionMiddleware } from '../middleware/session.js';
+import { setLocals } from '../middleware/locals.js';
 
 const router = express.Router();
 
 router.use(updateSessionMiddleware);
+router.use(setLocals);
 
 router.get('/', mainController.showHome);
 

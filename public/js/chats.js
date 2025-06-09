@@ -16,11 +16,10 @@ function createChatElem(chat) {
     linkElem.href = `/chats/${chat.id}`;
     linkElem.innerText = chat.name;
     
-    
     root.appendChild(linkElem);
     
     // highlight the opened chat
-    if (chat.id == chatId) {
+    if (chat.id == CHAT_ID) {
         root.classList.add('active');
     }
     return root;
@@ -34,7 +33,14 @@ async function loadChatList() {
         }
     });
 
-    const chats = await res.json();
+    const body = await res.json();
+
+    if (!body.success) {
+        chatListElem.textContent = body.message;
+        return;
+    }
+
+    const chats = body.chats;
 
     for (let chat of chats) {
         chatListElem.appendChild(createChatElem(chat));
@@ -83,7 +89,14 @@ async function loadMessages() {
         }
     });
 
-    const messages = await res.json();
+    const body = await res.json();
+
+    if (!body.success) {
+        messagesElem.textContent = body.message;
+        return;
+    }
+
+    const messages = body.messages;
 
     for (let msg of messages) {
         messagesElem.prepend(createMsgElem(msg));

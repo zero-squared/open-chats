@@ -18,8 +18,10 @@ export default {
                 });
             }
     
-            // TODO Return success
-            return res.send(result);
+            return res.send({
+                success: true,
+                chats: result
+            });
         } catch (e) {
             console.error(e);
 
@@ -32,9 +34,9 @@ export default {
     getMessages: async (req, res) => {
         let { limit, offset } = req.query;
 
-        limit = parseInt(limit);
-        offset = parseInt(offset);
-        const chatId = parseInt(req.params.id);
+        limit = Number(limit);
+        offset = Number(offset);
+        const chatId = Number(req.params.id);
 
         // default values
         if (!limit) {
@@ -90,8 +92,10 @@ export default {
                 });
             }
 
-            // TODO Return success
-            return res.send(result);
+            return res.send({
+                success: true,
+                messages: result
+            });
         } catch (e) {
             console.error(e);
 

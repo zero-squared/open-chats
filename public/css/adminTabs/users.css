@@ -8,10 +8,10 @@
 .users .user {
     border: 1px solid white;
     width: 100%;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 64px 1fr 1fr 1fr;
+    text-align: center;
     align-items: center;
-    justify-content: space-between;
     padding-right: 10px;
     height: 64px;
     box-sizing: border-box;
