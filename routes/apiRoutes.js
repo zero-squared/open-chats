@@ -1,11 +1,11 @@
 import express from 'express';
 
 import authController from '../controllers/api/authController.js';
+import userController from '../controllers/api/userController.js';
+import chatController from '../controllers/api/chatController.js';
+import messageController from '../controllers/api/messageController.js';
 import { uploadSingleImage } from '../middleware/multerUpload.js';
 import { canUpdateUser, isGuest, isAdmin, isAuthenticated } from '../middleware/user.js';
-import userController from '../controllers/api/userController.js';
-import chatController from '../controllers/api/chatApiController.js';
-import messageController from '../controllers/api/messageController.js';
 
 const router = express.Router();
 

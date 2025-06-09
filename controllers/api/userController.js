@@ -25,21 +25,22 @@ export default {
                 offset: offset
             });
 
-            let results = [];
+            let result = [];
 
             for (const user of users) {
                 const userRole = await user.getRole();
 
-                results.push({
+                result.push({
                     id: user.id,
                     username: user.username,
-                    avatarUrl: user.avatarUrl,
+                    avatarUrl: user.avatarUrl || DEFAULT_AVATAR,
                     createdAt: user.createdAt,
                     role: userRole.name
                 });
             }
 
-            return res.send(results);
+            // TODO Return success
+            return res.send(result);
         } catch (e) {
             console.error(e);
 

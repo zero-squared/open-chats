@@ -1,12 +1,10 @@
-const avatarForm = document.getElementById('avatar-form');
+const AVATAR_API = '/api/users/@me/avatar';
 
 const fileInput = document.getElementById('file-input');
-
+const avatarForm = document.getElementById('avatar-form');
 const errorElem = document.getElementById('error');
 const avatarElem = document.getElementById('avatar');
 const deleteAvatarBtn = document.getElementById('delete-avatar-btn');
-
-const AVATAR_API = '/api/users/@me/avatar';
 
 avatarForm.onsubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +49,7 @@ deleteAvatarBtn.onclick = async () => {
             return;
         }
 
-        avatarElem.src = DEFAULT_AVATAR;
+        avatarElem.src = body.avatarUrl;
     } catch (e) {
         console.error(e);
         errorElem.innerText = UNEXPECTED_ERROR_TEXT;

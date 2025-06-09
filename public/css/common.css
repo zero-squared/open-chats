@@ -64,3 +64,8 @@ header .language-selector img {
 .error {
     color: rgb(255, 108, 108);
 }
+
+.active {
+    background-color: #4a4a4a;
+    font-weight: bold;
+}

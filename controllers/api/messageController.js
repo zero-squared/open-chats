@@ -14,23 +14,32 @@ export default {
             });
         }
 
-        const chat = await sequelize.models.Chat.findByPk(chatId);
+        try {
+            const chat = await sequelize.models.Chat.findByPk(chatId);
+    
+            if (!chat) {
+                return res.status(400).send({
+                    success: false,
+                    message: req.t('errors.chatNotExist')
+                });
+            }
+    
+            const message = await sequelize.models.Message.create({
+                UserId: req.session.user.id,
+                ChatId: chatId,
+                text: text
+            });
+    
+            return res.send({
+                success: true,
+            });
+        } catch (e) {
+            console.error(e)
 
-        if (!chat) {
-            return res.status(400).send({
+            return res.status(500).send({
                 success: false,
-                message: req.t('errors.chatNotExist')
+                message: req.t('errors.internalServerError')
             });
         }
-
-        const message = await sequelize.models.Message.create({
-            UserId: req.session.user.id,
-            ChatId: chatId,
-            text: text
-        });
-
-        return res.send({
-            success: true,
-        });
     }
 }

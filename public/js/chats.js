@@ -1,7 +1,7 @@
 const API_GET_CHATS = '/api/chats/';
-
-// only valid if chatId !== null
-const apiGetMessages = `/api/chats/${chatId}/messages/`;
+const CHAT_ID = location.pathname.split('/')[2];
+const API_GET_MESSAGES = `/api/chats/${CHAT_ID}/messages/`;
+const API_SEND_MESSAGE = `/api/chats/${CHAT_ID}/send/`;
 
 const chatListElem = document.getElementById('chat-list');
 const messagesElem = document.getElementById('message-container');
@@ -21,7 +21,7 @@ function createChatElem(chat) {
     
     // highlight the opened chat
     if (chat.id == chatId) {
-        root.classList.add('current-chat')
+        root.classList.add('active');
     }
     return root;
 }
@@ -50,8 +50,7 @@ function createMsgElem(msg) {
     avatarDivElem.classList.add('avatar-container');
     
     const avatarElem = document.createElement('img');
-    // TODO: maybe add a default avatar url constant somewhere?
-    avatarElem.src = msg.sender.avatarUrl || '/img/defaultAvatar.png';
+    avatarElem.src = msg.sender.avatarUrl;
     
     avatarDivElem.appendChild(avatarElem);
     
@@ -77,7 +76,7 @@ function createMsgElem(msg) {
 }
 
 async function loadMessages() {
-    const res = await fetch(apiGetMessages, {
+    const res = await fetch(API_GET_MESSAGES, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -97,7 +96,7 @@ window.onload = () => {
 };
 
 msgSendButtonElem.onclick = async () => {
-    const res = await fetch(`/api/chats/${chatId}/send/`, {
+    const res = await fetch(API_SEND_MESSAGE, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

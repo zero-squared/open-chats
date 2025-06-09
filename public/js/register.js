@@ -1,13 +1,11 @@
-const registerForm = document.getElementById('register-form');
+const REGISTER_API = '/api/auth/register';
+const REDIRECT = '/';
 
+const registerForm = document.getElementById('register-form');
 const usernameInput = document.getElementById('username-input');
 const passwordInput = document.getElementById('password-input');
 const repeatPasswordInput = document.getElementById('repeat-password-input');
-
 const errorElem = document.getElementById('error');
-
-const REGISTER_API = '/api/auth/register';
-const REDIRECT = '/';
 
 registerForm.onsubmit = async (e) => {
     e.preventDefault();

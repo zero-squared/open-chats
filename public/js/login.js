@@ -1,12 +1,10 @@
-const loginForm = document.getElementById('login-form');
-
-const usernameInput = document.getElementById('username-input');
-const passwordInput = document.getElementById('password-input');
-
-const errorElem = document.getElementById('error');
-
 const LOGIN_API = '/api/auth/login';
 const REDIRECT = '/';
+
+const loginForm = document.getElementById('login-form');
+const usernameInput = document.getElementById('username-input');
+const passwordInput = document.getElementById('password-input');
+const errorElem = document.getElementById('error');
 
 loginForm.onsubmit = async (e) => {
     e.preventDefault();

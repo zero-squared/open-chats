@@ -24,6 +24,6 @@ export default {
             // TODO: show some error
         }
 
-        return res.redirect(`/chats/${chat.id}/`);
+        return res.redirect(`/chats/${chat.id}`);
     }
 }

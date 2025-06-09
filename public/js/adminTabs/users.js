@@ -40,7 +40,7 @@ function createUserElem(user) {
     const userElem = document.createElement('div');
 
     const avatarElem = document.createElement('img');
-    avatarElem.src = user.avatarUrl || DEFAULT_AVATAR;
+    avatarElem.src = user.avatarUrl;
     avatarElem.alt = 'Avatar';
 
     const usernameElem = document.createElement('p');
