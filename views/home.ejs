@@ -11,11 +11,6 @@
     <%- include('partials/header'); -%>
     <main>
         <h1>OpenChats</h1>
-        <p><%= t('welcome') %></p>
-        <% if (user) { %>
-        <%= user.role %>
-        <img src="<%= user.avatarUrl || 'img/defaultAvatar.png' %>" alt="User avatar" width="128" height="128">
-        <% } %>
     </main>
 </body>
 </html>

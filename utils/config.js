@@ -12,3 +12,5 @@ export const PASSWORD_MAX_LENGTH = 50;
 export const MESSAGE_MAX_LENGTH = 512;
 
 export const ADMIN_TABS = ['users', 'chats'];
+
+export const DEFAULT_AVATAR = '/img/defaultAvatar.png';

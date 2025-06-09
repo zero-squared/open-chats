@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create();
 
-// Encode "{private_key}:" string to base64 for authorization according to documentation: https://imagekit.io/docs/api-reference
+// Encode string "{private_key}:" to base64 for authorization according to documentation: https://imagekit.io/docs/api-reference
 const authorization = Buffer.from(`${process.env.IK_PRIVATE_KEY}:`).toString('base64');
 
 instance.defaults.headers.common['Authorization'] = `Basic ${authorization}`;

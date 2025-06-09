@@ -2,11 +2,14 @@ import express from 'express';
 
 import mainController from '../controllers/mainController.js';
 import adminController from '../controllers/adminController.js';
+import chatController from '../controllers/chatController.js';
 import apiRouter from './apiRoutes.js';
 import { isGuest, isAuthenticated, isAdmin } from '../middleware/user.js';
-import chatController from '../controllers/chatController.js';
+import { updateSessionMiddleware } from '../middleware/session.js';
 
 const router = express.Router();
+
+router.use(updateSessionMiddleware);
 
 router.get('/', mainController.showHome);
 

@@ -17,7 +17,6 @@ export default async () => {
         const phPasswordHash = await bcrypt.hash('12345', parseInt(process.env.SALT_ROUNDS));
         await sequelize.models.User.create({ username: 'user1', password: phPasswordHash, RoleId: userRole.id });
         await sequelize.models.User.create({ username: 'viuviu', password: phPasswordHash, RoleId: userRole.id });
-        await sequelize.models.User.create({ username: 'femboy_uwu', password: phPasswordHash, RoleId: moderatorRole.id });
 
         console.log('Creating placeholder chats...');
         const phChat1 = await sequelize.models.Chat.create({ name: 'Test chat 1' });

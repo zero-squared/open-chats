@@ -2,7 +2,7 @@ import FormData from 'form-data';
 
 import sequelize from '../../models/index.js';
 import { uploadFile, deleteFile } from '../../utils/imageKitApi.js';
-import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH, PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from '../../utils/config.js';
+import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH, DEFAULT_AVATAR } from '../../utils/config.js';
 
 
 export default {
@@ -91,10 +91,6 @@ export default {
             user.username = username;
             await user.save();
 
-            if (req.session.user.id === user.id) {
-                req.session.user.username = username;
-            }
-
             return res.send({
                 success: true,
                 username: username
@@ -144,10 +140,6 @@ export default {
 
             await user.save();
 
-            if (req.session.user.id === user.id) {
-                req.session.user.avatarUrl = data.url;
-            }
-
             return res.send({
                 success: true,
                 avatarUrl: data.url
@@ -184,14 +176,11 @@ export default {
                 user.avatarUrl = null;
                 user.avatarFileId = null;
                 await user.save();
-
-                if (req.session.user.id === user.id) {
-                    req.session.user.avatarUrl = null;
-                }
             }
 
             return res.send({
-                success: true
+                success: true,
+                avatarUrl: DEFAULT_AVATAR
             });
         } catch (e) {
             console.error(e);

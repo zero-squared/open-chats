@@ -13,7 +13,7 @@
 <body>
     <%- include('partials/header'); -%>
         <main>
-            <img src="<%= user.avatarUrl || '/img/defaultAvatar.png' %>" id="avatar" alt="User avatar" width="70" height="70">
+            <img src="<%= user.avatarUrl %>" id="avatar" alt="User avatar" width="70" height="70">
             <p><%= t('profile.username') %><%= user.username %>
             </p>
             <form id="avatar-form">

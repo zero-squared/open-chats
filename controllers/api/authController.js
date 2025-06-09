@@ -3,6 +3,7 @@ import { UniqueConstraintError } from 'sequelize';
 
 import sequelize from '../../models/index.js';
 import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH, PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from '../../utils/config.js';
+import { updateSession } from '../../utils/session.js';
 
 export default {
     registerUser: async (req, res) => {
@@ -71,12 +72,8 @@ export default {
                 RoleId: userRole.id
             });
 
-            req.session.user = {
-                id: user.id,
-                username: user.username,
-                avatarUrl: user.avatarUrl,
-                role: userRole.name
-            }
+            await updateSession(req, user);
+            
             res.send({
                 success: true,
             });
@@ -138,14 +135,8 @@ export default {
                 });
             }
 
-            const role = await user.getRole();
+            await updateSession(req, user);
 
-            req.session.user = {
-                id: user.id,
-                username: user.username,
-                avatarUrl: user.avatarUrl,
-                role: role.name
-            }
             res.send({
                 success: true,
             });

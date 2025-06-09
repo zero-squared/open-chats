@@ -2,15 +2,16 @@ import sequelize from "../models/index.js";
 
 export default {
     showChat: async (req, res, next) => {
-        let ok = true;
-
         const chatId = parseInt(req.params.id);
-        if (!chatId || !Number.isInteger(chatId))
+
+        if (!chatId || !Number.isInteger(chatId)) {
             return next();
+        }
 
         const chat = await sequelize.models.Chat.findByPk(chatId);
-        if (!chat)
+        if (!chat) {
             return next();
+        }
 
         return res.render('chats', { user: req.session.user, chatId: chatId, chatName: chat.name });
     },
