@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title><%= t('websiteTitle') %> | <%= t('profile.title') %></title>
     <link rel="icon" type="image/png" href="/img/logo.png" />
     <%- include('partials/common'); -%>
-    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/profile.css">
     <script src="/js/profile.js" defer></script>
 </head>
-
 <body>
     <%- include('partials/header'); -%>
         <main>
-            <img src="<%= user.avatarUrl %>" id="avatar" alt="User avatar" width="70" height="70">
-            <p><%= t('profile.username') %><%= user.username %>
-            </p>
-            <form id="avatar-form">
-                <input type="file" id="file-input" name="avatar" accept="image/*" />
-                <p class="error" id="error"></p>
-                <button type="submit"><%= t('profile.uploadAvatarButton') %></button>
-            </form>
-            <button id="delete-avatar-btn">
-                Delete avatar
-            </button>
+            <div class="profile">
+                <h2><%= t('profile.userProfile') %></h2>
+                <div class="avatar-container">
+                    <img src="<%= user.avatarUrl %>" id="avatar" alt="User avatar" width="100" height="100">
+                    <div class="avatar-btns">
+                        <label class="btn" for="avatar-file-input" id="upload-avatar-label"><%= t('profile.uploadAvatarButton') %></label>
+                        <button class="btn" id="delete-avatar-btn">Delete avatar</button>
+                        <input type="file" id="avatar-file-input" name="avatar" accept="image/*" />
+                    </div>
+                </div>
+                <p class="error" id="avatar-error"></p>
+                <div class="user-info">
+                    <p><%= t('profile.username') %><b><%= user.username %></b></p>
+                    <p><%= t('profile.role') %><b><%= user.role %></b></p>
+                    <div class="user-info-btns">
+                        <!-- TODO: Add functionality -->
+                        <button class="btn">Edit username</button>
+                        <button class="btn">Change password</button>
+                    </div>
+                </div>
+                <!-- TODO: Add user-info-error -->
+            </div>
         </main>
 </body>
-
 </html>

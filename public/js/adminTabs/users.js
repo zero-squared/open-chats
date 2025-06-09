@@ -24,7 +24,7 @@ async function loadNewUsers() {
 
     if (!body.success) {
         loadMore = false;
-        loaderElem.textContent = body.message;
+        loaderElem.innerText = body.message;
         return;
     }
 
@@ -52,20 +52,20 @@ function createUserElem(user) {
     avatarElem.alt = 'Avatar';
 
     const usernameElem = document.createElement('p');
-    usernameElem.textContent = user.username;
+    usernameElem.innerText = user.username;
 
     const roleElem = document.createElement('p');
     if (user.role === 'admin') {
-        roleElem.textContent = ADMIN_ROLE_TEXT;
+        roleElem.innerText = ADMIN_ROLE_TEXT;
     } else if (user.role === 'moderator') {
-        roleElem.textContent = MODERATOR_ROLE_TEXT;
+        roleElem.innerText = MODERATOR_ROLE_TEXT;
     } else {
-        roleElem.textContent = USER_ROLE_TEXT;
+        roleElem.innerText = USER_ROLE_TEXT;
     }
 
     const createAtElem = document.createElement('p');
     const createdAt = new Date(user.createdAt);
-    createAtElem.textContent = localDateString(createdAt, {
+    createAtElem.innerText = localDateString(createdAt, {
         year: "numeric",
         month: "long",
         day: "numeric",

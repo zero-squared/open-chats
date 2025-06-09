@@ -1,9 +1,9 @@
 import FormData from 'form-data';
+import sharp from 'sharp';
 
 import sequelize from '../../models/index.js';
 import { uploadFile, deleteFile } from '../../utils/imageKitApi.js';
 import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH, DEFAULT_AVATAR } from '../../utils/config.js';
-
 
 export default {
     getUsers: async (req, res) => {
@@ -130,8 +130,15 @@ export default {
 
             const avatarFileName = `${user.username}_avatar`;
 
+            const squareImageBuffer = await sharp(req.file.buffer).resize({
+                width: 128,
+                height: 128,
+                fit: sharp.fit.cover,
+                position: sharp.strategy.entropy
+            }).toBuffer();
+
             const formData = new FormData();
-            formData.append('file', req.file.buffer, avatarFileName);
+            formData.append('file', squareImageBuffer, avatarFileName);
             formData.append('fileName', avatarFileName);
             formData.append('folder', '/avatars/');
             formData.append('publicKey', process.env.IK_PUBLIC_KEY);

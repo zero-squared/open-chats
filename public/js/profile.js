@@ -1,18 +1,22 @@
 const AVATAR_API = '/api/users/@me/avatar';
 
-const fileInput = document.getElementById('file-input');
-const avatarForm = document.getElementById('avatar-form');
-const errorElem = document.getElementById('error');
-const avatarElem = document.getElementById('avatar');
+const avatarFileInput = document.getElementById('avatar-file-input');
+const uploadAvatarLabel = document.getElementById('upload-avatar-label');
 const deleteAvatarBtn = document.getElementById('delete-avatar-btn');
+const avatarErrorElem = document.getElementById('avatar-error');
+const avatarElem = document.getElementById('avatar');
 
-avatarForm.onsubmit = async (e) => {
-    e.preventDefault();
+let avatarButtonsDisabled = false;
 
-    errorElem.innerText = '';
+// TODO Fix avatar uploading with space in filename
 
-    const file = fileInput.files[0];
-        
+avatarFileInput.onchange = async (e) => {
+    console.log('aaa')
+    avatarErrorElem.style.display = 'none';
+    toggleAvatarBtns(true);
+
+    const file = avatarFileInput.files[0];
+
     const formData = new FormData();
     formData.append('image', file);
 
@@ -25,18 +29,23 @@ avatarForm.onsubmit = async (e) => {
         const body = await res.json();
 
         if (!body.success) {
-            errorElem.innerText = body.message;
+            showAvatarError(body.message);
+            toggleAvatarBtns(false);
             return;
         }
 
         avatarElem.src = body.avatarUrl;
     } catch (e) {
         console.error(e);
-        errorElem.innerText = UNEXPECTED_ERROR_TEXT;
+        showAvatarError(UNEXPECTED_ERROR_TEXT);
     }
+    toggleAvatarBtns(false);
 }
 
 deleteAvatarBtn.onclick = async () => {
+    avatarErrorElem.style.display = 'none';
+    toggleAvatarBtns(true);
+
     try {
         const res = await fetch(AVATAR_API, {
             method: 'DELETE'
@@ -45,13 +54,32 @@ deleteAvatarBtn.onclick = async () => {
         const body = await res.json();
 
         if (!body.success) {
-            errorElem.innerText = body.message;
+            showAvatarError(body.message);
+            toggleAvatarBtns(false);
             return;
         }
 
         avatarElem.src = body.avatarUrl;
     } catch (e) {
         console.error(e);
-        errorElem.innerText = UNEXPECTED_ERROR_TEXT;
+        showAvatarError(UNEXPECTED_ERROR_TEXT);
+    }
+    toggleAvatarBtns(false);
+}
+
+function showAvatarError(errorText) {
+    avatarErrorElem.style.display = 'block';
+    avatarErrorElem.innerText = errorText;
+}
+
+function toggleAvatarBtns(disabled) {
+    avatarButtonsDisabled = disabled;
+
+    if (disabled) {
+        uploadAvatarLabel.classList.add('disabled');
+        deleteAvatarBtn.classList.add('disabled');
+    } else {
+        uploadAvatarLabel.classList.remove('disabled');
+        deleteAvatarBtn.classList.remove('disabled');
     }
 }

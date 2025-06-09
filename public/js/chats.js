@@ -36,7 +36,7 @@ async function loadChatList() {
     const body = await res.json();
 
     if (!body.success) {
-        chatListElem.textContent = body.message;
+        chatListElem.innerText = body.message;
         return;
     }
 
@@ -92,7 +92,7 @@ async function loadMessages() {
     const body = await res.json();
 
     if (!body.success) {
-        messagesElem.textContent = body.message;
+        messagesElem.innerText = body.message;
         return;
     }
 

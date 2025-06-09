@@ -30,7 +30,7 @@ export function uploadSingleImage(req, res, next) {
             });
         }
 
-        if (!req.file.originalname.endsWith('.png') && !req.file.originalname.endsWith('.jpg')) {
+        if (!req.file.originalname.endsWith('.png') && !req.file.originalname.endsWith('.jpg') && !req.file.originalname.endsWith('.jpeg')) {
             return res.status(400).send({
                 success: false,
                 message: req.t('errors.incorrectImageExtension')

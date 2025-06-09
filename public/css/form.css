@@ -25,6 +25,17 @@ main form input {
     border: solid 1px #ffffff;
 }
 
+main form button {
+    background: transparent;
+    padding: 5px;
+    border: solid 1px #ffffff;
+    cursor: pointer;
+}
+
+main form button:hover {
+    text-decoration: underline;
+}
+
 main img {
     border: solid 1px #ffffff;
 }
