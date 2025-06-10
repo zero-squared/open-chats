@@ -226,6 +226,8 @@ if (msgSendButtonElem) {
 
     document.onkeydown = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            
             sendMessageFromInput();
         }
     }
