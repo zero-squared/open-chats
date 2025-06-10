@@ -39,18 +39,6 @@ main #avatar {
     user-select: none;
 }
 
-.btn {
-    background-color: transparent;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 5px;
-    border: solid 1px #ffffff;
-}
-
-.btn:hover {
-    text-decoration: underline;
-}
-
 .user-info {
     display: flex;
     flex-direction: column;
@@ -62,12 +50,6 @@ main #avatar {
     column-gap: 20px;
     display: flex;
     justify-content: space-between;
-}
-
-.disabled {
-    cursor: auto !important;
-    color: #cecece !important;
-    border: solid 1px #cecece !important;
 }
 
 #avatar-error {
@@ -94,26 +76,10 @@ main #avatar {
     align-items: center;
 }
 
-.modal-content input {
-    background-color: transparent;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 5px;
-    border: solid 1px #ffffff;
-}
-
 .modal-content form {
     display: flex;
     row-gap: 10px;
     flex-direction: column;
-}
-
-.modal-content button {
-    background-color: transparent;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 5px;
-    border: solid 1px #ffffff;
 }
 
 #username-error {

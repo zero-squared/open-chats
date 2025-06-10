@@ -16,8 +16,8 @@
                 <div class="avatar-container">
                     <img src="<%= user.avatarUrl %>" id="avatar" alt="User avatar" width="100" height="100">
                     <div class="avatar-btns">
-                        <label class="btn" for="avatar-file-input" id="upload-avatar-label"><%= t('profile.uploadAvatarButton') %></label>
-                        <button class="btn" id="delete-avatar-btn">Delete avatar</button>
+                        <label class="primary-btn" for="avatar-file-input" id="upload-avatar-label"><%= t('profile.uploadAvatarButton') %></label>
+                        <button class="primary-btn" id="delete-avatar-btn">Delete avatar</button>
                         <input type="file" id="avatar-file-input" name="avatar" accept="image/*" />
                     </div>
                 </div>
@@ -27,20 +27,20 @@
                     <p><%= t('profile.role') %><span><%= user.role %></span></p>
                     <div class="user-info-btns">
                         <!-- TODO: Add functionality -->
-                        <button class="btn" id="edit-username-btn">Edit username</button>
-                        <button class="btn" id="change-password-btn">Change password</button>
+                        <button class="primary-btn" id="edit-username-btn">Edit username</button>
+                        <button class="primary-btn" id="change-password-btn">Change password</button>
                     </div>
                 </div>
                 <!-- TODO: Add user-info-error -->
             </div>
             <div class="modal" id="username-modal">
                 <div class="modal-content">
-                    <button class="close-btn" id="username-modal-close"><img src="/img/close.png" alt="Close"></button>
-                    <h2>Edit username</h2>
+                    <button class="close-btn primary-btn" id="username-modal-close"><img src="/img/close.png" alt="Close"></button>
+                    <h2><%= t('profile.editUsername') %></h2>
                     <form id="edit-username-form">
-                        <label><%= t('forms.usernameLabel') %><input type="text" id="username-input" name="username" minlength="4" maxlength="30" required /></label>
+                        <label><%= t('forms.usernameLabel') %><input type="text" class="primary-input" id="username-input" name="username" minlength="4" maxlength="30" required /></label>
                         <p class="error" id="username-error"></p>
-                        <button type="submit">Save</button>
+                        <button class="primary-btn" type="submit"><%= t('profile.save') %></button>
                     </form>
                 </div>
             </div>

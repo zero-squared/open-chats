@@ -18,7 +18,12 @@ const usernameErrorElem = document.getElementById('username-error');
 
 let avatarButtonsDisabled = false;
 
+avatarFileInput.onclick = async (e) => {
+    if (avatarButtonsDisabled) e.preventDefault();
+}
+
 avatarFileInput.onchange = async () => {
+    if (avatarButtonsDisabled) return;
     avatarErrorElem.style.display = 'none';
     toggleAvatarBtns(true);
 
@@ -50,6 +55,7 @@ avatarFileInput.onchange = async () => {
 }
 
 deleteAvatarBtn.onclick = async () => {
+    if (avatarButtonsDisabled) return;
     avatarErrorElem.style.display = 'none';
     toggleAvatarBtns(true);
 

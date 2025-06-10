@@ -21,25 +21,6 @@ main form label {
     justify-content: space-between;
 }
 
-main form input {
-    font-size: 16px;
-    background: transparent;
-    padding: 5px;
-    border: solid 1px #ffffff;
-}
-
-main form button {
-    font-size: 16px;
-    background: transparent;
-    padding: 5px;
-    border: solid 1px #ffffff;
-    cursor: pointer;
-}
-
-main form button:hover {
-    text-decoration: underline;
-}
-
 main img {
     border: solid 1px #ffffff;
 }
