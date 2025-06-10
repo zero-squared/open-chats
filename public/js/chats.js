@@ -186,6 +186,13 @@ async function scrollLoad() {
     }
 
     scrollIsLoading = false;
+
+    // crutch to fix a scrolling issue    
+    requestAnimationFrame(() => {
+        console.log(msgContainerElem.scrollTop);
+        msgContainerElem.scrollTo(0, msgContainerElem.scrollTop + 1);
+        msgContainerElem.scrollTo(0, msgContainerElem.scrollTop - 1);
+    });
 }
 
 msgContainerElem.onscroll = () => {
