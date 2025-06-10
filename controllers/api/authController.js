@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
-import { UniqueConstraintError } from 'sequelize';
 
 import sequelize from '../../models/index.js';
 import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH, PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from '../../utils/config.js';
 import { updateSession } from '../../utils/session.js';
+import { handleUsernameError } from '../../utils/users.js';
 
 export default {
     registerUser: async (req, res) => {
@@ -73,24 +73,12 @@ export default {
             });
 
             await updateSession(req, user);
-            
+
             res.send({
                 success: true,
             });
         } catch (e) {
-            if (e instanceof UniqueConstraintError) {
-                res.status(400).send({
-                    success: false,
-                    message: req.t('errors.uniqueUsername')
-                });
-            } else {
-                console.error(e);
-
-                return res.status(500).send({
-                    success: false,
-                    message: req.t('errors.internalServerError')
-                });
-            }
+            return handleUsernameError(req, res, e);
         }
     },
     loginUser: async (req, res) => {

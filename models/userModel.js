@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 
-// TODO Add username validation
 export default (sequelize) => {
     sequelize.define('User', {
         username: {
@@ -8,7 +7,11 @@ export default (sequelize) => {
             allowNull: false,
             unique: true,
             validate: {
-                len: [4, 30]
+                len: [4, 30],
+                is: {
+                    args: /^[a-zA-Z0-9_-]+$/,
+                    msg: 'errors.usernameValidation'
+                }
             }
         },
         avatarUrl: {

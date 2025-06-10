@@ -23,15 +23,26 @@
                 </div>
                 <p class="error" id="avatar-error"></p>
                 <div class="user-info">
-                    <p><%= t('profile.username') %><b><%= user.username %></b></p>
-                    <p><%= t('profile.role') %><b><%= user.role %></b></p>
+                    <p><%= t('profile.username') %><span id="username"><%= user.username %></span></p>
+                    <p><%= t('profile.role') %><span><%= user.role %></span></p>
                     <div class="user-info-btns">
                         <!-- TODO: Add functionality -->
-                        <button class="btn">Edit username</button>
-                        <button class="btn">Change password</button>
+                        <button class="btn" id="edit-username-btn">Edit username</button>
+                        <button class="btn" id="change-password-btn">Change password</button>
                     </div>
                 </div>
                 <!-- TODO: Add user-info-error -->
+            </div>
+            <div class="modal" id="username-modal">
+                <div class="modal-content">
+                    <button class="close-btn" id="username-modal-close"><img src="/img/close.png" alt="Close"></button>
+                    <h2>Edit username</h2>
+                    <form id="edit-username-form">
+                        <label><%= t('forms.usernameLabel') %><input type="text" id="username-input" name="username" minlength="4" maxlength="30" required /></label>
+                        <p class="error" id="username-error"></p>
+                        <button type="submit">Save</button>
+                    </form>
+                </div>
             </div>
         </main>
 </body>

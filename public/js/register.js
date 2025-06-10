@@ -36,6 +36,6 @@ registerForm.onsubmit = async (e) => {
 
     } catch (e) {
         console.error(e);
-        errorElem.innerText = UNEXPECTED_ERROR_TEXT;
+        errorElem.innerText = localizedStrings.errors.unexpectedError;
     }
 }
