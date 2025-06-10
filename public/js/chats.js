@@ -171,25 +171,6 @@ window.onload = () => {
     init();
 };
 
-if (msgSendButtonElem) {
-    msgSendButtonElem.onclick = async () => {
-        const res = await fetch(API_SEND_MESSAGE, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                text: msgTextareaElem.value,
-            })
-        });
-
-        // TODO: handle error
-
-        // FIXME: temporary until websockets are added
-        location.reload();
-    };
-}
-
 async function scrollLoad() {
     if (!scrollLoadMore || scrollIsLoading) return;
 
@@ -212,3 +193,35 @@ msgContainerElem.onscroll = () => {
         scrollLoad();
     }
 };
+
+async function sendMessage() {
+    const res = await fetch(API_SEND_MESSAGE, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            text: msgTextareaElem.value,
+        })
+    });
+
+    // TODO: handle error
+
+    // FIXME: temporary until websockets are added
+    location.reload();
+};
+
+//sending messages
+if (msgSendButtonElem) {
+    msgSendButtonElem.onclick = () => {
+        sendMessage();
+    }
+
+    document.onkeydown = (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+            sendMessage();
+        }
+    }
+}
+
+// TODO: handle messages that are too big
