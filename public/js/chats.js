@@ -15,6 +15,7 @@ const msgContainerElem = document.getElementById('message-container');
 const msgSendButtonElem = document.getElementById('msg-send-button');
 const msgTextareaElem = document.getElementById('msg-textarea');
 
+// scroll
 let scrollMsgOffset = 0;
 let scrollIsLoading = false;
 let scrollLoadMore = true;
@@ -194,7 +195,7 @@ msgContainerElem.onscroll = () => {
     }
 };
 
-async function sendMessage() {
+async function sendMessageFromInput() {
     const res = await fetch(API_SEND_MESSAGE, {
         method: 'POST',
         headers: {
@@ -207,21 +208,33 @@ async function sendMessage() {
 
     // TODO: handle error
 
-    // FIXME: temporary until websockets are added
-    location.reload();
+    msgTextareaElem.value = "";
 };
 
 //sending messages
 if (msgSendButtonElem) {
     msgSendButtonElem.onclick = () => {
-        sendMessage();
+        sendMessageFromInput();
     }
 
     document.onkeydown = (e) => {
-        if (e.key === "Enter" && !e.shiftKey) {
-            sendMessage();
+        if (e.key === 'Enter' && !e.shiftKey) {
+            sendMessageFromInput();
         }
     }
 }
 
-// TODO: handle messages that are too big
+// TODO: handle invalid messages (too big, empty (if leading/trailing whitespace is removed))
+
+// sockets
+const socket = io();
+
+socket.on('new_msg', (socketMsg) => {
+    if (socketMsg.chatId != CHAT_ID)
+        return;
+
+    // TODO: validate?
+    console.log(socketMsg);
+    console.log(socketMsg.msgData);
+    addMsg(socketMsg.msgData);
+});

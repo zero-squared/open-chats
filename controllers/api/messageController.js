@@ -1,5 +1,9 @@
 import sequelize from "../../models/index.js";
+import { getIO } from "../../sockets/index.js";
 import { MESSAGE_MAX_LENGTH } from "../../utils/config.js";
+import { getMsgDataObj } from "../../utils/messages.js";
+
+// TODO: handle invalid messages empty (if leading/trailing whitespace is removed), clean leading/trailing whitespace
 
 export default {
     sendMessage: async (req, res) => {
@@ -29,6 +33,8 @@ export default {
                 ChatId: chatId,
                 text: text
             });
+
+            getIO().emit('new_msg', {chatId: chatId, msgData: await getMsgDataObj(message.id)});
     
             return res.send({
                 success: true,
