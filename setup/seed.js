@@ -21,11 +21,15 @@ export default async () => {
         console.log('Creating placeholder chats...');
         const phChat1 = await sequelize.models.Chat.create({ name: 'Test chat 1' });
         const phChat2 = await sequelize.models.Chat.create({ name: 'Test chat 2' });
+        const phChat3 = await sequelize.models.Chat.create({ name: 'A heated discussion...' });
 
         console.log('Creating placeholder messages...');
         await sequelize.models.Message.create({ text: 'test message in chat 1', ChatId: phChat1.id, UserId: adminUser.id });
         await sequelize.models.Message.create({ text: 'test message in chat 2', ChatId: phChat2.id, UserId: adminUser.id });
         await sequelize.models.Message.create({ text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae purus tempus erat congue porttitor. Phasellus mattis metus quis diam elementum pharetra. Morbi vestibulum lorem sit amet odio facilisis, eu molestie sem consectetur. Sed et porta diam. Curabitur tempus, dui sit amet maximus pulvinar, sem massa congue turpis, vel feugiat magna neque eget elit. Proin id lectus sem. Donec et ornare orci, nec pellentesque enim. Etiam justo leo, vehicula non metus in, egestas facilisis lorem. In id lobortis ex. Ut euismod elit eget ex ullamcorper, eu varius lectus sagittis. Suspendisse volutpat pretium nisl, vel pretium nibh hendrerit fermentum. Cras quis condimentum tellus.', ChatId: phChat2.id, UserId: adminUser.id });
         await sequelize.models.Message.create({ text: 'another test message in chat 2', ChatId: phChat2.id, UserId: adminUser.id });
+        for (let i = 0; i < 500; i++) {
+            await sequelize.models.Message.create({ text: `asdfjkhasdf ${i}`, ChatId: phChat3.id, UserId: adminUser.id });
+        }
     }
 }
