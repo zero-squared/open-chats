@@ -1,9 +1,8 @@
 const CHAT_ID = location.pathname.split('/')[2];
 const MSG_LOAD_LIMIT_INITIAL = 15;
 const MSG_LOAD_LIMIT_SCROLL = 10;
-const SCROLL_THRESHOLD = 100;
-
-// TODO: remove console.log's
+const SCROLL_LOAD_THRESHOLD = 100;
+const ANCHORED_TO_BOTTOM_THRESHOLD = 10;
 
 // API url's
 const API_GET_CHATS = '/api/chats/';
@@ -80,12 +79,21 @@ function addMsg(newMsgData) {
     const newMsg = { data: newMsgData, elem: createMsgElem(newMsgData) };
     msgArr.splice(index, 0, newMsg);
 
+    const anchoredToBottom = msgContainerElem.scrollTop + msgContainerElem.clientHeight >= msgContainerElem.scrollHeight - ANCHORED_TO_BOTTOM_THRESHOLD;
+
     // DOM
     if (nextChildElem === null) {
         msgContainerElem.appendChild(newMsg.elem);
     }
     else {
         msgContainerElem.insertBefore(newMsg.elem, nextChildElem);
+    }
+
+    if (anchoredToBottom) {
+        // scrolling to bottom if already at bottom
+        requestAnimationFrame(() => {
+            msgContainerElem.scrollTo(0, msgContainerElem.scrollHeight);
+        });
     }
 }
 
@@ -182,7 +190,6 @@ if (msgSendButtonElem) {
     };
 }
 
-// TODO: scroll logic
 async function scrollLoad() {
     if (!scrollLoadMore || scrollIsLoading) return;
 
@@ -193,7 +200,6 @@ async function scrollLoad() {
     if (!messages || messages.length === 0) {
         scrollLoadMore = false;
     } else {
-        console.log("b", messages.length);
         scrollMsgOffset += messages.length;
     }
 
@@ -201,9 +207,8 @@ async function scrollLoad() {
 }
 
 msgContainerElem.onscroll = () => {
-    const nearTop = msgContainerElem.scrollTop <= SCROLL_THRESHOLD;
+    const nearTop = msgContainerElem.scrollTop <= SCROLL_LOAD_THRESHOLD;
     if (nearTop) {
-        console.log(scrollLoadMore, scrollIsLoading, scrollMsgOffset);
         scrollLoad();
     }
 };
