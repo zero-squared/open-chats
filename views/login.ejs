@@ -13,8 +13,8 @@
     <main>
         <h1><%= t('loginPage.title') %></h1>
         <form id="login-form">
-            <label><%= t('forms.usernameLabel') %><input type="text" class="primary-input" id="username-input" name="username" minlength="4" maxlength="30" required /></label>
-            <label><%= t('forms.passwordLabel') %><input type="password" class="primary-input" id="password-input" name="password" minlength="5" maxlength="50" required /></label>
+            <label><%= t('forms.usernameLabel') %><input type="text" class="primary-input" id="username-input" minlength="4" maxlength="30" required /></label>
+            <label><%= t('forms.passwordLabel') %><input type="password" class="primary-input" id="password-input" minlength="5" maxlength="50" required /></label>
             <p class="error" id="error"></p>
             <button class="primary-btn" type="submit"><%= t('forms.loginButton') %></button>
         </form>

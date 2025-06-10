@@ -13,9 +13,9 @@
     <main>
         <h1><%= t('registerPage.title') %></h1>
         <form id="register-form">
-            <label><%= t('forms.usernameLabel') %><input type="text" class="primary-input" name="username" id="username-input" minlength="4" maxlength="30" required /></label>
-            <label><%= t('forms.passwordLabel') %><input type="password" class="primary-input" name="password" id="password-input" minlength="5" maxlength="50" required /></label>
-            <label><%= t('forms.repeatPasswordLabel') %><input type="password" class="primary-input" id="repeat-password-input" name="repeat-password" minlength="5" maxlength="50" required /></label>
+            <label><%= t('forms.usernameLabel') %><input type="text" class="primary-input" id="username-input" minlength="4" maxlength="30" required /></label>
+            <label><%= t('forms.passwordLabel') %><input type="password" class="primary-input" id="password-input" minlength="5" maxlength="50" required /></label>
+            <label><%= t('forms.repeatPasswordLabel') %><input type="password" class="primary-input" id="repeat-password-input" minlength="5" maxlength="50" required /></label>
             <p class="error" id="error"></p>
             <button class="primary-btn" type="submit"><%= t('forms.registerButton') %></button>
         </form>

@@ -46,7 +46,9 @@
   "nodemonConfig": {
     "ignore": [
       "locales/*/*.missing.json",
-      "docs/**"
+      "docs/**",
+      "views/**",
+      "public/**"
     ]
   }
 }

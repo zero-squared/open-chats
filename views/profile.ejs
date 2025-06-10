@@ -6,7 +6,9 @@
     <link rel="icon" type="image/png" href="/img/logo.png" />
     <%- include('partials/common'); -%>
     <link rel="stylesheet" href="/css/profile.css">
-    <script src="/js/profile.js" defer></script>
+    <script src="/js/profile/avatar.js" defer></script>
+    <script src="/js/profile/username.js" defer></script>
+    <script src="/js/profile/password.js" defer></script>
 </head>
 <body>
     <%- include('partials/header'); -%>
@@ -18,7 +20,7 @@
                     <div class="avatar-btns">
                         <label class="primary-btn" for="avatar-file-input" id="upload-avatar-label"><%= t('profile.uploadAvatarButton') %></label>
                         <button class="primary-btn" id="delete-avatar-btn">Delete avatar</button>
-                        <input type="file" id="avatar-file-input" name="avatar" accept="image/*" />
+                        <input type="file" id="avatar-file-input" accept="image/*" />
                     </div>
                 </div>
                 <p class="error" id="avatar-error"></p>
@@ -26,20 +28,31 @@
                     <p><%= t('profile.username') %><span id="username"><%= user.username %></span></p>
                     <p><%= t('profile.role') %><span><%= user.role %></span></p>
                     <div class="user-info-btns">
-                        <!-- TODO: Add functionality -->
-                        <button class="primary-btn" id="edit-username-btn">Edit username</button>
-                        <button class="primary-btn" id="change-password-btn">Change password</button>
+                        <button class="primary-btn" id="edit-username-btn"><%= t('profile.editUsername') %></button>
+                        <button class="primary-btn" id="change-password-btn"><%= t('profile.changePassword') %></button>
                     </div>
                 </div>
-                <!-- TODO: Add user-info-error -->
             </div>
             <div class="modal" id="username-modal">
                 <div class="modal-content">
                     <button class="close-btn primary-btn" id="username-modal-close"><img src="/img/close.png" alt="Close"></button>
                     <h2><%= t('profile.editUsername') %></h2>
                     <form id="edit-username-form">
-                        <label><%= t('forms.usernameLabel') %><input type="text" class="primary-input" id="username-input" name="username" minlength="4" maxlength="30" required /></label>
+                        <label><%= t('forms.usernameLabel') %><input type="text" class="primary-input" id="username-input" minlength="4" maxlength="30" required /></label>
                         <p class="error" id="username-error"></p>
+                        <button class="primary-btn" type="submit"><%= t('profile.save') %></button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal" id="password-modal">
+                <div class="modal-content">
+                    <button class="close-btn primary-btn" id="password-modal-close"><img src="/img/close.png" alt="Close"></button>
+                    <h2><%= t('profile.changePassword') %></h2>
+                    <form id="change-password-form">
+                        <label><%= t('forms.currentPasswordLabel') %><input type="password" class="primary-input" id="cur-password-input" minlength="5" maxlength="50" required /></label>
+                        <label><%= t('forms.newPasswordLabel') %><input type="password" class="primary-input" id="new-password-input" minlength="5" maxlength="50" required /></label>
+                        <label><%= t('forms.repeatNewPasswordLabel') %><input type="password" class="primary-input" id="repeat-password-input" minlength="5" maxlength="50" required /></label>
+                        <p class="error" id="password-error"></p>
                         <button class="primary-btn" type="submit"><%= t('profile.save') %></button>
                     </form>
                 </div>

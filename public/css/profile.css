@@ -61,14 +61,6 @@ main #avatar {
     display: none;
 }
 
-#username-modal {
-    display: none;
-}
-
-.modal-content {
-    width: 300px;
-}
-
 .modal-content label {
     font-size: 16px;
     display: flex;
@@ -82,7 +74,15 @@ main #avatar {
     flex-direction: column;
 }
 
-#username-error {
+#username-modal, #password-modal {
+    display: none;
+}
+
+#username-modal .modal-content {
+    width: 300px;
+}
+
+#username-error, #password-error {
     display: none;
     width: auto;
 }
