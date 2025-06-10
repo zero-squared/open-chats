@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 
+// TODO Add username validation
 export default (sequelize) => {
     sequelize.define('User', {
         username: {

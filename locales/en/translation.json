@@ -60,8 +60,10 @@
         "fileRequired": "File is required"
     },
     "profile": {
+        "userProfile": "User profile",
         "title": "Profile",
         "username": "Username: ",
+        "role": "Role: ",
         "uploadAvatarButton": "Upload avatar"
     },
     "roles": {
