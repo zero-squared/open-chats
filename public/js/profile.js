@@ -11,7 +11,6 @@ let avatarButtonsDisabled = false;
 // TODO Fix avatar uploading with space in filename
 
 avatarFileInput.onchange = async (e) => {
-    console.log('aaa')
     avatarErrorElem.style.display = 'none';
     toggleAvatarBtns(true);
 
