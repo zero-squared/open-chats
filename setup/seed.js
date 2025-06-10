@@ -12,6 +12,10 @@ export default async () => {
     const adminPasswordHash = await bcrypt.hash('admin', parseInt(process.env.SALT_ROUNDS));
     const adminUser = await sequelize.models.User.create({ username: 'admin', password: adminPasswordHash, RoleId: adminRole.id });
 
+    // TODO: remove this from production
+    console.log('Creating test chat...');
+    const testChat = await sequelize.models.Chat.create({ name: 'Test chat' });
+
     if (process.env.NODE_ENV === 'development') {
         console.log('Creating placeholder users...')
         const phPasswordHash = await bcrypt.hash('12345', parseInt(process.env.SALT_ROUNDS));
