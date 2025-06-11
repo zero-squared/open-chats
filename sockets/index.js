@@ -7,6 +7,12 @@ export function initializeSockets(webServer, sessionMiddleware) {
 
     io.engine.use(sessionMiddleware);
 
+    io.on("connection", (socket) => {
+        socket.on("join_chat", (chatId) => {
+            socket.join(chatId);
+        });
+    });
+
     return io;
 }
 

@@ -34,7 +34,7 @@ export default {
                 text: text
             });
 
-            getIO().emit('new_msg', {chatId: chatId, msgData: await getMsgDataObj(message.id)});
+            getIO().to(chatId).emit('new_msg', {chatId: chatId, msgData: await getMsgDataObj(message.id)});
     
             return res.send({
                 success: true,

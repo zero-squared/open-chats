@@ -227,7 +227,7 @@ if (msgSendButtonElem) {
     document.onkeydown = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            
+
             sendMessageFromInput();
         }
     }
@@ -237,6 +237,10 @@ if (msgSendButtonElem) {
 
 // sockets
 const socket = io();
+
+socket.on("connect", () => {
+    socket.emit('join_chat', Number(CHAT_ID));
+});
 
 socket.on('new_msg', (socketMsg) => {
     if (socketMsg.chatId != CHAT_ID)
