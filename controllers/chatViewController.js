@@ -24,7 +24,7 @@ export default {
         });
 
         if (!chat) {
-            return res.status(404).render('error', { title: req.t('noChats.title'), message: req.t('noChats.message'), image: '/img/astolfoNoChats.gif' });
+            return res.render('error', { title: req.t('noChats.title'), message: req.t('noChats.message'), image: '/img/astolfoNoChats.gif' });
         }
 
         return res.redirect(`/chats/${chat.id}`);

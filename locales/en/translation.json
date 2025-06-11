@@ -36,6 +36,9 @@
         "usernameLabel": "Username: ",
         "passwordLabel": "Password: ",
         "repeatPasswordLabel": "Repeat password: ",
+        "newPasswordLabel": "New password: ",
+        "repeatNewPasswordLabel": "Repeat new password: ",
+        "currentPasswordLabel": "Current password: ",
         "loginButton": "Login",
         "registerButton": "Register"
     },
@@ -53,18 +56,25 @@
         "internalServerError": "Internal Server Error",
         "incorrectUsernamePassword": "Incorrect username or password",
         "fileTooLarge": "File too large",
-        "incorrectImageExtension": "File does not have a .png or .jpg extension.",
+        "incorrectImageExtension": "File does not have a .png or .jpg extension",
         "badRequest": "Bad Request",
         "unauthorized": "Unauthorized",
         "chatNotExist": "Chat does not exist",
-        "fileRequired": "File is required"
+        "fileRequired": "File is required",
+        "usernameValidation": "Username can only contain letters, numbers, underscores, and dashes",
+        "currentPasswordRequired": "Current password is required",
+        "newPasswordRequired": "New password is required",
+        "incorrectPassword": "Incorrect password"
     },
     "profile": {
         "userProfile": "User profile",
         "title": "Profile",
-        "username": "Username: ",
         "role": "Role: ",
-        "uploadAvatarButton": "Upload avatar"
+        "username": "Username: ",
+        "uploadAvatarButton": "Upload avatar",
+        "save": "Save",
+        "editUsername": "Edit username",
+        "changePassword": "Change password"
     },
     "roles": {
         "admin": "Admin",

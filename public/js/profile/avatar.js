@@ -1,4 +1,4 @@
-const AVATAR_API = '/api/users/@me/avatar';
+const AVATAR_API = '/api/users/@me/avatar/';
 
 const avatarFileInput = document.getElementById('avatar-file-input');
 const uploadAvatarLabel = document.getElementById('upload-avatar-label');
@@ -8,10 +8,12 @@ const avatarElem = document.getElementById('avatar');
 
 let avatarButtonsDisabled = false;
 
-// TODO Fix avatar uploading with space in filename
+avatarFileInput.onclick = async (e) => {
+    if (avatarButtonsDisabled) e.preventDefault();
+}
 
-avatarFileInput.onchange = async (e) => {
-    console.log('aaa')
+avatarFileInput.onchange = async () => {
+    if (avatarButtonsDisabled) return;
     avatarErrorElem.style.display = 'none';
     toggleAvatarBtns(true);
 
@@ -37,12 +39,13 @@ avatarFileInput.onchange = async (e) => {
         avatarElem.src = body.avatarUrl;
     } catch (e) {
         console.error(e);
-        showAvatarError(UNEXPECTED_ERROR_TEXT);
+        showAvatarError(localizedStrings.errors.unexpectedError);
     }
     toggleAvatarBtns(false);
 }
 
 deleteAvatarBtn.onclick = async () => {
+    if (avatarButtonsDisabled) return;
     avatarErrorElem.style.display = 'none';
     toggleAvatarBtns(true);
 
@@ -62,7 +65,7 @@ deleteAvatarBtn.onclick = async () => {
         avatarElem.src = body.avatarUrl;
     } catch (e) {
         console.error(e);
-        showAvatarError(UNEXPECTED_ERROR_TEXT);
+        showAvatarError(localizedStrings.errors.unexpectedError);
     }
     toggleAvatarBtns(false);
 }

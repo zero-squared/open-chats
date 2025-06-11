@@ -8,7 +8,7 @@ main {
     column-gap: 50px;
 }
 
-main img {
+main #avatar {
     border: 1px solid white;
     border-radius: 100%;
 }
@@ -26,7 +26,6 @@ main img {
 .avatar-container {
     display: flex;
     flex-direction: row;
-    /* align-items: center; */
     justify-content: space-between;
     row-gap: 20px;
 }
@@ -38,18 +37,6 @@ main img {
     flex-direction: column;
     column-gap: 20px;
     user-select: none;
-}
-
-.btn {
-    background-color: transparent;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 5px;
-    border: solid 1px #ffffff;
-}
-
-.btn:hover {
-    text-decoration: underline;
 }
 
 .user-info {
@@ -65,16 +52,34 @@ main img {
     justify-content: space-between;
 }
 
-.disabled {
-    cursor: auto !important;
-    color: #cecece !important;
-    border: solid 1px #cecece !important;
-}
-
 #avatar-error {
+    text-align: center;
     display: none;
 }
 
 #avatar-file-input {
     display: none;
+}
+
+.modal-content label {
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 20px;
+    align-items: center;
+}
+
+.modal-content form {
+    display: flex;
+    row-gap: 10px;
+    flex-direction: column;
+}
+
+#username-modal, #password-modal {
+    display: none;
+}
+
+#username-error, #password-error {
+    display: none;
+    width: auto;
 }

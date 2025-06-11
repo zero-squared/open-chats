@@ -84,7 +84,7 @@ main {
     height: 64px;
     box-sizing: border-box;
     border-top: 1px solid white;
-    padding:  16px;
+    padding:  10px;
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
@@ -92,7 +92,7 @@ main {
 
 #msg-send-button {
     all: unset;
-    height: 32px;
+    height: 40px;
 }
 
 #msg-send-button img {

@@ -4,6 +4,7 @@ import sharp from 'sharp';
 import sequelize from '../../models/index.js';
 import { uploadFile, deleteFile } from '../../utils/imageKitApi.js';
 import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH, DEFAULT_AVATAR } from '../../utils/config.js';
+import { handleUsernameError } from '../../utils/users.js';
 
 export default {
     getUsers: async (req, res) => {
@@ -99,12 +100,7 @@ export default {
                 username: username
             });
         } catch (e) {
-            console.error(e);
-
-            return res.status(500).send({
-                success: false,
-                message: req.t('errors.internalServerError')
-            });
+            return handleUsernameError(req, res, e);
         }
     },
     updateAvatar: async (req, res) => {

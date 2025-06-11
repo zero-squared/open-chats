@@ -56,11 +56,11 @@ function createUserElem(user) {
 
     const roleElem = document.createElement('p');
     if (user.role === 'admin') {
-        roleElem.innerText = ADMIN_ROLE_TEXT;
+        roleElem.innerText = localizedStrings.roles.admin;
     } else if (user.role === 'moderator') {
-        roleElem.innerText = MODERATOR_ROLE_TEXT;
+        roleElem.innerText = localizedStrings.roles.moderator;
     } else {
-        roleElem.innerText = USER_ROLE_TEXT;
+        roleElem.innerText = localizedStrings.roles.user;
     }
 
     const createAtElem = document.createElement('p');
