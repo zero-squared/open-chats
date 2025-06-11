@@ -39,6 +39,8 @@ function createChatElem(chat) {
 }
 
 async function loadChatList() {
+    // TODO: maybe handle promise reject
+    
     const res = await fetch(API_GET_CHATS, {
         method: 'GET',
         headers: {
@@ -149,7 +151,7 @@ async function loadMessages(limit, offset) {
     const body = await res.json();
 
     if (!body.success) {
-        messagesElem.innerText = body.message;
+        msgContainerElem.innerText = body.message;
         return null;
     }
 
@@ -247,7 +249,6 @@ socket.on('new_msg', (socketMsg) => {
     if (socketMsg.msgData.chatId != CHAT_ID)
         return;
 
-    // TODO: validate?
     console.log(socketMsg);
     console.log(socketMsg.msgData);
     addMsg(socketMsg.msgData);
