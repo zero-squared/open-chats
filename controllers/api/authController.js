@@ -192,7 +192,6 @@ export default {
 
             const passwordHash = await bcrypt.hash(newPassword, parseInt(process.env.SALT_ROUNDS));
             user.password = passwordHash;
-            console.log(user)
             await user.save();
 
             return res.send({
