@@ -61,12 +61,16 @@
         "unauthorized": "Unauthorized",
         "chatNotExist": "Chat does not exist",
         "fileRequired": "File is required",
-        "usernameValidation": "Username can only contain letters, numbers, underscores, and dashes"
+        "usernameValidation": "Username can only contain letters, numbers, underscores, and dashes",
+        "currentPasswordRequired": "Current password is required",
+        "newPasswordRequired": "New password is required",
+        "incorrectPassword": "Incorrect password"
     },
     "profile": {
         "userProfile": "User profile",
         "title": "Profile",
         "role": "Role: ",
+        "username": "Username: ",
         "uploadAvatarButton": "Upload avatar",
         "save": "Save",
         "editUsername": "Edit username",

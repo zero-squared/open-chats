@@ -16,6 +16,7 @@ router.delete('/users/:id/avatar', canUpdateUser, userController.deleteAvatar);
 
 router.post('/auth/login', isGuest, authController.loginUser);
 router.post('/auth/register', isGuest, authController.registerUser);
+router.patch('/auth/password', isAuthenticated, authController.changePassword);
 
 router.get('/chats/', chatController.getChats);
 router.get('/chats/:id/messages', chatController.getMessages);

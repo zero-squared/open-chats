@@ -65,6 +65,7 @@ main #avatar {
     font-size: 16px;
     display: flex;
     justify-content: space-between;
+    column-gap: 20px;
     align-items: center;
 }
 
@@ -76,10 +77,6 @@ main #avatar {
 
 #username-modal, #password-modal {
     display: none;
-}
-
-#username-modal .modal-content {
-    width: 300px;
 }
 
 #username-error, #password-error {
