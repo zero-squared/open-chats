@@ -19,10 +19,10 @@
     },
     "adminPage": {
         "title": "Admin",
+        "loading": "Loading...",
         "tabs": {
             "users": {
-                "title": "Users",
-                "loading": "Loading..."
+                "title": "Users"
             },
             "chats": {
                 "title": "Chats"
