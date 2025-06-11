@@ -136,6 +136,9 @@ function createMsgElem(msgData) {
 async function loadMessages(limit, offset) {
     const apiGetMessages = `/api/chats/${CHAT_ID}/messages?limit=${limit}&offset=${offset}`;
 
+    const prevScrollHeight = msgContainerElem.scrollHeight;
+    const prevScrollTop = msgContainerElem.scrollTop;
+
     const res = await fetch(apiGetMessages, {
         method: 'GET',
         headers: {
@@ -155,6 +158,11 @@ async function loadMessages(limit, offset) {
     for (let msgData of messages) {
         addMsg(msgData);
     }
+
+    requestAnimationFrame(() => {
+        const newScrollHeight = msgContainerElem.scrollHeight;
+        msgContainerElem.scrollTop = prevScrollTop + (newScrollHeight - prevScrollHeight);
+    });
 
     return body.messages;
 }
@@ -186,13 +194,6 @@ async function scrollLoad() {
     }
 
     scrollIsLoading = false;
-
-    // crutch to fix a scrolling issue    
-    requestAnimationFrame(() => {
-        console.log(msgContainerElem.scrollTop);
-        msgContainerElem.scrollTo(0, msgContainerElem.scrollTop + 1);
-        msgContainerElem.scrollTo(0, msgContainerElem.scrollTop - 1);
-    });
 }
 
 msgContainerElem.onscroll = () => {
