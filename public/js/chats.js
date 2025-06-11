@@ -243,7 +243,7 @@ socket.on("connect", () => {
 });
 
 socket.on('new_msg', (socketMsg) => {
-    if (socketMsg.chatId != CHAT_ID)
+    if (socketMsg.msgData.chatId != CHAT_ID)
         return;
 
     // TODO: validate?
