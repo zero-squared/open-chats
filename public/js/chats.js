@@ -32,7 +32,7 @@ function createChatElem(chat) {
     root.appendChild(linkElem);
 
     // highlight the opened chat
-    if (chat.id == CHAT_ID) {
+    if (chat.id === CHAT_ID) {
         root.classList.add('active');
     }
     return root;
@@ -40,7 +40,7 @@ function createChatElem(chat) {
 
 async function loadChatList() {
     // TODO: maybe handle promise reject
-    
+
     const res = await fetch(API_GET_CHATS, {
         method: 'GET',
         headers: {
@@ -75,8 +75,6 @@ function addMsg(newMsgData) {
             break;
         index++;
     }
-
-    // TODO: check corner cases
 
     const nextChildElem = index === msgArr.length ? null : msgArr[index].elem;
     const newMsg = { data: newMsgData, elem: createMsgElem(newMsgData) };
@@ -206,17 +204,32 @@ msgContainerElem.onscroll = () => {
 };
 
 async function sendMessageFromInput() {
-    const res = await fetch(API_SEND_MESSAGE, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            text: msgTextareaElem.value,
-        })
-    });
+    if (msgTextareaElem.value.trim() === "") {
+        return;
+    }
 
-    // TODO: handle error
+    let res;
+    try {
+        res = await fetch(API_SEND_MESSAGE, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: msgTextareaElem.value,
+            })
+        });
+    }
+    catch {
+        alert(localizedStrings.errors.unexpectedError);
+        return;
+    }
+
+    const body = await res.json();
+    if (!body.success) {
+        alert(body.message);
+        return;
+    }
 
     msgTextareaElem.value = "";
 };
@@ -236,8 +249,6 @@ if (msgSendButtonElem) {
     }
 }
 
-// TODO: handle invalid messages (too big, empty (if leading/trailing whitespace is removed))
-
 // sockets
 const socket = io();
 
@@ -249,7 +260,5 @@ socket.on('new_msg', (socketMsg) => {
     if (socketMsg.msgData.chatId != CHAT_ID)
         return;
 
-    console.log(socketMsg);
-    console.log(socketMsg.msgData);
     addMsg(socketMsg.msgData);
 });
