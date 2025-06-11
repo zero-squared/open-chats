@@ -8,7 +8,9 @@ import { getMsgDataObj } from "../../utils/messages.js";
 export default {
     sendMessage: async (req, res) => {
         const chatId = Number(req.params.id);
-        const { text } = req.body;
+        let { text } = req.body;
+
+        text = text.trim();
 
         // data type and limit validation
         if (!Number.isInteger(chatId) || text.length <= 0 || text.length > MESSAGE_MAX_LENGTH) {
