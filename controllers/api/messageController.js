@@ -3,8 +3,6 @@ import { getIO } from "../../sockets/index.js";
 import { MESSAGE_MAX_LENGTH } from "../../utils/config.js";
 import { getMsgDataObj } from "../../utils/messages.js";
 
-// TODO: handle invalid messages empty (if leading/trailing whitespace is removed), clean leading/trailing whitespace
-
 export default {
     sendMessage: async (req, res) => {
         const chatId = Number(req.params.id);
