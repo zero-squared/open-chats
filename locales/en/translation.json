@@ -40,7 +40,8 @@
         "repeatNewPasswordLabel": "Repeat new password: ",
         "currentPasswordLabel": "Current password: ",
         "loginButton": "Login",
-        "registerButton": "Register"
+        "registerButton": "Register",
+        "nameLabel": "Name: "
     },
     "errors": {
         "notFound": "Not Found",
@@ -78,7 +79,8 @@
         "deleteAvatar": "Delete avatar"
     },
     "actions": {
-        "changeRole": "Change role"
+        "changeRole": "Change role",
+        "editChat": "Edit chat"
     },
     "roles": {
         "admin": "Admin",

@@ -9,8 +9,7 @@ const errorElem = document.getElementById('error');
 
 registerForm.onsubmit = async (e) => {
     e.preventDefault();
-    
-    errorElem.innerText = '';
+    errorElem.style.display = 'none';
 
     try {
         const res = await fetch(REGISTER_API, {
@@ -29,6 +28,7 @@ registerForm.onsubmit = async (e) => {
 
         if (!body.success) {
             errorElem.innerText = body.message;
+            errorElem.style.display = 'block';
             return;
         }
 

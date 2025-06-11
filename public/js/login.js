@@ -8,6 +8,7 @@ const errorElem = document.getElementById('error');
 
 loginForm.onsubmit = async (e) => {
     e.preventDefault();
+    errorElem.style.display = 'none';
 
     try {
         const res = await fetch(LOGIN_API, {
@@ -25,6 +26,7 @@ loginForm.onsubmit = async (e) => {
 
         if (!body.success) {
             errorElem.innerText = body.message;
+            errorElem.style.display = 'block';
             return;
         }
 

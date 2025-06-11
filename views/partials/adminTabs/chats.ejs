@@ -4,3 +4,15 @@
     </div>
     <div class="loader" id="loader"><%= t('adminPage.loading') %></div>
 </div>
+<div class="modal" id="chat-modal">
+    <div class="modal-content">
+        <button class="close-btn primary-btn" id="chat-modal-close"><img src="/img/close.png" alt="Close"></button>
+        <h2><%= t('actions.editChat') %></h2>
+        <form id="edit-chat-form">
+            <label><%= t('forms.nameLabel') %><input type="text" class="primary-input" id="name-input" required /></label>
+            <input type="text" id="chat-id-input" required />
+            <p class="error" id="chat-error"></p>
+            <button class="primary-btn" type="submit"><%= t('profile.save') %></button>
+        </form>
+    </div>
+</div>

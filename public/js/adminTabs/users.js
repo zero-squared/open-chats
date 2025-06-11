@@ -133,8 +133,7 @@ function createUserElem(user, localization) {
             await updateRole(user.id, changeRoleSelect.value);
         }
 
-    userElem.appendChild(changeRoleSelect);
-
+        userElem.appendChild(changeRoleSelect);
     }
 
     const deleteAvatarBtn = document.createElement('button');
@@ -169,9 +168,9 @@ window.onload = async () => {
     await loadNewUsers();
 }
 
-scrollElem.onscroll = () => {
+scrollElem.onscroll = async () => {
     const nearBottom = scrollElem.scrollTop + scrollElem.clientHeight >= scrollElem.scrollHeight - 10;
     if (nearBottom && loadMore && !isLoading) {
-        loadNewUsers();
+        await loadNewUsers();
     }
 }
