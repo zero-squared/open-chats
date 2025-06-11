@@ -4,7 +4,7 @@ import sharp from 'sharp';
 import sequelize from '../../models/index.js';
 import { uploadFile, deleteFile } from '../../utils/imageKitApi.js';
 import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH, DEFAULT_AVATAR } from '../../utils/config.js';
-import { handleUsernameError } from '../../utils/users.js';
+import { getUserDataObj, handleUsernameError } from '../../utils/users.js';
 
 export default {
     getUsers: async (req, res) => {
@@ -23,27 +23,60 @@ export default {
         try {
             const users = await sequelize.models.User.findAll({
                 limit: limit,
-                offset: offset
+                offset: offset,
+                order: [['createdAt', 'DESC']] // newest first
             });
 
             let result = [];
 
             for (const user of users) {
-                const userRole = await user.getRole();
-
-                result.push({
-                    id: user.id,
-                    username: user.username,
-                    avatarUrl: user.avatarUrl || DEFAULT_AVATAR,
-                    createdAt: user.createdAt,
-                    role: userRole.name
-                });
+                result.push(await getUserDataObj(user));
             }
 
             return res.send({
                 success: true,
-                users: result
+                users: result,
+                localization: {
+                    actions: {
+                        deleteAvatar: req.t('profile.deleteAvatar'),
+                    },
+                    roles: {
+                        admin: req.t('roles.admin'),
+                        moderator: req.t('roles.moderator'),
+                        user: req.t('roles.user')
+                    }
+                }
             });
+        } catch (e) {
+            console.error(e);
+
+            return res.status(500).send({
+                success: false,
+                message: req.t('errors.internalServerError')
+            });
+        }
+    },
+    getUser: async (req, res) => {
+        let userId = req.params.id;
+
+        if (userId === '@me') {
+            userId = req.session.user.id;
+        }
+
+        try {
+            const user = await sequelize.models.User.findByPk(userId);
+
+            if (!user) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            }
+
+            res.send({
+                success: true,
+                user: await getUserDataObj(user)
+            })
         } catch (e) {
             console.error(e);
 
@@ -91,6 +124,13 @@ export default {
 
         try {
             const user = await sequelize.models.User.findByPk(userId);
+
+            if (!user) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            }
 
             user.username = username;
             await user.save();
@@ -149,6 +189,72 @@ export default {
             return res.send({
                 success: true,
                 avatarUrl: data.url
+            });
+        } catch (e) {
+            console.error(e);
+
+            return res.status(500).send({
+                success: false,
+                message: req.t('errors.internalServerError')
+            });
+        }
+    },
+    updateRole: async (req, res) => {
+        if (!req.body) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
+        let userId = Number(req.params.id);
+
+        if (!userId) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
+        if (userId === req.session.user.id) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
+        const { roleId } = req.body;
+
+        if (!roleId) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
+        try {
+            const role = await sequelize.models.Role.findByPk(roleId);
+
+            if (!role) {
+                return res.status(400).send({
+                    success: false,
+                    message: req.t('errors.badRequest')
+                });
+            }
+
+            const user = await sequelize.models.User.findByPk(userId);
+
+            if (!user) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            }
+
+            await user.setRole(role);
+
+            return res.send({
+                success: true
             });
         } catch (e) {
             console.error(e);

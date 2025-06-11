@@ -74,7 +74,11 @@
         "uploadAvatarButton": "Upload avatar",
         "save": "Save",
         "editUsername": "Edit username",
-        "changePassword": "Change password"
+        "changePassword": "Change password",
+        "deleteAvatar": "Delete avatar"
+    },
+    "actions": {
+        "changeRole": "Change role"
     },
     "roles": {
         "admin": "Admin",

@@ -1,5 +1,19 @@
 import { UniqueConstraintError, ValidationError } from 'sequelize';
 
+import { DEFAULT_AVATAR } from './config.js';
+
+export async function getUserDataObj(user) {
+    const role = await user.getRole();
+
+    return {
+        id: user.id,
+        username: user.username,
+        avatarUrl: user.avatarUrl || DEFAULT_AVATAR,
+        createdAt: user.createdAt,
+        role: role.name
+    }
+}
+
 export function handleUsernameError(req, res, e) {
     if (e instanceof UniqueConstraintError) {
         return res.status(400).send({

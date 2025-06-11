@@ -69,7 +69,7 @@ export async function canUpdateUser(req, res, next) {
     try {
         const user = await sequelize.models.User.findByPk(userId);
 
-        if (!user || user.id !== req.session.user.id) {
+        if ((!user || user.id !== req.session.user.id) && req.session.user.role !== 'admin') {
             return res.status(401).send({
                 success: false,
                 message: req.t('errors.unauthorized')

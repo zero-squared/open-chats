@@ -1,11 +1,12 @@
 * {
-    font-family: Helvetica, sans-serif; 
+    font-family: Helvetica, sans-serif;
     margin: 0;
     padding: 0;
     color: #ffffff;
 }
 
-html, body {
+html,
+body {
     background-color: #121212;
     height: 100%;
     display: flex;
@@ -64,6 +65,8 @@ header .language-selector img {
 
 .error {
     color: rgb(255, 108, 108);
+    display: none;
+    width: auto;
 }
 
 .active {
@@ -79,12 +82,12 @@ header .language-selector img {
 }
 
 .modal {
+    display: none;
     top: 0;
     background-color: rgba(100, 100, 100, 0.3);
     width: 100%;
     height: 100%;
     position: absolute;
-    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -114,6 +117,20 @@ header .language-selector img {
     height: 100%
 }
 
+.modal-content label {
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 20px;
+    align-items: center;
+}
+
+.modal-content form {
+    display: flex;
+    row-gap: 10px;
+    flex-direction: column;
+}
+
 .primary-input {
     all: unset;
     cursor: text;
@@ -135,5 +152,20 @@ header .language-selector img {
 }
 
 .primary-btn:hover {
+    text-decoration: underline;
+}
+
+.primary-select {
+    appearance: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    background: #121212;
+    padding: 5px;
+    border: solid 1px #ffffff;
+}
+
+.primary-select:hover {
     text-decoration: underline;
 }

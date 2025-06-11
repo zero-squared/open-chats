@@ -10,9 +10,11 @@ import { canUpdateUser, isGuest, isAdmin, isAuthenticated } from '../middleware/
 const router = express.Router();
 
 router.get('/users/', isAdmin, userController.getUsers);
+router.get('/users/:id', isAuthenticated, userController.getUser);
 router.patch('/users/:id', canUpdateUser, userController.updateUser);
 router.post('/users/:id/avatar', canUpdateUser, uploadSingleImage, userController.updateAvatar);
 router.delete('/users/:id/avatar', canUpdateUser, userController.deleteAvatar);
+router.patch('/users/:id/role', isAdmin, userController.updateRole);
 
 router.post('/auth/login', isGuest, authController.loginUser);
 router.post('/auth/register', isGuest, authController.registerUser);

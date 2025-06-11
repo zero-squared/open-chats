@@ -54,32 +54,8 @@ main #avatar {
 
 #avatar-error {
     text-align: center;
-    display: none;
 }
 
 #avatar-file-input {
-    display: none;
-}
-
-.modal-content label {
-    font-size: 16px;
-    display: flex;
-    justify-content: space-between;
-    column-gap: 20px;
-    align-items: center;
-}
-
-.modal-content form {
-    display: flex;
-    row-gap: 10px;
-    flex-direction: column;
-}
-
-#username-modal, #password-modal {
-    display: none;
-}
-
-#username-error, #password-error {
-    display: none;
-    width: auto;
+     display: none;
 }
