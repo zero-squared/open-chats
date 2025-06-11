@@ -4,12 +4,12 @@ import { MESSAGE_MAX_LENGTH } from "../../utils/config.js";
 import { getMsgDataObj } from "../../utils/messages.js";
 import { GET_MESSAGES_LIMIT_DEFAULT, GET_MESSAGES_LIMIT_MAX, GET_MESSAGES_OFFSET_DEFAULT } from '../../utils/config.js'
 
-// TODO: handle invalid messages empty (if leading/trailing whitespace is removed), clean leading/trailing whitespace
-
 export default {
     sendMessage: async (req, res) => {
         const chatId = Number(req.params.id);
-        const { text } = req.body;
+        let { text } = req.body;
+
+        text = text.trim();
 
         // data type and limit validation
         if (!Number.isInteger(chatId) || text.length <= 0 || text.length > MESSAGE_MAX_LENGTH) {

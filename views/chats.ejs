@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title><%= t('websiteTitle') %> | <%= chat.id == null ? t('chats.defaultTitle') : chat.name %></title>
+    <title><%= t('websiteTitle') %> | <%= chat.id === null ? t('chats.defaultTitle') : chat.name %></title>
     <link rel="icon" type="image/png" href="/img/logo.png" />
     <%- include('partials/common'); -%>
     <link rel="stylesheet" href="/css/chats.css">
@@ -25,8 +25,7 @@
             </div>
             <% if (user) { %>
             <div class="msg-textarea-container">
-                <!-- <input type="text"> -->
-                <textarea id="msg-textarea" placeholder="Message <%= chat.name %>"></textarea>
+                <textarea id="msg-textarea" maxlength="1024" placeholder="Message <%= chat.name %>"></textarea>
                 <button id="msg-send-button">
                     <img src="/img/send.png">
                 </button>
