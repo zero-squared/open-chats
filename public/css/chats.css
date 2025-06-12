@@ -93,22 +93,10 @@ main {
 
 .username-text-container .msg-text {
     overflow-wrap: break-word;
-    word-break: break-all;
+    word-break: break-word;
 }
 
-/* input */
-.msg-textarea-container {
-    width: 100%;
-    height: 64px;
-    box-sizing: border-box;
-    border-top: 1px solid white;
-    padding:  10px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
-    align-items: center;
-}
-
+/* deleting messages */
 .delete-btn {
     all: unset;
     opacity: 0;
@@ -135,6 +123,19 @@ main {
     opacity: 1;
 }
 
+/* message input */
+.msg-textarea-container {
+    width: 100%;
+    height: 64px;
+    box-sizing: border-box;
+    border-top: 1px solid white;
+    padding:  10px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+}
+
 #msg-send-button {
     all: unset;
     height: 40px;
@@ -150,4 +151,6 @@ main {
     height: 100%;
     border-radius: 0px;
     overflow: hidden;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
