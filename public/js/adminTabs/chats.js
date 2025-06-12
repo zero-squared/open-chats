@@ -11,12 +11,20 @@ let curChatNameElem;
 const loaderElem = document.getElementById('loader');
 const chatsContainer = document.getElementById('chats-container');
 const scrollElem = document.getElementById('chats-scroll');
-const chatModal = document.getElementById('chat-modal');
-const chatModalClose = document.getElementById('chat-modal-close');
-const nameInput = document.getElementById('name-input');
-const chatIdInput = document.getElementById('chat-id-input');
+const editChatModal = document.getElementById('edit-chat-modal');
+const editChatModalClose = document.getElementById('edit-chat-modal-close');
+const editNameInput = document.getElementById('edit-name-input');
 const editUsernameForm = document.getElementById('edit-chat-form');
-const chatErrorElem = document.getElementById('chat-error');
+const editChatErrorElem = document.getElementById('edit-chat-error');
+const createChatBtn = document.getElementById('create-chat');
+
+const createChatModalElems = {
+    modal: document.getElementById('create-chat-modal'),
+    closeBtn: document.getElementById('create-chat-modal-close'),
+    form: document.getElementById('create-chat-form'),
+    nameInput: document.getElementById('create-name-input'),
+    error: document.getElementById('create-chat-error')
+}
 
 async function loadNewChats() {
     isLoading = true;
@@ -72,12 +80,38 @@ function createChatElem(chat, localization) {
 
     editChatBtn.onclick = async () => {
         curChatId = chat.id;
-        nameInput.value = nameElem.innerText;
-        chatErrorElem.style.display = 'none';
-        chatModal.style.display = 'flex';
+        editNameInput.value = nameElem.innerText;
+        editChatErrorElem.style.display = 'none';
+        editChatModal.style.display = 'flex';
         curChatNameElem = nameElem;
     }
     chatElem.appendChild(editChatBtn);
+
+    const deleteChatBtn = document.createElement('button');
+    deleteChatBtn.classList.add('primary-btn');
+    deleteChatBtn.innerText = localization.actions.deleteChat;
+
+    deleteChatBtn.onclick = async () => {
+        const res = await fetch(`/api/chats/${chat.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: editNameInput.value
+            })
+        });
+
+        const body = await res.json();
+
+        if (!body.success) {
+            alert(body.message);
+            return;
+        }
+
+        chatElem.remove();
+    }
+    chatElem.appendChild(deleteChatBtn);
 
     chatElem.classList.add('chat');
 
@@ -95,14 +129,14 @@ scrollElem.onscroll = async () => {
     }
 }
 
-chatModalClose.onclick = () => {
-    chatModal.style.display = 'none';
-    chatErrorElem.style.display = 'none';
+editChatModalClose.onclick = () => {
+    editChatModal.style.display = 'none';
+    editChatErrorElem.style.display = 'none';
 }
 
 editUsernameForm.onsubmit = async (e) => {
     e.preventDefault();
-    chatErrorElem.style.display = 'none';
+    editChatErrorElem.style.display = 'none';
 
     const res = await fetch(`/api/chats/${curChatId}`, {
         method: 'PATCH',
@@ -110,18 +144,55 @@ editUsernameForm.onsubmit = async (e) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: nameInput.value
+            name: editNameInput.value
         })
     });
 
     const body = await res.json();
 
     if (!body.success) {
-        chatErrorElem.style.display = 'block';
-        chatErrorElem.innerText = body.message;
+        editChatErrorElem.style.display = 'block';
+        editChatErrorElem.innerText = body.message;
         return;
     }
 
     curChatNameElem.innerText = body.name;
-    chatModal.style.display = 'none';
+    editChatModal.style.display = 'none';
+}
+
+createChatBtn.onclick = () => {
+    createChatModalElems.nameInput.value = '';
+    createChatModalElems.error.style.display = 'none';
+    createChatModalElems.modal.style.display = 'flex';
+}
+
+createChatModalElems.closeBtn.onclick = () => {
+    createChatModalElems.modal.style.display = 'none';
+}
+
+createChatModalElems.form.onsubmit = async (e) => {
+    e.preventDefault();
+    createChatModalElems.error.style.display = 'none';
+
+    const res = await fetch('/api/chats', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: createChatModalElems.nameInput.value
+        })
+    });
+
+    const body = await res.json();
+
+    if (!body.success) {
+        createChatModalElems.error.style.display = 'block';
+        createChatModalElems.error.innerText = body.message;
+        return;
+    }
+
+    const chatElem = createChatElem(body.chat, body.localization);
+    chatsContainer.appendChild(chatElem);
+    createChatModalElems.modal.style.display = 'none';
 }

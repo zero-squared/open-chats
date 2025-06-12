@@ -21,7 +21,9 @@ router.post('/auth/register', isGuest, authController.registerUser);
 router.patch('/auth/password', isAuthenticated, authController.changePassword);
 
 router.get('/chats/', chatController.getChats);
+router.post('/chats/', isAdmin, chatController.createChat);
 router.patch('/chats/:id', isAdmin, chatController.updateChat);
+router.delete('/chats/:id', isAdmin, chatController.deleteChat);
 
 router.get('/chats/:id/messages', messageController.getMessages);
 router.post('/chats/:id/send', isAuthenticated, messageController.sendMessage);

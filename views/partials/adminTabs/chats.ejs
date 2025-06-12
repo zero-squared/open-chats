@@ -1,16 +1,30 @@
-<h2><%= t('adminPage.tabs.chats.title') %></h2>
+<div class="top-panel">
+    <h2><%= t('adminPage.tabs.chats.title') %></h2>
+    <button class="primary-btn" id="create-chat"><%= t('actions.createChat') %></button>
+</div>
 <div class="chats" id="chats-scroll">
     <div id="chats-container">
     </div>
     <div class="loader" id="loader"><%= t('adminPage.loading') %></div>
 </div>
-<div class="modal" id="chat-modal">
+<div class="modal" id="edit-chat-modal">
     <div class="modal-content">
-        <button class="close-btn primary-btn" id="chat-modal-close"><img src="/img/close.png" alt="Close"></button>
+        <button class="close-btn primary-btn" id="edit-chat-modal-close"><img src="/img/close.png" alt="Close"></button>
         <h2><%= t('actions.editChat') %></h2>
         <form id="edit-chat-form">
-            <label><%= t('forms.nameLabel') %><input type="text" class="primary-input" id="name-input" required /></label>
-            <p class="error" id="chat-error"></p>
+            <label><%= t('forms.nameLabel') %><input type="text" class="primary-input" id="edit-name-input" required /></label>
+            <p class="error" id="edit-chat-error"></p>
+            <button class="primary-btn" type="submit"><%= t('profile.save') %></button>
+        </form>
+    </div>
+</div>
+<div class="modal" id="create-chat-modal">
+    <div class="modal-content">
+        <button class="close-btn primary-btn" id="create-chat-modal-close"><img src="/img/close.png" alt="Close"></button>
+        <h2><%= t('actions.createChat') %></h2>
+        <form id="create-chat-form">
+            <label><%= t('forms.nameLabel') %><input type="text" class="primary-input" id="create-name-input" required /></label>
+            <p class="error" id="create-chat-error"></p>
             <button class="primary-btn" type="submit"><%= t('profile.save') %></button>
         </form>
     </div>

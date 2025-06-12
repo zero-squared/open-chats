@@ -1,4 +1,4 @@
-const CHAT_ID = location.pathname.split('/')[2];
+const CHAT_ID = Number(location.pathname.split('/')[2]);
 const MSG_LOAD_LIMIT_INITIAL = 15;
 const MSG_LOAD_LIMIT_SCROLL = 10;
 const SCROLL_LOAD_THRESHOLD = 100;
@@ -253,12 +253,11 @@ if (msgSendButtonElem) {
 const socket = io();
 
 socket.on("connect", () => {
-    socket.emit('join_chat', Number(CHAT_ID));
+    socket.emit('join_chat', CHAT_ID);
 });
 
 socket.on('new_msg', (socketMsg) => {
-    if (socketMsg.msgData.chatId != CHAT_ID)
-        return;
+    if (socketMsg.msgData.chatId != CHAT_ID) return;
 
     addMsg(socketMsg.msgData);
 });

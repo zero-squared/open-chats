@@ -80,7 +80,9 @@
     },
     "actions": {
         "changeRole": "Change role",
-        "editChat": "Edit chat"
+        "editChat": "Edit chat",
+        "createChat": "Create chat",
+        "deleteChat": "Delete chat"
     },
     "roles": {
         "admin": "Admin",

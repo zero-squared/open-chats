@@ -51,7 +51,7 @@ async function deleteAvatar(userId, avatarElem) {
     const body = await res.json();
 
     if (!body.success) {
-        alert(`Error deleting avatar: ${body.message}`);
+        alert(body.message);
         return;
     }
 
@@ -72,7 +72,7 @@ async function updateRole(userId, roleId) {
     const body = await res.json();
 
     if (!body.success) {
-        alert(`Error updating role: ${body.message}`);
+        alert(body.message);
         return;
     }
 }
@@ -159,7 +159,7 @@ window.onload = async () => {
     const body = await res.json();
 
     if (!body.success) {
-        alert(`Error getting current user: ${body.message}`);
+        alert(body.message);
         return;
     }
 

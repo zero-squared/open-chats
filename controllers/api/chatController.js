@@ -22,7 +22,55 @@ export default {
                 chats: result,
                 localization: {
                     actions: {
-                        editChat: req.t('actions.editChat')
+                        editChat: req.t('actions.editChat'),
+                        deleteChat: req.t('actions.deleteChat')
+                    }
+                }
+            });
+        } catch (e) {
+            console.error(e);
+
+            return res.status(500).send({
+                success: false,
+                message: req.t('errors.internalServerError')
+            });
+        }
+    },
+    createChat: async (req, res) => {
+        if (!req.body) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
+        const { name } = req.body;
+
+        // TODO Validate using sequelize
+        if (!name) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
+        try {
+            const chat = await sequelize.models.Chat.create({
+                name: name
+            });
+
+            // TODO Create unified way to convert db to data obj
+            return res.send({
+                success: true,
+                chat: {
+                    id: chat.id,
+                    name: chat.name,
+                    createdAt: chat.createdAt
+                },
+                localization: {
+                    actions: {
+                        editChat: req.t('actions.editChat'),
+                        deleteChat: req.t('actions.deleteChat')
                     }
                 }
             });
@@ -77,6 +125,40 @@ export default {
             return res.send({
                 success: true,
                 name: name
+            });
+        } catch (e) {
+            console.error(e);
+
+            return res.status(500).send({
+                success: false,
+                message: req.t('errors.internalServerError')
+            });
+        }
+    },
+    deleteChat: async (req, res) => {
+        let chatId = Number(req.params.id);
+
+        if (!chatId) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
+        try {
+            const chat = await sequelize.models.Chat.findByPk(chatId);
+
+            if (!chat) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            }
+
+            await chat.destroy();
+
+            return res.send({
+                success: true
             });
         } catch (e) {
             console.error(e);
