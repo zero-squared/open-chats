@@ -211,8 +211,9 @@ async function finishEditing() {
 function addMsg(newMsgData) {
     let index = 0;
     for (const msg of msgArr) {
-        if (msg.data.createdAt > newMsgData.createdAt)
+        if (new Date(msg.data.createdAt) > new Date(newMsgData.createdAt)) {
             break;
+        }
         index++;
     }
 
