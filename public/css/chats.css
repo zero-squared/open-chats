@@ -1,3 +1,8 @@
+/* generic */
+.invisible {
+    visibility: hidden !important;
+}
+
 main {
     display: grid;
     grid-template-columns: 300px 1fr;

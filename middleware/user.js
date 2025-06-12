@@ -101,7 +101,7 @@ export async function canDeleteMessageMw(req, res, next) {
     // TODO: maybe check that the message exists
     // (not necessary, now it just sends "unauthorized")
 
-    if (!canDeleteMessage(req.session.user.id, messageId)) {
+    if (! (await canDeleteMessage(req.session.user.id, messageId))) {
         return res.status(401).send({
             success: false,
             message: req.t('errors.unauthorized')

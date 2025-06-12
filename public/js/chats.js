@@ -156,18 +156,20 @@ function createMsgElem(msgData) {
 
     root.appendChild(avatarDivElem);
     root.appendChild(usernameTextDivElem);
-    
-    if (msgData.canDelete) {
-        const deleteBtn = document.createElement('button');
-        deleteBtn.classList.add('delete-btn');
-        const deleteBtnImg = document.createElement('img');
-        deleteBtnImg.src = '/img/delete.png';
-        deleteBtn.appendChild(deleteBtnImg);
-        deleteBtn.onclick = async () => {
-            if (confirm(localization.actions.confirmDeletion)) await deleteMessage(msgData.id);
-        }
 
-        root.appendChild(deleteBtn);
+    // delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
+    const deleteBtnImg = document.createElement('img');
+    deleteBtnImg.src = '/img/delete.png';
+    deleteBtn.appendChild(deleteBtnImg);
+    deleteBtn.onclick = async () => {
+        if (confirm(localization.actions.confirmDeletion)) await deleteMessage(msgData.id);
+    }
+    root.appendChild(deleteBtn);
+
+    if (!msgData.canDelete) {
+        deleteBtn.classList.add("invisible");
     }
 
 
