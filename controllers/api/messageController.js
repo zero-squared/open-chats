@@ -12,7 +12,7 @@ export default {
         text = text.trim();
 
         // data type and limit validation
-        if (!Number.isInteger(chatId) || text.length <= 0 || text.length > MESSAGE_MAX_LENGTH) {
+        if (!Number.isInteger(chatId) || text.trim().length <= 0 || text.length > MESSAGE_MAX_LENGTH) {
             return res.status(400).send({
                 success: false,
                 message: req.t('errors.badRequest')
@@ -123,7 +123,7 @@ export default {
         const messageId = Number(req.params.id);
         const text = req.body.text;
 
-        if (!chatId || !messageId || text.length <= 0 || text.length > MESSAGE_MAX_LENGTH) {
+        if (!chatId || !messageId || text.trim().length <= 0 || text.length > MESSAGE_MAX_LENGTH) {
             return res.status(400).send({
                 success: false,
                 message: req.t('errors.badRequest')
