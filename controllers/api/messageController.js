@@ -100,12 +100,7 @@ export default {
 
             return res.send({
                 success: true,
-                messages: result,
-                localization: {
-                    actions: {
-                        confirmDeletion: 'Do you want to delete this message?'
-                    }
-                }
+                messages: result
             });
         } catch (e) {
             console.error(e);
