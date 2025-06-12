@@ -1,6 +1,6 @@
 import sequelize from '../models/index.js';
 import { DEFAULT_AVATAR } from './config.js';
-import { canDeleteMessage } from './users.js';
+import { canDeleteMessage, canEditMessage } from './users.js';
 
 // TODO Use existing function for sender
 export async function getMsgDataObj(messageId, userId) {
@@ -10,12 +10,14 @@ export async function getMsgDataObj(messageId, userId) {
     });
 
     let canDelete = false;
+    let canEdit = false;
     let label;
 
     if (userId) {
         const user = await sequelize.models.User.findByPk(userId);
         if (user) {
             canDelete = await canDeleteMessage(userId, messageId);
+            canEdit = await canEditMessage(userId, messageId);
         }
 
         label = await sequelize.models.Label.findOne({
@@ -33,6 +35,7 @@ export async function getMsgDataObj(messageId, userId) {
         updatedAt: message.updatedAt,
         text: message.text,
         canDelete: canDelete,
+        canEdit: canEdit,
         sender: {
             id: sender.id,
             username: sender.username,

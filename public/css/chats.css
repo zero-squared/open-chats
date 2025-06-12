@@ -107,7 +107,7 @@ main {
     width: 100%;
     display: grid;
     box-sizing: border-box;
-    grid-template-columns: 48px 1fr auto;
+    grid-template-columns: 48px 1fr auto auto;
     padding: 8px 16px;
     border-top: 1px solid white;
 }
@@ -138,8 +138,12 @@ main {
     word-break: break-word;
 }
 
+.message-active {
+    background-color: #4a4a4a !important;
+}
+
 /* deleting messages */
-.delete-btn {
+.msg-action-btn {
     all: unset;
     opacity: 0;
     width: 40px;
@@ -147,7 +151,7 @@ main {
     cursor: pointer;
 }
 
-.delete-btn img {
+.msg-action-btn img {
    height: 100%;
    width: 100%;
 }
@@ -164,7 +168,7 @@ main {
     text-decoration: underline;
 }
 
-.message:hover .delete-btn {
+.message:hover .msg-action-btn {
     opacity: 1;
 }
 
@@ -182,12 +186,12 @@ main {
     align-items: center;
 }
 
-#msg-send-button {
+.msg-input-action-btn {
     all: unset;
     height: 40px;
 }
 
-#msg-send-button img {
+.msg-input-action-btn img {
     height: 100%;
 }
 
@@ -199,4 +203,8 @@ main {
     overflow: hidden;
     overflow-wrap: break-word;
     word-break: break-word;
+}
+
+#msg-edit-button {
+    display: none;
 }

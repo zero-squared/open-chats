@@ -32,8 +32,11 @@
             <% if (user) { %>
             <div class="msg-textarea-container">
                 <textarea id="msg-textarea" maxlength="1024" placeholder="Message <%= chat.name %>"></textarea>
-                <button id="msg-send-button">
+                <button id="msg-send-button" class="msg-input-action-btn">
                     <img src="/img/send.png">
+                </button>
+                <button id="msg-edit-button" class="msg-input-action-btn">
+                    <img src="/img/edit.png">
                 </button>
             </div>
             <% } %>

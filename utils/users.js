@@ -70,7 +70,7 @@ export async function canDeleteMessage(userId, messageId) {
         const userRole = await user.getRole();
         const senderRole = await sender.getRole();
 
-        if (userRole.name === 'user' && userRole.name === 'blocked') {
+        if (userRole.name === 'user') {
             return user.id === sender.id;
         } 
         else if (userRole.name === 'moderator') {
@@ -78,6 +78,9 @@ export async function canDeleteMessage(userId, messageId) {
         }
         else if (userRole.name === 'admin') {
             return true;
+        }
+        else if (userRole.name === 'blocked') {
+            return false;
         }
 
         console.error(`Unknown role!: ${userRole.name}`);

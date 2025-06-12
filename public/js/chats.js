@@ -14,6 +14,7 @@ const API_SEND_MESSAGE = `/api/chats/${CHAT_ID}/send/`;
 const chatListElem = document.getElementById('chat-list');
 const msgContainerElem = document.getElementById('message-container');
 const msgSendButtonElem = document.getElementById('msg-send-button');
+const msgEditButtonElem = document.getElementById('msg-edit-button');
 const msgTextareaElem = document.getElementById('msg-textarea');
 
 // scroll
@@ -21,9 +22,47 @@ let scrollMsgOffset = 0;
 let scrollIsLoading = false;
 let scrollLoadMore = true;
 
+// chats
 let chatOffset = 0;
 let loadMoreChats = true;
 let isLoadingChats = false;
+
+// permissions
+function canEditMessage(msgData) {
+    if (!currentUser) return false;
+    
+    if (currentUser.role === 'blocked') return false;
+    
+    return msgData.sender.id === currentUser.id;
+}
+
+/*
+Who can delete whose messages:
+- user: own
+- moderator: everyone's except admins'
+- admin: everyone's
+
+if the user or the message does not exist, returns false
+*/
+function canDeleteMessage(msgData) {
+    if (!currentUser) return false;
+    
+    if (currentUser.role === 'user') {
+        return currentUser.id === msgData.sender.id;
+    }
+    else if (currentUser.role === 'moderator') {
+        return msgData.sender.role !== 'admin';
+    }
+    else if (currentUser.role === 'admin') {
+        return true;
+    }
+    else if (currentUser.role === 'blocked') {
+        return false;
+    }
+
+    console.error(`Unknown role!: ${currentUser.role}`);
+    return false;
+}
 
 // chat list
 function createChatElem(chat) {
@@ -86,6 +125,87 @@ chatListElem.onscroll = async () => {
 
 // {data, elem} oldest first
 const msgArr = [];
+let isEditing = false;
+let msgDataBeingEdited = null;
+let msgElemBeingEdited = null;
+
+function setMstInputActionButton(action) {
+    if (action === 'send') {
+        msgSendButtonElem.style.display = 'block';
+        msgEditButtonElem.style.display = 'none';
+        return;
+    }
+
+    if (action === 'edit') {
+        msgSendButtonElem.style.display = 'none';
+        msgEditButtonElem.style.display = 'block';
+        return;
+    }
+
+    console.error(`Unknown action: ${action}`);
+}
+
+function startEditing(msgData, elem) {
+    isEditing = true;
+    msgDataBeingEdited = msgData;
+    msgElemBeingEdited = elem;
+
+    setMstInputActionButton('edit');
+
+    elem.classList.add('message-active');
+
+    msgTextareaElem.value = msgData.text;
+}
+
+function cancelEditing() {
+    if (!isEditing) return;
+
+    setMstInputActionButton('send');
+
+    msgElemBeingEdited.classList.remove('message-active');
+
+    msgTextareaElem.value = "";
+    isEditing = false;
+}
+
+async function finishEditing() {
+    if (!isEditing) return;
+
+    if (msgTextareaElem.value.trim() === "") {
+        return;
+    }
+
+    msgElemBeingEdited.classList.remove('message-active');
+
+    let res;
+    try {
+        res = await fetch(`/api/chats/${CHAT_ID}/messages/${msgDataBeingEdited.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: msgTextareaElem.value
+            })
+        });
+    }
+    catch (e) {
+        console.error(e);
+        alert(localization.errors.unexpectedError);
+        return;
+    }
+
+    const body = await res.json();
+    if (!body.success) {
+        alert(body.message);
+        return;
+    }
+
+    msgTextareaElem.value = '';
+    setMstInputActionButton('send');
+
+    isEditing = false;
+}
 
 // adds the message to both the array and the DOM
 function addMsg(newMsgData) {
@@ -157,21 +277,41 @@ function createMsgElem(msgData) {
     root.appendChild(avatarDivElem);
     root.appendChild(usernameTextDivElem);
 
+    // edit button
+    const editBtn = document.createElement('button');
+    editBtn.classList.add('msg-action-btn');
+    const editBtnImg = document.createElement('img');
+    editBtnImg.src = '/img/edit.png';
+    editBtn.appendChild(editBtnImg);
+
+    if (canEditMessage(msgData)) {
+        editBtn.onclick = async () => {
+            startEditing(msgData, root);
+        }
+    }
+    else {
+        editBtn.classList.add("invisible");
+    }
+
+    root.appendChild(editBtn);
+
     // delete button
     const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('delete-btn');
+    deleteBtn.classList.add('msg-action-btn');
     const deleteBtnImg = document.createElement('img');
     deleteBtnImg.src = '/img/delete.png';
     deleteBtn.appendChild(deleteBtnImg);
-    deleteBtn.onclick = async () => {
-        if (confirm(localization.actions.confirmDeletion)) await deleteMessage(msgData.id);
-    }
-    root.appendChild(deleteBtn);
 
-    if (!msgData.canDelete) {
+    if (canDeleteMessage(msgData)) {
+        deleteBtn.onclick = async () => {
+            if (confirm(localization.actions.confirmDeletion)) await deleteMessage(msgData.id);
+        }
+    }
+    else {
         deleteBtn.classList.add("invisible");
     }
 
+    root.appendChild(deleteBtn);
 
     return root;
 }
@@ -220,7 +360,7 @@ function updateUsername(user, label) {
             const usernameElem = msg.elem.getElementsByClassName('username')[0];
 
             msg.data.sender.label = label;
-            usernameElem.innerText = formatUsername(user.username, user.role,  label);
+            usernameElem.innerText = formatUsername(user.username, user.role, label);
         }
     }
 }
@@ -270,6 +410,35 @@ window.onload = async () => {
     await getLocalization();
     await getCurrentUser();
     await init();
+
+    // sending/editing messages
+    if (currentUser) {
+        msgSendButtonElem.onclick = () => {
+            sendMessageFromInput();
+        }
+        msgEditButtonElem.onclick = () => {
+            finishEditing();
+        }
+
+        document.onkeydown = (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                if (!isEditing) {
+                    sendMessageFromInput();
+                }
+                else {
+                    finishEditing();
+                }
+            }
+
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                if (isEditing) {
+                    cancelEditing();
+                }
+            }
+        }
+    }
 };
 
 async function scrollLoad() {
@@ -313,7 +482,7 @@ async function sendMessageFromInput() {
         });
     }
     catch {
-        alert(localizedStrings.errors.unexpectedError);
+        alert(localization.errors.unexpectedError);
         return;
     }
 
@@ -351,17 +520,12 @@ function removeMessageElem(messageId) {
     }
 }
 
-//sending messages
-if (msgSendButtonElem) {
-    msgSendButtonElem.onclick = () => {
-        sendMessageFromInput();
-    }
-
-    document.onkeydown = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-
-            sendMessageFromInput();
+function updateMessageElem(msgData) {
+    for (const msg of msgArr) {
+        if (msg.data.id === msgData.id) {
+            msg.data = msgData;
+            msg.elem.getElementsByClassName('msg-text')[0].innerText = msgData.text;
+            return;
         }
     }
 }
@@ -378,5 +542,12 @@ socket.on('new_msg', (socketMsg) => {
 });
 
 socket.on('delete_msg', (socketMsg) => {
+    if (isEditing && msgDataBeingEdited.id === socketMsg.msgId)
+        cancelEditing();
+
     removeMessageElem(socketMsg.msgId);
+});
+
+socket.on('edit_msg', (socketMsg) => {
+    updateMessageElem(socketMsg.msgData);
 });
