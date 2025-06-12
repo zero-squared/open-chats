@@ -141,7 +141,11 @@ function createUserElem(user, localization) {
     deleteAvatarBtn.innerText = localization.actions.deleteAvatar;
 
     deleteAvatarBtn.onclick = async () => {
+        deleteAvatarBtn.disabled = true;
+        deleteAvatarBtn.classList.add('disabled');
         await deleteAvatar(user.id, avatarElem);
+        deleteAvatarBtn.disabled = false;
+        deleteAvatarBtn.classList.remove('disabled');
     }
 
     userElem.appendChild(deleteAvatarBtn);
