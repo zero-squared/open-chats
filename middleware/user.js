@@ -1,4 +1,5 @@
 import sequelize from '../models/index.js';
+import { canDeleteMessage } from '../utils/users.js';
 
 function disallow(req, res) {
     if (req.baseUrl === '/api') {
@@ -8,14 +9,14 @@ function disallow(req, res) {
         });
     }
     return res.redirect('/');
-} 
+}
 
 
 export function isGuest(req, res, next) {
     if (!req.session.user) {
         return next();
     }
-    
+
     return disallow(req, res);
 }
 
@@ -23,7 +24,7 @@ export function isAuthenticated(req, res, next) {
     if (req.session.user) {
         return next();
     }
-    
+
     return disallow(req, res);
 }
 
@@ -31,7 +32,7 @@ export function isUser(req, res, next) {
     if (req.session.user && req.session.user.role === 'user') {
         return next();
     }
-    
+
     return disallow(req, res);
 }
 
@@ -87,7 +88,7 @@ export async function canUpdateUser(req, res, next) {
     }
 }
 
-export async function canDeleteMessage(req, res, next) {
+export async function canDeleteMessageMw(req, res, next) {
     if (!req.session.user) {
         return res.status(401).send({
             success: false,
@@ -97,25 +98,15 @@ export async function canDeleteMessage(req, res, next) {
 
     const messageId = Number(req.params.id);
 
-    const chatId = Number(req.params.chatId);
+    // TODO: maybe check that the message exists
+    // (not necessary, now it just sends "unauthorized")
 
-    try {
-        const message = await sequelize.models.Message.findByPk(messageId);
-
-        if (!message || message.ChatId !== chatId || (message.UserId !== req.session.user.id && req.session.user.role !== 'admin')) {
-            return res.status(401).send({
-                success: false,
-                message: req.t('errors.unauthorized')
-            });
-        } 
-
-        return next();
-    } catch (e) {
-        console.error(e);
-
-        res.status(500).send({
+    if (!canDeleteMessage(req.session.user.id, messageId)) {
+        return res.status(401).send({
             success: false,
-            message: req.t('errors.internalServerError')
+            message: req.t('errors.unauthorized')
         });
     }
+
+    return next();
 }

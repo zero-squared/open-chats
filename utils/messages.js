@@ -1,5 +1,6 @@
 import sequelize from '../models/index.js';
 import { DEFAULT_AVATAR } from './config.js';
+import { canDeleteMessage } from './users.js';
 
 // TODO Use existing function for sender
 export async function getMsgDataObj(messageId, userId) {
@@ -13,7 +14,7 @@ export async function getMsgDataObj(messageId, userId) {
         const user = await sequelize.models.User.findByPk(userId);
         if (user) {
             const role = await user.getRole();
-            canDelete = user.id === sender.id || role.name === 'admin';
+            canDelete = await canDeleteMessage(userId, messageId);
         }
 
         const label = await sequelize.models.Label.findOne({
