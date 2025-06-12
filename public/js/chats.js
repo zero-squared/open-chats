@@ -131,9 +131,6 @@ function createMsgElem(msgData) {
 
     avatarDivElem.appendChild(avatarElem);
 
-    const messageBlock = document.createElement('div');
-    messageBlock.classList.add('message-block');
-
     // username/text div
     const usernameTextDivElem = document.createElement('div');
     usernameTextDivElem.classList.add('username-text-container');
@@ -155,8 +152,9 @@ function createMsgElem(msgData) {
     usernameTextDivElem.appendChild(usernameElem);
     usernameTextDivElem.appendChild(msgTextElem);
 
-    messageBlock.appendChild(usernameTextDivElem);
-
+    root.appendChild(avatarDivElem);
+    root.appendChild(usernameTextDivElem);
+    
     if (msgData.canDelete) {
         const deleteBtn = document.createElement('button');
         deleteBtn.classList.add('delete-btn');
@@ -167,11 +165,9 @@ function createMsgElem(msgData) {
             if (confirm(localization.actions.confirmDeletion)) await deleteMessage(msgData.id);
         }
 
-        messageBlock.appendChild(deleteBtn);
+        root.appendChild(deleteBtn);
     }
 
-    root.appendChild(avatarDivElem);
-    root.appendChild(messageBlock);
 
     return root;
 }

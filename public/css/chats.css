@@ -38,6 +38,7 @@ main {
 
 /* main-content */
 #main-content {
+    width: auto;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -58,7 +59,8 @@ main {
 .message {
     width: 100%;
     display: grid;
-    grid-template-columns: 48px 1fr;
+    box-sizing: border-box;
+    grid-template-columns: 48px 1fr auto;
     padding: 8px 16px;
     border-top: 1px solid white;
 }
@@ -77,13 +79,6 @@ main {
     height: 100%;
     border-radius: 100%;
     border: 1.5px solid white;
-}
-
-.message-block {
-    padding-right: 32px;
-    column-gap: 8px;
-    display: flex;
-    justify-content: space-between;
 }
 
 .message .username-text-container {
