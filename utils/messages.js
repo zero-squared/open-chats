@@ -12,7 +12,8 @@ export async function getMsgDataObj(messageId, userId) {
     if (userId) {
         const user = await sequelize.models.User.findByPk(userId);
         if (user) {
-            canDelete = user.id === sender.id || await user.getRole() === 'admin'
+            const role = await user.getRole();
+            canDelete = user.id === sender.id || role.name === 'admin';
         }
 
         const label = await sequelize.models.Label.findOne({
