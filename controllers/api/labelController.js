@@ -60,7 +60,7 @@ export default {
             });
         }
 
-        if (text.length < USERNAME_MIN_LENGTH) {
+        if (text.trim().length < USERNAME_MIN_LENGTH) {
             return res.status(400).send({
                 success: false,
                 message: req.t('errors.badRequest')

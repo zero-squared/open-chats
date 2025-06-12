@@ -357,7 +357,7 @@ async function changeLabel(targetUser) {
 
 function updateUsername(user, label) {
     for (const msg of msgArr) {
-        if (msg.data.sender.id === id) {
+        if (msg.data.sender.id === user.id) {
             const usernameElem = msg.elem.getElementsByClassName('username')[0];
 
             msg.data.sender.label = label;
@@ -516,7 +516,7 @@ function removeMessageElem(messageId) {
         if (msg.data.id === messageId) {
             msg.elem.remove();
             msgArr.splice(i, 1);
-            break;
+            return;
         }
     }
 }

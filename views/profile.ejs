@@ -26,7 +26,7 @@
                 <p class="error" id="avatar-error"></p>
                 <div class="user-info">
                     <p><%= t('profile.username') %><span id="username"><%= user.username %></span></p>
-                    <p><%= t('profile.role') %><span><%= user.role %></span></p>
+                    <p><%= t('profile.role') %><span><%= t(`roles.${user.role}`) %></span></p>
                     <div class="user-info-btns">
                         <button class="primary-btn" id="edit-username-btn"><%= t('profile.editUsername') %></button>
                         <button class="primary-btn" id="change-password-btn"><%= t('profile.changePassword') %></button>

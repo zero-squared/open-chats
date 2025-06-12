@@ -31,7 +31,7 @@
             </div>
             <% if (user) { %>
             <div class="msg-textarea-container">
-                <textarea id="msg-textarea" maxlength="1024" placeholder="Message <%= chat.name %>"></textarea>
+                <textarea id="msg-textarea" maxlength="1024" placeholder="<%= t('actions.message') %><%= chat.name %>"></textarea>
                 <button id="msg-send-button" class="msg-input-action-btn">
                     <img src="/img/send.png">
                 </button>

@@ -1,34 +1,103 @@
 {
+    "websiteTitle": "OpenChats",
     "header": {
         "nav": {
             "home": "Главная",
-            "login": "Войти",
+            "chats": "Чаты",
+            "login": "Вход",
             "register": "Регистрация",
-            "logout": "Выйти",
-            "profile": "Профиль"
+            "logout": "Выход",
+            "profile": "Профиль",
+            "admin": "Админ"
         }
     },
-    "login": {
-        "title": "Вход",
-        "form": {
-            "username": "Имя пользователя: ",
-            "password": "Пароль:",
-            "loginButton": "Войти"
+    "loginPage": {
+        "title": "Вход"
+    },
+    "registerPage": {
+        "title": "Регистрация"
+    },
+    "adminPage": {
+        "title": "Админ",
+        "loading": "Загрузка...",
+        "tabs": {
+            "users": {
+                "title": "Пользователи"
+            },
+            "chats": {
+                "title": "Чаты"
+            }
         }
     },
-    "register": {
-        "title": "Регистрация",
-        "form": {
-            "username": "Имя пользователя: ",
-            "password": "Пароль: ",
-            "repeatPassword": "Повторите пароль: ",
-            "registerButton": "Зарегистрироваться"
-        }
+    "chats": {
+        "defaultTitle": "Чаты"
     },
-    "notFound": "Не найдено",
+    "forms": {
+        "usernameLabel": "Имя пользователя: ",
+        "passwordLabel": "Пароль: ",
+        "repeatPasswordLabel": "Повторите пароль: ",
+        "newPasswordLabel": "Новый пароль: ",
+        "repeatNewPasswordLabel": "Повторите новый пароль: ",
+        "currentPasswordLabel": "Текущий пароль: ",
+        "loginButton": "Войти",
+        "registerButton": "Зарегистрироваться",
+        "nameLabel": "Имя: "
+    },
+    "errors": {
+        "notFound": "Не найдено",
+        "usernameRequired": "Имя пользователя обязательно",
+        "passwordRequired": "Пароль обязателен",
+        "usernameTooShort": "Имя пользователя должно содержать не менее 5 символов",
+        "usernameTooLong": "Имя пользователя не может быть длиннее 30 символов",
+        "passwordTooShort": "Пароль должен содержать не менее 5 символов",
+        "passwordTooLong": "Пароль не может быть длиннее 50 символов",
+        "unexpectedError": "Неожиданная ошибка",
+        "samePasswords": "Пароли должны совпадать",
+        "uniqueUsername": "Имя пользователя должно быть уникальным",
+        "internalServerError": "Внутренняя ошибка сервера",
+        "incorrectUsernamePassword": "Неверное имя пользователя или пароль",
+        "fileTooLarge": "Файл слишком большой",
+        "incorrectImageExtension": "Файл должен иметь расширение .png или .jpg",
+        "badRequest": "Неверный запрос",
+        "unauthorized": "Неавторизован",
+        "chatNotExist": "Чат не существует",
+        "fileRequired": "Файл обязателен",
+        "usernameValidation": "Имя пользователя может содержать только буквы, цифры, подчёркивания и дефисы",
+        "currentPasswordRequired": "Текущий пароль обязателен",
+        "newPasswordRequired": "Новый пароль обязателен",
+        "incorrectPassword": "Неверный пароль"
+    },
     "profile": {
+        "userProfile": "Профиль пользователя",
         "title": "Профиль",
+        "role": "Роль: ",
         "username": "Имя пользователя: ",
-        "uploadAvatarButton": "Загрузить аватар"
+        "uploadAvatarButton": "Загрузить аватар",
+        "save": "Сохранить",
+        "editUsername": "Изменить имя пользователя",
+        "changePassword": "Изменить пароль",
+        "deleteAvatar": "Удалить аватар"
+    },
+    "actions": {
+        "changeRole": "Изменить роль",
+        "editChat": "Редактировать чат",
+        "createChat": "Создать чат",
+        "deleteChat": "Удалить чат",
+        "confirmDeletion": "Вы хотите удалить это сообщение?",
+        "message": "Написать в ",
+        "editing": "Редактирование сообщения в "
+    },
+    "label": {
+        "enterText": "Введите текст для метки"
+    },
+    "roles": {
+        "admin": "Админ",
+        "moderator": "Модератор",
+        "user": "Пользователь",
+        "blocked": "Заблокирован"
+    },
+    "noChats": {
+        "title": "Нет чатов",
+        "message": "Чаты не созданы"
     }
 }
