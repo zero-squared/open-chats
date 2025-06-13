@@ -155,6 +155,7 @@ function startEditing(msgData, elem) {
     elem.classList.add('message-active');
 
     msgTextareaElem.value = msgData.text;
+    msgTextareaElem.focus();
 }
 
 function cancelEditing() {

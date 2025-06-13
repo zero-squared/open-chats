@@ -11,6 +11,15 @@ const passwordErrorElem = document.getElementById('password-error');
 
 changePasswordBtn.onclick = () => {
     passwordModal.style.display = 'flex';
+    curPasswordInput.focus();
+    document.onkeydown = (e) => {
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            passwordModal.style.display = 'none';
+            passwordErrorElem.style.display = 'none';
+            document.onkeydown = null;
+        }
+    }
 }
 
 passwordModalClose.onclick = () => {

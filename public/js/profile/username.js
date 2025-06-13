@@ -11,6 +11,15 @@ const usernameErrorElem = document.getElementById('username-error');
 editUsernameBtn.onclick = () => {
     usernameInput.value = usernameElem.innerText;
     usernameModal.style.display = 'flex';
+    usernameInput.focus();
+    document.onkeydown = (e) => {
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            usernameModal.style.display = 'none';
+            usernameErrorElem.style.display = 'none';
+            document.onkeydown = null;
+        }
+    }
 }
 
 usernameModalClose.onclick = () => {

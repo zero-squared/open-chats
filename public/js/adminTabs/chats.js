@@ -14,7 +14,7 @@ const scrollElem = document.getElementById('chats-scroll');
 const editChatModal = document.getElementById('edit-chat-modal');
 const editChatModalClose = document.getElementById('edit-chat-modal-close');
 const editNameInput = document.getElementById('edit-name-input');
-const editUsernameForm = document.getElementById('edit-chat-form');
+const editChatForm = document.getElementById('edit-chat-form');
 const editChatErrorElem = document.getElementById('edit-chat-error');
 const createChatBtn = document.getElementById('create-chat');
 
@@ -83,6 +83,15 @@ function createChatElem(chat) {
         editNameInput.value = nameElem.innerText;
         editChatErrorElem.style.display = 'none';
         editChatModal.style.display = 'flex';
+        editNameInput.focus();
+        document.onkeydown = (e) => {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                editChatModal.style.display = 'none';
+                editChatErrorElem.style.display = 'none';
+                document.onkeydown = null;
+            }
+        }
         curChatNameElem = nameElem;
     }
     chatElem.appendChild(editChatBtn);
@@ -135,7 +144,7 @@ editChatModalClose.onclick = () => {
     editChatErrorElem.style.display = 'none';
 }
 
-editUsernameForm.onsubmit = async (e) => {
+editChatForm.onsubmit = async (e) => {
     e.preventDefault();
     editChatErrorElem.style.display = 'none';
 
@@ -165,6 +174,14 @@ createChatBtn.onclick = () => {
     createChatModalElems.nameInput.value = '';
     createChatModalElems.error.style.display = 'none';
     createChatModalElems.modal.style.display = 'flex';
+    createChatModalElems.nameInput.focus();
+    document.onkeydown = (e) => {
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            createChatModalElems.modal.style.display = 'none';
+            document.onkeydown = null;
+        }
+    }
 }
 
 createChatModalElems.closeBtn.onclick = () => {
