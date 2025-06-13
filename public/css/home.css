@@ -8,9 +8,36 @@ main {
 }
 
 main p {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+main li {
     font-size: 20px;
 }
 
 main img {
     border: 1px solid white;
+}
+
+.features {
+    column-gap: 20px;
+    display: flex;
+}
+
+.feature-list {
+    padding: 20px;
+    display: flex;
+    row-gap: 20px;
+    flex-direction: column;
+}
+
+.feature-list ul {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.feature-list li {
+    margin-left: 20px;
 }

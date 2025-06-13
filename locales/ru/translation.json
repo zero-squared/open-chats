@@ -11,6 +11,17 @@
             "admin": "Админ"
         }
     },
+    "home": {
+        "welcome": "Добро пожаловать на {{websiteTitle}}",
+        "description": "Платформа с чатами для общения",
+        "features": {
+            "title": "Особенности",
+            "multipleChats": "Множество чатов",
+            "realTimeMessaging": "Обмен сообщениями в реальном времени",
+            "customAvatars": "Пользовательские аватары",
+            "customUserLabels": "Пользовательские метки"
+        }
+    },
     "loginPage": {
         "title": "Вход"
     },

@@ -10,7 +10,22 @@
 <body>
     <%- include('partials/header'); -%>
     <main>
-        <h1>OpenChats</h1>
+        <h1><%= t('home.welcome', {
+            websiteTitle: t('websiteTitle')
+        }) %></h1>
+        <h2><%= t('home.description') %></h2>
+        <div class="features">
+            <img src="/img/shikonoko.gif" alt="Shikonoko">
+            <div class="feature-list">
+                <p><%= t('home.features.title') %></p>
+                <ul>
+                    <li><%= t('home.features.multipleChats') %></li>
+                    <li><%= t('home.features.realTimeMessaging') %></li>
+                    <li><%= t('home.features.customAvatars') %></li>
+                    <li><%= t('home.features.customUserLabels') %></li>
+                </ul>
+            </div>
+        </div>
     </main>
 </body>
 </html>

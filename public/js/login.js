@@ -1,5 +1,5 @@
 const LOGIN_API = '/api/auth/login';
-const REDIRECT = '/';
+const REDIRECT = '/chats';
 
 const loginForm = document.getElementById('login-form');
 const usernameInput = document.getElementById('username-input');

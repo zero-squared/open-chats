@@ -11,6 +11,17 @@
             "admin": "Admin"
         }
     },
+    "home": {
+        "welcome": "Welcome to the {{websiteTitle}}",
+        "description": "A platform with chats for communication",
+        "features": {
+            "title": "Features",
+            "multipleChats": "Multiple chats",
+            "realTimeMessaging": "Real-time messaging",
+            "customAvatars": "Custom avatars",
+            "customUserLabels": "Custom user labels"
+        }
+    },
     "loginPage": {
         "title": "Login"
     },
