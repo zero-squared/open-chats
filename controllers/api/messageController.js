@@ -111,10 +111,62 @@ export default {
             });
         }
     },
+    editMessage: async (req, res) => {
+        if (!req.body) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+        
+        const chatId = Number(req.params.chatId);
+        const messageId = Number(req.params.id);
+        const text = req.body.text;
+
+        if (!chatId || !messageId || text.length <= 0 || text.length > MESSAGE_MAX_LENGTH) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
+
+        try {
+            const message = await sequelize.models.Message.findByPk(messageId);
+
+            if (!message || message.ChatId !== chatId) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            }
+
+            message.text = text;
+            await message.save();
+
+            getIO().to(chatId).emit('edit_msg', {msgData: await getMsgDataObj(message.id, req.session?.user?.id)});
+
+            return res.send({
+                success: true
+            });
+        } catch (e) {
+            console.error(e);
+
+            return res.status(500).send({
+                success: false,
+                message: req.t('errors.internalServerError')
+            });
+        }
+    },
     deleteMessage: async (req, res) => {
         const chatId = Number(req.params.chatId);
-
         const messageId = Number(req.params.id);
+
+        if (!chatId || !messageId) {
+            return res.status(400).send({
+                success: false,
+                message: req.t('errors.badRequest')
+            });
+        }
 
         try {
             const message = await sequelize.models.Message.findByPk(messageId);

@@ -38,6 +38,15 @@ export function handleUsernameError(req, res, e) {
     });
 }
 
+export async function canEditMessage(userId, messageId) {
+    const message = await sequelize.models.Message.findByPk(messageId);
+    const user = await sequelize.models.User.findByPk(userId);
+
+    if (!message || !user) return false;
+
+    return message.UserId === user.id;
+}
+
 /*
 Who can delete whose messages:
 - user: own

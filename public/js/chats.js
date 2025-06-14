@@ -177,10 +177,17 @@ function createMsgElem(msgData) {
 }
 
 function formatUsername(username, role, label) {
-    if (!label) {
-        return `${username} - ${localization.roles[role]}`;
+    let result = username;
+
+    if (label) {
+        result = `${label} [${username}]`;
     }
-    return `${label} [${username}] - ${localization.roles[role]}`;
+
+    if (role !== 'user') {
+        result += ` - ${localization.roles[role]}`;
+    }
+
+    return result;
 }
 
 async function changeLabel(targetUser) {
