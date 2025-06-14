@@ -27,6 +27,7 @@ for (const modelFile of modelFiles) {
     }
 }
 
+// TODO Refactor foreign key names
 // User
 sequelize.models.User.belongsTo(sequelize.models.Role, {
     foreignKey: {
@@ -57,6 +58,20 @@ sequelize.models.Message.belongsTo(sequelize.models.User, {
     foreignKey: {
         allowNull: false,
     }
+});
+
+// Label
+sequelize.models.Label.belongsTo(sequelize.models.User, {
+    foreignKey: {
+        name: 'authorUserId',
+        allowNull: false
+    },
+});
+sequelize.models.Label.belongsTo(sequelize.models.User, {
+    foreignKey: {
+        name: 'targetUserId',
+        allowNull: false
+    },
 });
 
 await sequelize.sync();

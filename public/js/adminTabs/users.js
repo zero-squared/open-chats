@@ -34,7 +34,7 @@ async function loadNewUsers() {
     }
 
     for (const user of users) {
-        const userElem = createUserElem(user, body.localization);
+        const userElem = createUserElem(user);
         usersContainer.appendChild(userElem);
     }
 
@@ -77,7 +77,7 @@ async function updateRole(userId, roleId) {
     }
 }
 
-function createUserElem(user, localization) {
+function createUserElem(user) {
     const userElem = document.createElement('div');
 
     const avatarElem = document.createElement('img');
@@ -156,6 +156,8 @@ function createUserElem(user, localization) {
 }
 
 window.onload = async () => {
+    await getLocalization();
+
     const res = await fetch(USER_API, {
         method: 'GET'
     });

@@ -14,6 +14,7 @@ import http from 'http';
 
 import router from './routes/mainRoutes.js';
 import { initializeSockets } from './sockets/index.js';
+import { SUPPORTED_LANGS, FALLBACK_LANG } from './utils/config.js';
 import './models/index.js';
 
 const app = express();
@@ -53,10 +54,10 @@ await i18next
     .use(i18nextBackend)
     .use(i18nextMiddleware.LanguageDetector)
     .init({
-        preload: ['en', 'ru'],
+        preload: SUPPORTED_LANGS,
         saveMissingTo: 'current',
         saveMissing: process.env.NODE_ENV === 'development',
-        fallbackLng: 'en',
+        fallbackLng: FALLBACK_LANG,
         backend: {
             loadPath: 'locales/{{lng}}/translation.json',
             addPath: 'locales/{{lng}}/translation.missing.json',

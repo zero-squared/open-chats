@@ -4,6 +4,8 @@ import authController from '../controllers/api/authController.js';
 import userController from '../controllers/api/userController.js';
 import chatController from '../controllers/api/chatController.js';
 import messageController from '../controllers/api/messageController.js';
+import localizationController from '../controllers/api/localizationController.js';
+import labelController from '../controllers/api/labelController.js';
 import { uploadSingleImage } from '../middleware/multerUpload.js';
 import { canUpdateUser, isGuest, isAdmin, isAuthenticated, canDeleteMessage } from '../middleware/user.js';
 
@@ -15,6 +17,8 @@ router.patch('/users/:id', canUpdateUser, userController.updateUser);
 router.post('/users/:id/avatar', canUpdateUser, uploadSingleImage, userController.updateAvatar);
 router.delete('/users/:id/avatar', canUpdateUser, userController.deleteAvatar);
 router.patch('/users/:id/role', isAdmin, userController.updateRole);
+
+router.patch('/users/:id/label', isAuthenticated, labelController.changeLabel);
 
 router.post('/auth/login', isGuest, authController.loginUser);
 router.post('/auth/register', isGuest, authController.registerUser);
@@ -28,5 +32,7 @@ router.delete('/chats/:id', isAdmin, chatController.deleteChat);
 router.post('/chats/:id/send', isAuthenticated, messageController.sendMessage);
 router.get('/chats/:id/messages', messageController.getMessages);
 router.delete('/chats/:chatId/messages/:id', canDeleteMessage, messageController.deleteMessage);
+
+router.get('/localization', localizationController.getLocalization);
 
 export default router;

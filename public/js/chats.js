@@ -25,8 +25,6 @@ let chatOffset = 0;
 let loadMoreChats = true;
 let isLoadingChats = false;
 
-let localization;
-
 // chat list
 function createChatElem(chat) {
     const root = document.createElement('div');
@@ -144,32 +142,73 @@ function createMsgElem(msgData) {
     usernameElem.classList.add('username');
     usernameElem.innerText = msgData.sender.username;
 
+    if (msgSendButtonElem) {
+        usernameElem.onclick = async () => {
+            await changeLabel(msgData.sender);
+        }
+    }
+
     const msgTextElem = document.createElement('p');
     msgTextElem.classList.add('msg-text');
     msgTextElem.innerText = msgData.text;
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('delete-btn');
-    const deleteBtnImg = document.createElement('img');
-    deleteBtnImg.src = '/img/delete.png';
-    deleteBtn.appendChild(deleteBtnImg);
-    
-    deleteBtn.onclick = async () => {
-        if (confirm(localization.actions.confirmDeletion)) await deleteMessage(msgData.id);
-    }
-    
-    if (!msgData.canDelete) deleteBtn.classList.add('hidden');
-    
     usernameTextDivElem.appendChild(usernameElem);
     usernameTextDivElem.appendChild(msgTextElem);
-    
+
     messageBlock.appendChild(usernameTextDivElem);
-    messageBlock.appendChild(deleteBtn);
+
+    if (msgData.canDelete) {
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('delete-btn');
+        const deleteBtnImg = document.createElement('img');
+        deleteBtnImg.src = '/img/delete.png';
+        deleteBtn.appendChild(deleteBtnImg);
+        deleteBtn.onclick = async () => {
+            if (confirm(localization.actions.confirmDeletion)) await deleteMessage(msgData.id);
+        }
+
+        messageBlock.appendChild(deleteBtn);
+    }
 
     root.appendChild(avatarDivElem);
     root.appendChild(messageBlock);
 
     return root;
+}
+
+async function changeLabel(targetUser) {
+    let labelText = prompt(localization.label.enterText, targetUser.username);
+    if (!labelText) return;
+
+    const res = await fetch(`/api/users/${targetUser.id}/label/`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            text: labelText,
+        })
+    });
+
+    const body = await res.json();
+
+    if (!body.success) {
+        alert(body.message);
+        return;
+    }
+
+    updateUsername(targetUser.id, body.text);
+}
+
+function updateUsername(userId, newUsername) {
+    for (const msg of msgArr) {
+        if (msg.data.sender.id === userId) {
+            const usernameElem = msg.elem.getElementsByClassName('username')[0];
+
+            msg.data.sender.username = newUsername;
+            usernameElem.innerText = newUsername;
+        }
+    }
 }
 
 // returns the parsed api body or null if !success
@@ -188,10 +227,6 @@ async function loadMessages(limit, offset) {
     if (!body.success) {
         msgContainerElem.innerText = body.message;
         return null;
-    }
-
-    if (!localization) {
-        localization = body.localization;
     }
 
     const messages = body.messages;
@@ -217,8 +252,9 @@ async function init() {
     }
 }
 
-window.onload = () => {
-    init();
+window.onload = async () => {
+    await getLocalization();
+    await init();
 };
 
 async function scrollLoad() {

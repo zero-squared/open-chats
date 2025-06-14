@@ -14,3 +14,6 @@ export const MESSAGE_MAX_LENGTH = 1024;
 export const ADMIN_TABS = ['users', 'chats'];
 
 export const DEFAULT_AVATAR = '/img/defaultAvatar.png';
+
+export const SUPPORTED_LANGS = ['en', 'ru'];
+export const FALLBACK_LANG = 'en';

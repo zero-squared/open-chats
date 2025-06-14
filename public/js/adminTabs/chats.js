@@ -49,7 +49,7 @@ async function loadNewChats() {
     }
 
     for (const chat of chats) {
-        const chatElem = createChatElem(chat, body.localization);
+        const chatElem = createChatElem(chat);
         chatsContainer.appendChild(chatElem);
     }
 
@@ -58,7 +58,7 @@ async function loadNewChats() {
     isLoading = false;
 }
 
-function createChatElem(chat, localization) {
+function createChatElem(chat) {
     const chatElem = document.createElement('div');
 
     const nameElem = document.createElement('p');
@@ -119,6 +119,7 @@ function createChatElem(chat, localization) {
 }
 
 window.onload = async () => {
+    await getLocalization();
     await loadNewChats();
 }
 
@@ -192,7 +193,7 @@ createChatModalElems.form.onsubmit = async (e) => {
         return;
     }
 
-    const chatElem = createChatElem(body.chat, body.localization);
+    const chatElem = createChatElem(body.chat);
     chatsContainer.appendChild(chatElem);
     createChatModalElems.modal.style.display = 'none';
 }

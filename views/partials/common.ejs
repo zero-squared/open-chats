@@ -1,9 +1,10 @@
 <!-- Must be included on every page in the <head> -->
 <script>
-    const localizedStrings = {
-        errors: {
-            unexpectedError: "<%= t('errors.unexpectedError') %>"
-        }
+    let localization;
+    async function getLocalization() {
+        const body = await fetch('/api/localization/');
+
+        localization = await body.json();
     }
     
     function setLang(lang) {

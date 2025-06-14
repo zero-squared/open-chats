@@ -33,13 +33,7 @@ export default {
 
             return res.send({
                 success: true,
-                chats: result,
-                localization: {
-                    actions: {
-                        editChat: req.t('actions.editChat'),
-                        deleteChat: req.t('actions.deleteChat')
-                    }
-                }
+                chats: result
             });
         } catch (e) {
             console.error(e);
@@ -80,12 +74,6 @@ export default {
                     id: chat.id,
                     name: chat.name,
                     createdAt: chat.createdAt
-                },
-                localization: {
-                    actions: {
-                        editChat: req.t('actions.editChat'),
-                        deleteChat: req.t('actions.deleteChat')
-                    }
                 }
             });
         } catch (e) {

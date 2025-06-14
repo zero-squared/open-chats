@@ -84,6 +84,9 @@
         "createChat": "Create chat",
         "deleteChat": "Delete chat"
     },
+    "label": {
+        "enterText": "Enter text for label"
+    },
     "roles": {
         "admin": "Admin",
         "moderator": "Moderator",
