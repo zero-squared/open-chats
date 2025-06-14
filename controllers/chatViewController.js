@@ -22,7 +22,11 @@ export default {
     },
     redirectChat: async (req, res) => {
         if (req.session.lastChatId) {
-            return res.redirect(`/chats/${req.session.lastChatId}`);
+            const chat = await sequelize.models.Chat.findByPk(req.session.lastChatId);
+            if (chat) {
+                return res.redirect(`/chats/${req.session.lastChatId}`);
+            }
+            delete req.session.lastChatId;
         }
         const chat = await sequelize.models.Chat.findOne({
             order: [['id', 'ASC']] // TODO: add a way to order chats and use it here
