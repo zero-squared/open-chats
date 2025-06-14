@@ -8,7 +8,7 @@ export async function getMsgDataObj(messageId, userId) {
     const sender = await sequelize.models.User.findByPk(message.UserId);
 
     let canDelete = false;
-    let username = sender.username;
+    let label;
 
     if (userId) {
         const user = await sequelize.models.User.findByPk(userId);
@@ -17,16 +17,12 @@ export async function getMsgDataObj(messageId, userId) {
             canDelete = await canDeleteMessage(userId, messageId);
         }
 
-        const label = await sequelize.models.Label.findOne({
+        label = await sequelize.models.Label.findOne({
             where: {
                 targetUserId: sender.id,
                 authorUserId: userId
             },
         });
-
-        if (label) {
-            username = label.text;
-        }
     }
 
     return {
@@ -38,7 +34,8 @@ export async function getMsgDataObj(messageId, userId) {
         canDelete: canDelete,
         sender: {
             id: sender.id,
-            username: username,
+            username: sender.username,
+            label: label?.text || '',
             avatarUrl: sender.avatarUrl || DEFAULT_AVATAR
         }
     };

@@ -140,7 +140,7 @@ function createMsgElem(msgData) {
 
     const usernameElem = document.createElement('h4');
     usernameElem.classList.add('username');
-    usernameElem.innerText = msgData.sender.username;
+    usernameElem.innerText = formatUsername(msgData.sender.username, msgData.sender.label);
 
     if (msgSendButtonElem) {
         usernameElem.onclick = async () => {
@@ -176,9 +176,16 @@ function createMsgElem(msgData) {
     return root;
 }
 
+function formatUsername(username, label) {
+    if (!label) {
+        return username;
+    }
+    return `${label} [${username}]`;
+}
+
 async function changeLabel(targetUser) {
-    let labelText = prompt(localization.label.enterText, targetUser.username);
-    if (!labelText) return;
+    let labelText = prompt(localization.label.enterText, targetUser.label || targetUser.username);
+    if (labelText === null) return;
 
     const res = await fetch(`/api/users/${targetUser.id}/label/`, {
         method: 'PATCH',
@@ -197,16 +204,16 @@ async function changeLabel(targetUser) {
         return;
     }
 
-    updateUsername(targetUser.id, body.text);
+    updateUsername(targetUser.id, targetUser.username, body.text);
 }
 
-function updateUsername(userId, newUsername) {
+function updateUsername(id, username, label) {
     for (const msg of msgArr) {
-        if (msg.data.sender.id === userId) {
+        if (msg.data.sender.id === id) {
             const usernameElem = msg.elem.getElementsByClassName('username')[0];
 
-            msg.data.sender.username = newUsername;
-            usernameElem.innerText = newUsername;
+            msg.data.sender.label = label;
+            usernameElem.innerText = formatUsername(username, label);
         }
     }
 }
