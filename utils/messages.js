@@ -5,7 +5,9 @@ import { canDeleteMessage } from './users.js';
 // TODO Use existing function for sender
 export async function getMsgDataObj(messageId, userId) {
     const message = await sequelize.models.Message.findByPk(messageId);
-    const sender = await sequelize.models.User.findByPk(message.UserId);
+    const sender = await sequelize.models.User.findByPk(message.UserId, {
+        include: 'Role'
+    });
 
     let canDelete = false;
     let label;
@@ -13,7 +15,6 @@ export async function getMsgDataObj(messageId, userId) {
     if (userId) {
         const user = await sequelize.models.User.findByPk(userId);
         if (user) {
-            const role = await user.getRole();
             canDelete = await canDeleteMessage(userId, messageId);
         }
 
@@ -35,6 +36,7 @@ export async function getMsgDataObj(messageId, userId) {
         sender: {
             id: sender.id,
             username: sender.username,
+            role: sender.Role.name,
             label: label?.text || '',
             avatarUrl: sender.avatarUrl || DEFAULT_AVATAR
         }

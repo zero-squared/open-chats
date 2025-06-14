@@ -12,7 +12,7 @@ export default {
 
         let userId = req.params.id;
 
-        if (userId === '@me' || userId === req.session.user.id) {
+        if (userId === '@me' || Number(userId) === req.session.user.id) {
             return res.status(400).send({
                 success: false,
                 message: req.t('errors.badRequest')

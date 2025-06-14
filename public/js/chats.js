@@ -140,12 +140,14 @@ function createMsgElem(msgData) {
 
     const usernameElem = document.createElement('h4');
     usernameElem.classList.add('username');
-    usernameElem.innerText = formatUsername(msgData.sender.username, msgData.sender.label);
+    usernameElem.classList.add(msgData.sender.role);
+    usernameElem.innerText = formatUsername(msgData.sender.username, msgData.sender.role, msgData.sender.label);
 
-    if (msgSendButtonElem) {
+    if (currentUser && currentUser.id !== msgData.sender.id) {
         usernameElem.onclick = async () => {
             await changeLabel(msgData.sender);
         }
+        usernameElem.classList.add('hover-underline');
     }
 
     const msgTextElem = document.createElement('p');
@@ -176,11 +178,11 @@ function createMsgElem(msgData) {
     return root;
 }
 
-function formatUsername(username, label) {
+function formatUsername(username, role, label) {
     if (!label) {
-        return username;
+        return `${username} - ${localization.roles[role]}`;
     }
-    return `${label} [${username}]`;
+    return `${label} [${username}] - ${localization.roles[role]}`;
 }
 
 async function changeLabel(targetUser) {
@@ -204,16 +206,16 @@ async function changeLabel(targetUser) {
         return;
     }
 
-    updateUsername(targetUser.id, targetUser.username, body.text);
+    updateUsername(targetUser, body.text);
 }
 
-function updateUsername(id, username, label) {
+function updateUsername(user, label) {
     for (const msg of msgArr) {
         if (msg.data.sender.id === id) {
             const usernameElem = msg.elem.getElementsByClassName('username')[0];
 
             msg.data.sender.label = label;
-            usernameElem.innerText = formatUsername(username, label);
+            usernameElem.innerText = formatUsername(user.username, user.role,  label);
         }
     }
 }
@@ -261,6 +263,7 @@ async function init() {
 
 window.onload = async () => {
     await getLocalization();
+    await getCurrentUser();
     await init();
 };
 
