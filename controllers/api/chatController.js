@@ -2,8 +2,22 @@ import sequelize from '../../models/index.js';
 
 export default {
     getChats: async (req, res) => {
+        let { limit, offset } = req.query;
+
+        limit = Number(limit);
+        offset = Number(offset);
+
+        if (!limit) {
+            limit = 10;
+        }
+        if (!offset) {
+            offset = 0;
+        }
+
         try {
             const chats = await sequelize.models.Chat.findAll({
+                limit: limit,
+                offset: offset,
                 order: [['id', 'ASC']] // TODO: add a way to order chats and use it here (or sort on frontend?)
             });
 

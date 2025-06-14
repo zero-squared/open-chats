@@ -7,6 +7,7 @@ main {
 
 /* chat list */
 .side-panel {
+    overflow: hidden;
     border-right: solid 1px white;
 }
 
@@ -14,6 +15,7 @@ main {
     width: 100%;
     height: 100%;
     display: grid;
+    overflow-y: auto;
     grid-auto-rows: 50px;
 }
 

@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import i18next from 'i18next';
 import i18nextMiddleware from 'i18next-http-middleware';
 import i18nextBackend from 'i18next-fs-backend';
+import compression from 'compression';
+import morgan from 'morgan';
 
 import fs from 'fs';
 import https from 'https';
@@ -42,6 +44,9 @@ if (process.env.NODE_ENV === 'production') {
             res.redirect("https://" + req.headers.host + req.path);
         }
     });
+
+    const accessLogStream = fs.createWriteStream('access.log', { flags: 'a' });
+    app.use(morgan('combined', { stream: accessLogStream }));
 }
 
 await i18next
@@ -64,6 +69,7 @@ await i18next
         }
     });
 
+app.use(compression());
 app.use(i18nextMiddleware.handle(i18next));
 app.set('view engine', 'ejs');
 app.use(sessionMiddleware);

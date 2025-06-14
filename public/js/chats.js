@@ -3,9 +3,10 @@ const MSG_LOAD_LIMIT_INITIAL = 15;
 const MSG_LOAD_LIMIT_SCROLL = 10;
 const SCROLL_LOAD_THRESHOLD = 100;
 const ANCHORED_TO_BOTTOM_THRESHOLD = 10;
+const CHAT_LIMIT = 30;
 
 // API url's
-const API_GET_CHATS = '/api/chats/';
+// const API_GET_CHATS = '/api/chats/';
 // const API_GET_MESSAGES = `/api/chats/${CHAT_ID}/messages/`;
 const API_SEND_MESSAGE = `/api/chats/${CHAT_ID}/send/`;
 
@@ -19,6 +20,10 @@ const msgTextareaElem = document.getElementById('msg-textarea');
 let scrollMsgOffset = 0;
 let scrollIsLoading = false;
 let scrollLoadMore = true;
+
+let chatOffset = 0;
+let loadMoreChats = true;
+let isLoadingChats = false;
 
 // chat list
 function createChatElem(chat) {
@@ -38,10 +43,11 @@ function createChatElem(chat) {
     return root;
 }
 
-async function loadChatList() {
+async function loadNewChats() {
     // TODO: maybe handle promise reject
+    isLoadingChats = true;
 
-    const res = await fetch(API_GET_CHATS, {
+    const res = await fetch(`/api/chats/?limit=${CHAT_LIMIT}&offset=${chatOffset}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -56,9 +62,23 @@ async function loadChatList() {
     }
 
     const chats = body.chats;
+    chatOffset += chats.length;
+
+    if (chats.length === 0) {
+        loadMoreChats = false;
+    }
 
     for (let chat of chats) {
         chatListElem.appendChild(createChatElem(chat));
+    }
+
+    isLoadingChats = false;
+}
+
+chatListElem.onscroll = async () => {
+    const nearBottom = chatListElem.scrollTop + chatListElem.clientHeight >= chatListElem.scrollHeight - 10;
+    if (nearBottom && loadMoreChats && !isLoadingChats) {
+        await loadNewChats();
     }
 }
 
@@ -168,7 +188,7 @@ async function loadMessages(limit, offset) {
 }
 
 async function init() {
-    loadChatList();
+    loadNewChats();
 
     const messages = await loadMessages(MSG_LOAD_LIMIT_INITIAL, 0);
     if (messages) {

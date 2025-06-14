@@ -1,5 +1,5 @@
 const CHATS_API = '/api/chats/';
-const LIMIT = 20;
+const LIMIT = 30;
 
 let offset = 0;
 let isLoading = true;
