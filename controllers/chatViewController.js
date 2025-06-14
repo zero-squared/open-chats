@@ -13,12 +13,17 @@ export default {
             return next();
         }
 
+        req.session.lastChatId = chat.id;
+
         return res.render('chats', { chat: {
             id: chat.id,
             name: chat.name
         }});
     },
-    redirectChatDefault: async (req, res) => {
+    redirectChat: async (req, res) => {
+        if (req.session.lastChatId) {
+            return res.redirect(`/chats/${req.session.lastChatId}`);
+        }
         const chat = await sequelize.models.Chat.findOne({
             order: [['id', 'ASC']] // TODO: add a way to order chats and use it here
         });

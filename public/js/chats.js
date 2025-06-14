@@ -277,7 +277,7 @@ socket.on("connect", () => {
 });
 
 socket.on('new_msg', (socketMsg) => {
-    if (socketMsg.msgData.chatId != CHAT_ID) return;
+    if (socketMsg.msgData.chatId !== CHAT_ID) return;
 
     addMsg(socketMsg.msgData);
 });

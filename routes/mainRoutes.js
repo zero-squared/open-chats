@@ -21,10 +21,10 @@ router.get('/register', isGuest, mainController.showRegister);
 router.get('/logout', mainController.logoutUser);
 router.get('/profile', isAuthenticated, mainController.showProfile);
 
-router.get('/admin', isAdmin, adminController.redirectMainAdmin);
+router.get('/admin', isAdmin, adminController.redirectAdmin);
 router.get('/admin/:tab', isAdmin, adminController.showAdmin);
 
-router.get('/chats/', chatViewController.redirectChatDefault);
+router.get('/chats/', chatViewController.redirectChat);
 router.get('/chats/:id', chatViewController.showChat);
 
 router.use('/api', apiRouter);

@@ -8,9 +8,15 @@ export default{
             return next();
         }
 
+        req.session.lastAdminTab = tabName;
+
         return res.render('admin', { tabName: tabName });
     },
-    redirectMainAdmin: async (req, res) => {
+    redirectAdmin: async (req, res) => {
+        if (req.session.lastAdminTab) {
+            return res.redirect(`/admin/${req.session.lastAdminTab}`);
+        }
+
         return res.redirect(`/admin/${ADMIN_TABS[0]}`);
     }
 }

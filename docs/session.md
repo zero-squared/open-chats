@@ -9,6 +9,8 @@ Example of authenticated user **req.session** object:
         username: 'admin',
         avatarUrl: 'https://example.com/image.png', // or null if does not exist
         role: 'admin' // 'user', 'moderator', 'admin'
-    }
+    },
+    lastAdminTab: 'users',
+    lastChatId: 3
 }
 ```
