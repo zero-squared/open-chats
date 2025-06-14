@@ -5,7 +5,7 @@ import userController from '../controllers/api/userController.js';
 import chatController from '../controllers/api/chatController.js';
 import messageController from '../controllers/api/messageController.js';
 import { uploadSingleImage } from '../middleware/multerUpload.js';
-import { canUpdateUser, isGuest, isAdmin, isAuthenticated } from '../middleware/user.js';
+import { canUpdateUser, isGuest, isAdmin, isAuthenticated, canDeleteMessage } from '../middleware/user.js';
 
 const router = express.Router();
 
@@ -25,7 +25,8 @@ router.post('/chats/', isAdmin, chatController.createChat);
 router.patch('/chats/:id', isAdmin, chatController.updateChat);
 router.delete('/chats/:id', isAdmin, chatController.deleteChat);
 
-router.get('/chats/:id/messages', messageController.getMessages);
 router.post('/chats/:id/send', isAuthenticated, messageController.sendMessage);
+router.get('/chats/:id/messages', messageController.getMessages);
+router.delete('/chats/:chatId/messages/:id', canDeleteMessage, messageController.deleteMessage);
 
 export default router;

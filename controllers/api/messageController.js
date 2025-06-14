@@ -35,7 +35,7 @@ export default {
                 text: text
             });
 
-            getIO().to(chatId).emit('new_msg', {msgData: await getMsgDataObj(message.id)});
+            getIO().to(chatId).emit('new_msg', {msgData: await getMsgDataObj(message.id, req.session?.user?.id)});
     
             return res.send({
                 success: true,
@@ -95,12 +95,48 @@ export default {
             let result = [];
     
             for (const msg of messages) {
-                result.push(await getMsgDataObj(msg.id));
+                result.push(await getMsgDataObj(msg.id, req.session?.user?.id));
             }
 
             return res.send({
                 success: true,
-                messages: result
+                messages: result,
+                localization: {
+                    actions: {
+                        confirmDeletion: 'Do you want to delete this message?'
+                    }
+                }
+            });
+        } catch (e) {
+            console.error(e);
+
+            return res.status(500).send({
+                success: false,
+                message: req.t('errors.internalServerError')
+            });
+        }
+    },
+    deleteMessage: async (req, res) => {
+        const chatId = Number(req.params.chatId);
+
+        const messageId = Number(req.params.id);
+
+        try {
+            const message = await sequelize.models.Message.findByPk(messageId);
+
+            if (!message || message.ChatId !== chatId) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            } 
+
+            await message.destroy();
+
+            getIO().to(chatId).emit('delete_msg', {msgId: messageId});
+
+            return res.send({
+                success: true
             });
         } catch (e) {
             console.error(e);

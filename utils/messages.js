@@ -1,9 +1,18 @@
 import sequelize from '../models/index.js';
 import { DEFAULT_AVATAR } from './config.js';
 
-export async function getMsgDataObj(messageId) {
+// TODO Use existing function for sender
+export async function getMsgDataObj(messageId, userId) {
     const message = await sequelize.models.Message.findByPk(messageId);
-    const user = await sequelize.models.User.findByPk(message.UserId);
+    const sender = await sequelize.models.User.findByPk(message.UserId);
+   
+    let canDelete = false;
+    if (userId) {
+        const user = await sequelize.models.User.findByPk(userId);
+        if (user) {
+            canDelete = user.id === sender.id || await user.getRole() === 'admin'
+        }
+    }
 
     return {
         id: message.id,
@@ -11,10 +20,11 @@ export async function getMsgDataObj(messageId) {
         createdAt: message.createdAt,
         updatedAt: message.updatedAt,
         text: message.text,
+        canDelete: canDelete,
         sender: {
-            id: user.id,
-            username: user.username,
-            avatarUrl: user.avatarUrl || DEFAULT_AVATAR
+            id: sender.id,
+            username: sender.username,
+            avatarUrl: sender.avatarUrl || DEFAULT_AVATAR
         }
     };
 }

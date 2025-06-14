@@ -86,3 +86,36 @@ export async function canUpdateUser(req, res, next) {
         });
     }
 }
+
+export async function canDeleteMessage(req, res, next) {
+    if (!req.session.user) {
+        return res.status(401).send({
+            success: false,
+            message: req.t('errors.unauthorized')
+        });
+    }
+
+    const messageId = Number(req.params.id);
+
+    const chatId = Number(req.params.chatId);
+
+    try {
+        const message = await sequelize.models.Message.findByPk(messageId);
+
+        if (!message || message.ChatId !== chatId || (message.UserId !== req.session.user.id && req.session.user.role !== 'admin')) {
+            return res.status(401).send({
+                success: false,
+                message: req.t('errors.unauthorized')
+            });
+        } 
+
+        return next();
+    } catch (e) {
+        console.error(e);
+
+        res.status(500).send({
+            success: false,
+            message: req.t('errors.internalServerError')
+        });
+    }
+}

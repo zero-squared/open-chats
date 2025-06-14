@@ -25,6 +25,8 @@ let chatOffset = 0;
 let loadMoreChats = true;
 let isLoadingChats = false;
 
+let localization;
+
 // chat list
 function createChatElem(chat) {
     const root = document.createElement('div');
@@ -131,6 +133,9 @@ function createMsgElem(msgData) {
 
     avatarDivElem.appendChild(avatarElem);
 
+    const messageBlock = document.createElement('div');
+    messageBlock.classList.add('message-block');
+
     // username/text div
     const usernameTextDivElem = document.createElement('div');
     usernameTextDivElem.classList.add('username-text-container');
@@ -143,11 +148,26 @@ function createMsgElem(msgData) {
     msgTextElem.classList.add('msg-text');
     msgTextElem.innerText = msgData.text;
 
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
+    const deleteBtnImg = document.createElement('img');
+    deleteBtnImg.src = '/img/delete.png';
+    deleteBtn.appendChild(deleteBtnImg);
+    
+    deleteBtn.onclick = async () => {
+        if (confirm(localization.actions.confirmDeletion)) await deleteMessage(msgData.id);
+    }
+    
+    if (!msgData.canDelete) deleteBtn.classList.add('hidden');
+    
     usernameTextDivElem.appendChild(usernameElem);
     usernameTextDivElem.appendChild(msgTextElem);
+    
+    messageBlock.appendChild(usernameTextDivElem);
+    messageBlock.appendChild(deleteBtn);
 
     root.appendChild(avatarDivElem);
-    root.appendChild(usernameTextDivElem);
+    root.appendChild(messageBlock);
 
     return root;
 }
@@ -160,10 +180,7 @@ async function loadMessages(limit, offset) {
     const prevScrollTop = msgContainerElem.scrollTop;
 
     const res = await fetch(apiGetMessages, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        method: 'GET'
     });
 
     const body = await res.json();
@@ -171,6 +188,10 @@ async function loadMessages(limit, offset) {
     if (!body.success) {
         msgContainerElem.innerText = body.message;
         return null;
+    }
+
+    if (!localization) {
+        localization = body.localization;
     }
 
     const messages = body.messages;
@@ -252,7 +273,32 @@ async function sendMessageFromInput() {
     }
 
     msgTextareaElem.value = "";
-};
+}
+
+async function deleteMessage(messageId) {
+    const res = await fetch(`/api/chats/${CHAT_ID}/messages/${messageId}`, {
+        method: 'DELETE'
+    });
+
+    const body = await res.json();
+
+    if (!body.success) {
+        alert(body.message);
+        return;
+    }
+}
+
+function removeMessageElem(messageId) {
+    for (let i = 0; i < msgArr.length; i++) {
+        const msg = msgArr[i];
+
+        if (msg.data.id === messageId) {
+            msg.elem.remove();
+            msgArr.splice(i, 1);
+            break;
+        }
+    }
+}
 
 //sending messages
 if (msgSendButtonElem) {
@@ -277,7 +323,9 @@ socket.on("connect", () => {
 });
 
 socket.on('new_msg', (socketMsg) => {
-    if (socketMsg.msgData.chatId !== CHAT_ID) return;
-
     addMsg(socketMsg.msgData);
+});
+
+socket.on('delete_msg', (socketMsg) => {
+    removeMessageElem(socketMsg.msgId);
 });
