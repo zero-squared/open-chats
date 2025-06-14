@@ -138,7 +138,7 @@ function createUserElem(user) {
 
     const deleteAvatarBtn = document.createElement('button');
     deleteAvatarBtn.classList.add('primary-btn');
-    deleteAvatarBtn.innerText = localization.actions.deleteAvatar;
+    deleteAvatarBtn.innerText = localization.profile.deleteAvatar;
 
     deleteAvatarBtn.onclick = async () => {
         deleteAvatarBtn.disabled = true;
