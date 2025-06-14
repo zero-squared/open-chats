@@ -7,6 +7,7 @@ export default async () => {
     const userRole = await sequelize.models.Role.create({ name: 'user' });
     const moderatorRole = await sequelize.models.Role.create({ name: 'moderator' });
     const adminRole = await sequelize.models.Role.create({ name: 'admin' });
+    const blockedRole = await sequelize.models.Role.create({ name: 'blocked' });
 
     console.log('Creating default admin user...');
     const adminPasswordHash = await bcrypt.hash('admin', parseInt(process.env.SALT_ROUNDS));

@@ -7,7 +7,7 @@ import messageController from '../controllers/api/messageController.js';
 import localizationController from '../controllers/api/localizationController.js';
 import labelController from '../controllers/api/labelController.js';
 import { uploadSingleImage } from '../middleware/multerUpload.js';
-import { canUpdateUser, isGuest, isAdmin, isAuthenticated, canDeleteMessageMw, canEditMessageMw } from '../middleware/user.js';
+import { canUpdateUser, isGuest, isAdmin, isAuthenticated, canDeleteMessageMw, canEditMessageMw, isNotBlocked } from '../middleware/user.js';
 
 const router = express.Router();
 
@@ -29,7 +29,7 @@ router.post('/chats/', isAdmin, chatController.createChat);
 router.patch('/chats/:id', isAdmin, chatController.updateChat);
 router.delete('/chats/:id', isAdmin, chatController.deleteChat);
 
-router.post('/chats/:id/send', isAuthenticated, messageController.sendMessage);
+router.post('/chats/:id/send', isNotBlocked, messageController.sendMessage);
 router.get('/chats/:id/messages', messageController.getMessages);
 router.patch('/chats/:chatId/messages/:id', canEditMessageMw, messageController.editMessage);
 router.delete('/chats/:chatId/messages/:id', canDeleteMessageMw, messageController.deleteMessage);

@@ -28,6 +28,14 @@ export function isAuthenticated(req, res, next) {
     return disallow(req, res);
 }
 
+export function isNotBlocked(req, res, next) {
+    if (req.session.user && req.session.user.role !== 'blocked') {
+        return next();
+    }
+
+    return disallow(req, res);
+}
+
 export function isUser(req, res, next) {
     if (req.session.user && req.session.user.role === 'user') {
         return next();

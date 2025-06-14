@@ -35,17 +35,7 @@ export default {
 
             return res.send({
                 success: true,
-                users: result,
-                localization: {
-                    actions: {
-                        deleteAvatar: req.t('profile.deleteAvatar'),
-                    },
-                    roles: {
-                        admin: req.t('roles.admin'),
-                        moderator: req.t('roles.moderator'),
-                        user: req.t('roles.user')
-                    }
-                }
+                users: result
             });
         } catch (e) {
             console.error(e);

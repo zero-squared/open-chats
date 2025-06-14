@@ -40,9 +40,11 @@ export function handleUsernameError(req, res, e) {
 
 export async function canEditMessage(userId, messageId) {
     const message = await sequelize.models.Message.findByPk(messageId);
-    const user = await sequelize.models.User.findByPk(userId);
+    const user = await sequelize.models.User.findByPk(userId, {
+        include: 'Role'
+    });
 
-    if (!message || !user) return false;
+    if (!message || !user || user.Role.name === 'blocked') return false;
 
     return message.UserId === user.id;
 }
@@ -68,7 +70,7 @@ export async function canDeleteMessage(userId, messageId) {
         const userRole = await user.getRole();
         const senderRole = await sender.getRole();
 
-        if (userRole.name === 'user') {
+        if (userRole.name === 'user' && userRole.name === 'blocked') {
             return user.id === sender.id;
         } 
         else if (userRole.name === 'moderator') {

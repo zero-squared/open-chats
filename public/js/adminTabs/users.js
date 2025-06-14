@@ -115,6 +115,9 @@ function createUserElem(user) {
         const adminRoleOption = document.createElement('option');
         adminRoleOption.innerText = localization.roles.admin;
         adminRoleOption.value = 3;
+        const blockedRoleOption = document.createElement('option');
+        blockedRoleOption.innerText = localization.roles.blocked;
+        blockedRoleOption.value = 4;
 
         if (user.role === 'user') {
             changeRoleSelect.selected = true;
@@ -122,11 +125,14 @@ function createUserElem(user) {
             moderatorRoleOption.selected = true;
         } else if (user.role === 'admin') {
             adminRoleOption.selected = true;
+        } else if (user.role === 'blocked') {
+            blockedRoleOption.selected = true;
         }
 
         changeRoleSelect.appendChild(userRoleOption);
         changeRoleSelect.appendChild(moderatorRoleOption);
         changeRoleSelect.appendChild(adminRoleOption);
+        changeRoleSelect.appendChild(blockedRoleOption);
 
         changeRoleSelect.onchange = async () => {
             await updateRole(user.id, changeRoleSelect.value);

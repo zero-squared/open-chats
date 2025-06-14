@@ -44,6 +44,10 @@ main {
     text-decoration: underline;
 }
 
+.blocked {
+    color: rgb(255, 107, 107);
+}
+
 .admin {
     color: rgb(255, 159, 255);
 }
