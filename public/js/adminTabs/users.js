@@ -5,7 +5,6 @@ const LIMIT = 20;
 let offset = 0;
 let isLoading = true;
 let loadMore = true;
-let curUser;
 
 const loaderElem = document.getElementById('loader');
 const usersContainer = document.getElementById('users-container');
@@ -98,7 +97,7 @@ function createUserElem(user) {
     });
     userElem.appendChild(createAtElem);
 
-    if (user.id === curUser.id) {
+    if (user.id === currentUser.id) {
         const roleElem = document.createElement('p');
         roleElem.innerText = localization.roles[user.role];
 
@@ -157,20 +156,7 @@ function createUserElem(user) {
 
 window.onload = async () => {
     await getLocalization();
-
-    const res = await fetch(USER_API, {
-        method: 'GET'
-    });
-
-    const body = await res.json();
-
-    if (!body.success) {
-        alert(body.message);
-        return;
-    }
-
-    curUser = body.user;
-
+    await getCurrentUser();
     await loadNewUsers();
 }
 

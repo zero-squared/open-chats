@@ -7,6 +7,9 @@ main {
 
 /* chat list */
 .side-panel {
+    display: flex;
+    flex-direction: column;
+    height: auto;
     overflow: hidden;
     border-right: solid 1px white;
 }
@@ -34,6 +37,41 @@ main {
 
 #chat-list .list-item a:hover {
     text-decoration: underline;
+}
+
+.admin {
+    color: rgb(255, 159, 255);
+}
+
+.moderator {
+    color: rgb(255, 211, 218);
+}
+
+.user-info {
+    box-sizing: border-box;
+    min-height: 64px;
+    max-height: 64px;
+    border-top: 1px solid white;
+    padding: 0 20px;
+    display: flex;
+    column-gap: 20px;
+    align-items: center;
+    text-decoration: none;
+}
+
+.user-info:hover {
+    text-decoration: underline;
+}
+
+.user-info p {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.user-info img {
+    height: 48px;
+    border-radius: 100%;
+    border: 1.5px solid white;
 }
 
 /* main-content */
@@ -107,10 +145,13 @@ main {
 
 .username {
     width: fit-content;
+}
+
+.hover-underline {
     cursor: pointer;
 }
 
-.username:hover {
+.hover-underline:hover {
     text-decoration: underline;
 }
 
@@ -121,7 +162,8 @@ main {
 /* message input */
 .msg-textarea-container {
     width: 100%;
-    height: 64px;
+    min-height: 64px;
+    max-height: 64px;
     box-sizing: border-box;
     border-top: 1px solid white;
     padding:  10px;

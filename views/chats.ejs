@@ -18,6 +18,12 @@
             <div id="chat-list">
                 <!-- filled with js -->
             </div>
+            <% if (user) { %>
+            <a class="user-info" href="/profile">
+                <img src="<%= user.avatarUrl %>" >
+                <p class="<%= user.role %>"><%= user.username %></p>
+            </a>
+            <% } %>
         </div>
         <div id="main-content">
             <div id="message-container">

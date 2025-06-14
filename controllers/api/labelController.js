@@ -12,7 +12,7 @@ export default {
 
         let userId = req.params.id;
 
-        if (userId === '@me' || userId === req.session.user.id) {
+        if (userId === '@me' || Number(userId) === req.session.user.id) {
             return res.status(400).send({
                 success: false,
                 message: req.t('errors.badRequest')
@@ -22,6 +22,37 @@ export default {
         const { text } = req.body;
 
         // TODO Change errors
+
+        if (text === '') {
+            const user = await sequelize.models.User.findByPk(userId);
+            if (!user) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            }
+
+            let label = await sequelize.models.Label.findOne({
+                where: {
+                    targetUserId: userId,
+                    authorUserId: req.session.user.id
+                },
+            });
+
+            if (!label) {
+                return res.status(404).send({
+                    success: false,
+                    message: req.t('errors.notFound')
+                });
+            }
+
+            await label.destroy();
+            return res.send({
+                success: true,
+                text: ''
+            });
+        }
+
         if (!text) {
             return res.status(400).send({
                 success: false,

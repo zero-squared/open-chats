@@ -59,7 +59,6 @@ export async function canDeleteMessage(userId, messageId) {
         const userRole = await user.getRole();
         const senderRole = await sender.getRole();
 
-        console.log("test", userRole.name, senderRole.name);
         if (userRole.name === 'user') {
             return user.id === sender.id;
         } 

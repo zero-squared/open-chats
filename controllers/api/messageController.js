@@ -2,7 +2,7 @@ import sequelize from "../../models/index.js";
 import { getIO } from "../../sockets/index.js";
 import { MESSAGE_MAX_LENGTH } from "../../utils/config.js";
 import { getMsgDataObj } from "../../utils/messages.js";
-import { GET_MESSAGES_LIMIT_DEFAULT, GET_MESSAGES_LIMIT_MAX, GET_MESSAGES_OFFSET_DEFAULT } from '../../utils/config.js'
+import { GET_MESSAGES_LIMIT_DEFAULT, GET_MESSAGES_LIMIT_MAX, GET_MESSAGES_OFFSET_DEFAULT } from '../../utils/config.js';
 
 export default {
     sendMessage: async (req, res) => {

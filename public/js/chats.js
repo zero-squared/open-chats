@@ -137,12 +137,14 @@ function createMsgElem(msgData) {
 
     const usernameElem = document.createElement('h4');
     usernameElem.classList.add('username');
-    usernameElem.innerText = msgData.sender.username;
+    usernameElem.classList.add(msgData.sender.role);
+    usernameElem.innerText = formatUsername(msgData.sender.username, msgData.sender.role, msgData.sender.label);
 
-    if (msgSendButtonElem) {
+    if (currentUser && currentUser.id !== msgData.sender.id) {
         usernameElem.onclick = async () => {
             await changeLabel(msgData.sender);
         }
+        usernameElem.classList.add('hover-underline');
     }
 
     const msgTextElem = document.createElement('p');
@@ -172,9 +174,16 @@ function createMsgElem(msgData) {
     return root;
 }
 
+function formatUsername(username, role, label) {
+    if (!label) {
+        return `${username} - ${localization.roles[role]}`;
+    }
+    return `${label} [${username}] - ${localization.roles[role]}`;
+}
+
 async function changeLabel(targetUser) {
-    let labelText = prompt(localization.label.enterText, targetUser.username);
-    if (!labelText) return;
+    let labelText = prompt(localization.label.enterText, targetUser.label || targetUser.username);
+    if (labelText === null) return;
 
     const res = await fetch(`/api/users/${targetUser.id}/label/`, {
         method: 'PATCH',
@@ -193,16 +202,16 @@ async function changeLabel(targetUser) {
         return;
     }
 
-    updateUsername(targetUser.id, body.text);
+    updateUsername(targetUser, body.text);
 }
 
-function updateUsername(userId, newUsername) {
+function updateUsername(user, label) {
     for (const msg of msgArr) {
-        if (msg.data.sender.id === userId) {
+        if (msg.data.sender.id === id) {
             const usernameElem = msg.elem.getElementsByClassName('username')[0];
 
-            msg.data.sender.username = newUsername;
-            usernameElem.innerText = newUsername;
+            msg.data.sender.label = label;
+            usernameElem.innerText = formatUsername(user.username, user.role,  label);
         }
     }
 }
@@ -250,6 +259,7 @@ async function init() {
 
 window.onload = async () => {
     await getLocalization();
+    await getCurrentUser();
     await init();
 };
 
